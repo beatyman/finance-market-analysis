@@ -1,7 +1,7 @@
 ---
 name: a-share-market-analysis
 description: A股4454+港股780缠论全量分析：chan.py买卖点 → XGBoost 58维打分 → 量价/板块/宏观/SMC/知识库多维度共振。支持单股分析/全市场扫描。
-version: 3.3.0
+version: 4.0.0
 author: Hermes
 license: MIT
 platforms: [linux, windows]
@@ -99,16 +99,31 @@ python3 train.py --stocks 27 --years 3
 
 ## 日报生成
 
-生成完整的 markdown 分析日报（`references/chan_daily_report.md`）：
+**命令:** `cd scripts && python3 daily_report.py`
 
-```bash
-cd scripts && python3 /dev/stdin << 'PYEOF'
-# 读取 hs300_stocks.csv → 全量chan扫描 → 聚合宏观/板块/期货 → markdown报告
-# 报告含: 事件日历/宏观全维度/板块热点(通达信)/买入标的/操作建议
-PYEOF
+生成完整 markdown 分析日报（`/root/chan_daily_report.md` + `references/chan_daily_report.md`）。日报结构：
+
+```
+# 🔬 缠论多维分析日报
+🗓️ 事件日历 (FOMC/地缘/PMI)
+🇨🇳 中国宏观 (国债10Y/2Y/30Y + 中美利差)
+🌍 美国宏观 (US10Y/DXY/VIX/汇率/商品)
+📈 股指期货 (Top20席位多空持仓/净变动)
+🔥 板块热点 (通达信概念15+行业15, 主力净流入/成交额)
+🎯 A股买入标的 (中枢内, 含名称/价格/评分/买入/止损/TP/ R:R)
+🇭🇰 港股 (买入/规避)
+📋 操作建议 (仓位分配)
 ```
 
-日报要求：概念板块≥15行 + 行业板块≥15行。标的表必须含股票名称（从 `hs300_stocks.csv` 成分券名称列获取）。
+日报要求：
+- 概念板块≥15行 + 行业板块≥15行（来自 `easy-tdx` 通达信）
+- 买入标的表必须含股票名称（从 `hs300_stocks.csv` 成分券名称列 `zfill(6)` 映射获取）
+- 宏观部分包含中美利差方向指引
+- 操作建议含具体仓位百分比
+
+## 旧版日报 (已废弃)
+
+老旧文章生成器示例（`references/chan_daily_report.md`），保留为模板参考。
 
 ## 数据源
 
@@ -141,6 +156,33 @@ for i in range(3):
     except:
         if i < 2: time.sleep(5 * (i + 1))
 ```
+
+## 宏观分析
+
+### 中国国债 & 中美利差
+
+`macro.py` 现在覆盖中美双向数据：AKShare获取中国国债收益率，yfinance获取美债/DXY/VIX/商品。`load_macro()` 5分钟缓存。中美利差自动计入方向判定。
+
+```python
+import akshare as ak
+cb = ak.bond_zh_us_rate(start_date='20250601')
+cn10 = float(cb['中国国债收益率10年'].iloc[-1])
+spread = us10 - cn10  # 中美利差
+```
+
+| 利差 | 方向指引 |
+|------|----------|
+| >2.5% | 🔴 资本外流压力大 → A股权重股承压 |
+| 1.5-2.5% | 🟡 偏宽，谨慎 |
+| <1.5% | 🟢 外资回流利好A股 |
+
+### 股指期货详细持仓
+
+`futures_sentiment.py` 输出Top20席位数据（多单/空单/净持仓/每日变动/方向）：
+
+### 通达信 easy-tdx 板块资金
+
+`board_hot.py` 提供概念+行业板块实时主力资金（easy-tdx 通达信协议）：
 
 ## 评分模型
 
@@ -213,7 +255,7 @@ R:R = 5.5:1 | 30分钟: 🟡 日线买但30m未确认
 
 ### 评分模型
 
-- 无训练模型时 `predict_score` 自动回退到规则评分 `score_from_features`
+- **XGBoost维度匹配（关键Pitfall）**: `predict_score` 必须用 `model.n_features_in_==feat_len` 自动检测维度，严禁硬编码 `len(feats)==30`。58维模型 + 30维硬编码 = 模型永不调用，回退到规则评分。
 - **XGBoost维度匹配** — `predict_score` 必须用 `model.n_features_in_==feat_len` 检查，不能硬编码 `len(feats)==30`。模型是58维但规则特征也是58维，硬编码30会导致模型永远不被调用
 - `model.n_features_in_` 是 sklearn API 的标准属性，在 `fit()` 后自动设置，无需手动维护
 - 训练使用 `models/chan_xgb_56d.pkl`，需与 `extract_features` 特征顺序一致
@@ -225,12 +267,31 @@ R:R = 5.5:1 | 30分钟: 🟡 日线买但30m未确认
 `analyze_single()` 自动拉取30分钟K线做次级别确认：
 - yfinance A股30m用 `period='5d', interval='30m'`（不是30d，A股30d 30m数据不可用）
 - 港股30m同样用 `period='5d'`
-- chan_engine.py 的日期解析必须兼容 `"2026-06-24"` 和 `"2026-06-24 09:30"` 两种格式（30m K线含时间）
+- **chan_engine.py 的日期解析必须兼容两种格式**: `"2026-06-24"` (日线用 `.split('-')`) 和 `"2026-06-24 09:30"` (30m K线含时间，需 `.split(' ')` 再拆时间)
 - 确认逻辑：日线Buy + 30m Buy = ✅高确信 | 日线Buy + 30m非Buy = 🟡等次级别
+- 30m报错 `ValueError: invalid literal for int() with base 10: '17 09:30'` 说明日期解析没兼容时间格式
 
 ### 全市场扫描综合评分
 
 `scan_market()` 输出综合评分 = XGB×60% + 量价×20% + 板块×20%，并含阿娇过滤（年涨>100%非三买降15分）。Excel输出14列含量价/板块/阿娇警告。
+
+### AKShare CSV 代码前导零 (Critical Pitfall)
+
+`ak.index_stock_cons_csindex(symbol='000300')` 返回的成分券代码**缺少前导零**（如 `2475` 而非 `002475`）。构建 yfinance 符号时**必须** `str(code).zfill(6)`：
+
+```python
+name_map = {str(c).zfill(6): str(n) for c, n in zip(df['成分券代码'], df['成分券名称'])}
+sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 2475.SZ ✗
+```
+
+不 zfill 会导致所有 00xxxx 代码的 yfinance 请求失败（"possibly delisted"）。
+
+### 港股报告输出索引 (Critical Pitfall)
+
+港股扫描结果元组结构为 `(code, name, label, px, score, ytd, zs_str, bsp_buy, in_zs)`。筛选买入和卖出时必须用正确索引：
+- `hk_buys = [r for r in hk_results if r[7]]` — `bsp_buy` 在索引 7
+- `hk_sells = [r for r in hk_results if not r[7] and 'Sell' in str(r[2])]` — `label` 在索引 **2**（不是 3）
+- 价格在索引 4，评分在索引 5，年涨在索引 6
 
 ### AKShare超时保护
 
