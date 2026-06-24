@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Stock Chanlun KB Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "package",
+    "assets",
+    "concepts",
+    "indexes",
+    "output_contract"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "package": {
+      "type": "object"
+    },
+    "assets": {
+      "type": "array"
+    },
+    "concepts": {
+      "type": "array"
+    },
+    "indexes": {
+      "type": "object"
+    },
+    "output_contract": {
+      "type": "object"
+    }
+  }
+}

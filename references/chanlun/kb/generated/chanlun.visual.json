@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "built_at": "2026-06-24T06:24:25+00:00",
+  "visual_use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+  "cards": []
+}

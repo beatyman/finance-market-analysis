@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0",
+  "package": {
+    "name": "agent-stock-chanlun-kb",
+    "version": "0.2",
+    "base_path": "references/chanlun/kb",
+    "built_at": "2026-06-24T06:24:25+00:00",
+    "runtime_dependencies": [
+      "Python 3 stdlib"
+    ],
+    "optional_dependencies": [
+      "embedding index, if generated separately"
+    ],
+    "not_required_at_runtime": [
+      "external RAG runtime",
+      "Qdrant",
+      "source PDF",
+      "Downloads path"
+    ]
+  },
+  "assets": [
+    {
+      "path": "references/chanlun/kb/generated/chanlun.fulltext.jsonl",
+      "type": "jsonl",
+      "role": "generated_index",
+      "sha256": "2dda6e36910a9a5b2e8e2515fe5adbda1a1cdd1c3a9c181f8cc93d8d6a01c0cf",
+      "size": 3268701
+    },
+    {
+      "path": "references/chanlun/kb/generated/chanlun.graph.json",
+      "type": "json",
+      "role": "generated_index",
+      "sha256": "a8ccb023dabd4790c95c3168da1c4a496de852befbfc3b2adaa8c437fad7697a",
+      "size": 29965
+    },
+    {
+      "path": "references/chanlun/kb/generated/chanlun.visual.json",
+      "type": "json",
+      "role": "generated_index",
+      "sha256": "c315feffa8c2979a1d0f50d6e3f1533385cf93c28c3b42001a199360b5557c52",
+      "size": 299
+    },
+    {
+      "path": "references/chanlun/kb/manifest.schema.json",
+      "type": "json",
+      "role": "reference",
+      "sha256": "b6228556d2a878961904c6d7004323beb959458f2569406938aeebff66b4375c",
+      "size": 572
+    },
+    {
+      "path": "references/chanlun/kb/sources/normalized/pages.jsonl",
+      "type": "jsonl",
+      "role": "normalized_source",
+      "sha256": "f1a746bba11747c8ef559ce2db4f9611583a014f595cd422f7472ac77d18c784",
+      "size": 3117860
+    },
+    {
+      "path": "references/chanlun/kb/sources/pageindex/ajiao_chanlun_pageindex_structure.json",
+      "type": "json",
+      "role": "normalized_source",
+      "sha256": "e631684587c01ddde85a501d70063b370dfd72ad9018e9e4375a57ec192ea40b",
+      "size": 3067052
+    },
+    {
+      "path": "references/chanlun/kb/sources/pageindex/nodes.jsonl",
+      "type": "jsonl",
+      "role": "normalized_source",
+      "sha256": "7313cae0ddd166ad40f491e9e27e69d8b39fc6d571e75347d671830fed5a2c1a",
+      "size": 6327429
+    },
+    {
+      "path": "references/chanlun/kb/sources/source_manifest.json",
+      "type": "json",
+      "role": "normalized_source",
+      "sha256": "bce5ca4b949626a9522b4aa3e3ca655970953b0beff93b7346311dd135291c12",
+      "size": 551
+    }
+  ],
+  "documents": [
+    {
+      "id": "ajiao_chanlun_pdf_text",
+      "title": "阿娇版+缠论.pdf extracted text",
+      "normalized_path": "references/chanlun/kb/sources/normalized/pages.jsonl",
+      "page_count": 1262,
+      "chunk_count": 109,
+      "indexing": "pageindex_semantic_nodes"
+    },
+    {
+      "id": "ajiao_chanlun_pageindex",
+      "title": "阿娇版+缠论.pdf PageIndex text tree",
+      "structure_path": "references/chanlun/kb/sources/pageindex/ajiao_chanlun_pageindex_structure.json",
+      "normalized_nodes_path": "references/chanlun/kb/sources/pageindex/nodes.jsonl",
+      "node_count": 109,
+      "active_fulltext": true
+    },
+    {
+      "id": "agent_stock_chanlun_fast",
+      "title": "Agent Stock Chanlun fast package",
+      "chunk_count": 0
+    }
+  ],
+  "concepts": [],
+  "indexes": {
+    "fulltext_jsonl": "references/chanlun/kb/generated/chanlun.fulltext.jsonl",
+    "visual_json": "references/chanlun/kb/generated/chanlun.visual.json",
+    "graph_json": "references/chanlun/kb/generated/chanlun.graph.json",
+    "pageindex_nodes_jsonl": "references/chanlun/kb/sources/pageindex/nodes.jsonl",
+    "embedding_jsonl_optional": "references/chanlun/kb/generated/chanlun.embeddings.jsonl"
+  },
+  "output_contract": {
+    "required_fields": [
+      "操作级别",
+      "走势定位",
+      "买卖点",
+      "结构依据",
+      "图形参照",
+      "置信度",
+      "失效条件"
+    ],
+    "optional_fields": [
+      "来源锚点"
+    ],
+    "confidence_values": [
+      "高",
+      "中",
+      "低",
+      "未触发"
+    ],
+    "low_confidence_rule": "If OHLC/history/timeframe evidence is insufficient, state 缠论结构置信度受限 and avoid aggressive action."
+  },
+  "validation": {
+    "schema": "references/chanlun/kb/manifest.schema.json",
+    "commands": [
+      "python3 scripts/chanlun_kb_validate.py",
+      "python3 scripts/chanlun_kb_search.py search 中枢 --top-k 3"
+    ]
+  }
+}

@@ -27,11 +27,11 @@ def collect_training_data(symbols=None, max_stocks=50, lookback_years=3):
     """收集训练数据: K线回放 + BSP特征提取 + 标签"""
     if symbols is None:
         # Core A-stock codes for training
-a_codes=["002475","603019","002594","601899","002371","601138","600489","002837","300476","000977","688041","603986","603893","688008","601100","600089","002281","002463","002428","300475","000988","600030","300124","300750"]
-hk_codes=["00700","09988","03690"]
-stocks=[]
-for c in a_codes[:max_stocks]:stocks.append((c,c))
-for c in hk_codes[:max(max_stocks-len(a_codes),0)]:stocks.append(("hk"+c,c))
+        a_codes=["002475","603019","002594","601899","002371","601138","600489","002837","300476","000977","688041","603986","603893","688008","601100","600089","002281","002463","002428","300475","000988","600030","300124","300750"]
+        hk_codes=["00700","09988","03690"]
+        stocks=[]
+        for c in a_codes[:max_stocks]:stocks.append((c,c))
+        for c in hk_codes[:max(max_stocks-len(a_codes),0)]:stocks.append(("hk"+c,c))
     else:
         stocks=[(f'hk{s}','') for s in symbols]
     

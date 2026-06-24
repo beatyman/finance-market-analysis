@@ -18,7 +18,7 @@ from chan_kb import evaluate
 from smc_insight import smc_analysis
 from macro import load_macro,macro_signal
 from volume_sector import volume_analysis,get_stock_sector,sector_analysis
-from sector_heat import sector_signal,get_sector_heat_tencent
+from sector_heat import sector_signal,get_sector_heat
 import pickle
 
 MODEL_PATH=os.path.join(HERE,'..','models','chan_xgb_hk.pkl')
@@ -111,7 +111,7 @@ def analyze_single(code_or_name,market='a'):
     print('  📊 量价: %s (vol_ratio=%.1fx)'%(vol['signal'],vol['vol_ratio']))
     sec=sector_analysis(code_or_name)
     print('  📈 板块: %s → %s'%(sec['sector'],sec['top_sector']))
-    heat_data=get_sector_heat_tencent()
+    heat_data=get_sector_heat()
     sh=sector_signal(code_or_name,heat=heat_data)
     print('  🔥 板块热度: %s %+.1f%% (%d%%↑)'%(sh['signal'],sh['avg_chg'],sh['up_ratio']))
     if result['confirmations']:

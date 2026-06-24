@@ -34,8 +34,8 @@ def get_sector_from_akshare():
     """直接从 AKShare 获取板块数据（需东财网络）"""
     try:
         import akshare as ak
-        industry=_ak_with_retry(ak.stock_board_industry_name_em)
-        concept=_ak_with_retry(ak.stock_board_concept_name_em)
+        industry=_ak_with_retry(ak.stock_board_industry_name_em,max_retries=2)
+        concept=_ak_with_retry(ak.stock_board_concept_name_em,max_retries=1)
         if industry is None and concept is None:return {}
         import pandas as pd
         dfs=[]

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "source_id": "ajiao_chanlun_pdf_text",
+  "title": "阿娇版+缠论.pdf extracted UTF-8 text",
+  "built_at": "2026-06-24T06:24:25+00:00",
+  "source_text_sha256": "69cf5289e7aad5328235ffd03f6a2a3e7b75616590f383bb51f77aad592b935b",
+  "page_count": 1262,
+  "chunk_count": 109,
+  "pageindex_structure": "references/chanlun/kb/sources/pageindex/ajiao_chanlun_pageindex_structure.json",
+  "pageindex_node_count": 109,
+  "runtime_note": "The generated KB does not require the source PDF or this source text path at runtime."
+}
