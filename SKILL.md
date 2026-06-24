@@ -421,6 +421,10 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 
 末尾汇总所有中枢内买点（去重）。常见结果：热门板块（如锂+7.6%）阿娇筛选后0个买点——因为涨停股已涨完，剩余全部Hold/Sell。
 
+## 板块批量扫描参考输出
+
+`references/board_stocks.csv` — 12板块全量成分股+缠论分析结果（代码/名称/板块/信号/评分/买入/止损/TP/R:R）。`references/board_analysis_report.md` — 对应的 markdown 完整报告。
+
 ## 外部知识库
 
 - [fpyluck/chanstock-skill](https://github.com/fpyluck/chanstock-skill) — 缠论知识库 + 语义搜索
