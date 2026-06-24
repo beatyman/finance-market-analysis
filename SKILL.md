@@ -1,7 +1,7 @@
 ---
 name: a-share-market-analysis
 description: A股4454+港股780缠论全量分析：chan.py买卖点 → XGBoost 58维打分 → 量价/板块/宏观/SMC/知识库多维度共振。支持单股分析/全市场扫描。
-version: 4.1.0
+version: 4.2.0
 author: Hermes
 license: MIT
 platforms: [linux, windows]
@@ -80,7 +80,7 @@ python3 train.py --stocks 27 --years 3
 |---|---|
 | `analyze.py` | 主入口 —— 单股 + 全市场扫描 |
 | `data.py` | 多源数据层 (Tencent/yfinance/AKShare/baostock 自动回退) |
-| `chan_engine.py` | chan.py BSP/中枢提取 |
+| `chan_engine.py` | chan.py BSP/中枢提取 — **不支持30m K线, 见 `references/t0_trading.md`** |
 | `scorer.py` | 58维特征提取 + XGBoost打分 |
 | `sector_heat.py` | 板块热度 (AKShare直连优先 → CSV → 腾讯推断) |
 | `macro.py` | 宏观因子 — 实时美债/DXY/汇率（5天周期+5分钟缓存） |
@@ -96,6 +96,8 @@ python3 train.py --stocks 27 --years 3
 | `chanlun_kb_search.py` | chanstock语义搜索CLI |
 | `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各15+,主力资金) |
 | `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
+| `t0_trade.py` | **日内做T策略** — 日线方向+30m价格区间+量价异常 |
+| `event_calendar.py` | 宏观事件日历 — Fed官网核实 + 中国/地缘日程 |
 
 ## 日报生成
 
@@ -103,9 +105,15 @@ python3 train.py --stocks 27 --years 3
 
 日报的格式是**固化标准**，不可随意改变。所有模块（宏观/板块/A股/港股/操作建议）的表结构和字段顺序必须保持一致。
 
-### 事件日历验证 ⚠️
+### 事件日历验证 (CRITICAL — Fed官网 vs 静态推测)
 
-`event_calendar.py` 目前使用**静态硬编码**数据。FOMC会议纪要实际发布时间、美联储讲话日程等需通过官方来源验证：
+`event_calendar.py` 使用静态硬编码数据。**FOMC 会议纪要不在会后次日发布——通常在会后约 3 周**（如 6/16-17 会议 → 约 7/8 纪要）。生成日报前必须在报告开头输出当前事件日历，但需明确标注数据来源（硬编码 vs 官网核实）。
+
+验证来源:
+- https://www.federalreserve.gov/calendar.htm (官方日历)
+- https://www.federalreserve.gov/newsevents.htm (新闻与事件)
+
+**本轮会话教训:** 静态日历曾错误标注 6/25 "FOMC会议纪要公布"。Fed 官网核实后发现本周 (6/23-27) 只有两场低影响讲话（Governor Cook + 麻省银行家协会），纪要实际在 7/8。
 
 ```bash
 # 官方日历
@@ -113,7 +121,7 @@ https://www.federalreserve.gov/calendar.htm
 https://www.federalreserve.gov/newsevents.htm
 ```
 
-**本轮会话教训:** 静态日历写"6/25 FOMC纪要公布"，但美联储官网显示本周只有两场低影响讲话，纪要约在7/8发布。生成报告前应先检查官网，或在报告中标注"基于历史规律预估，以官网为准"。
+**本轮会话教训:** 静态日历写"6/25 FOMC纪要公布"，但美联储官网显示本周只有两场低影响讲话（Governor Cook + 麻省银行家协会），纪要约在7/8发布。**生成报告前必须先检查官网核实日历，不能依赖上一次会话的静态日期。** FOMC 会议纪要通常在会后约 3 周发布（6/16-17 会议 → 约 7/8 纪要），不是次日。
 
 ```
 # 🔬 缠论多维分析日报
@@ -276,10 +284,8 @@ R:R = 5.5:1 | 30分钟: 🟡 日线买但30m未确认
 
 `analyze_single()` 自动拉取30分钟K线做次级别确认：
 - yfinance A股30m用 `period='5d', interval='30m'`（不是30d，A股30d 30m数据不可用）
-- 港股30m同样用 `period='5d'`
-- **chan_engine.py 的日期解析必须兼容两种格式**: `"2026-06-24"` (日线用 `.split('-')`) 和 `"2026-06-24 09:30"` (30m K线含时间，需 `.split(' ')` 再拆时间)
-- 确认逻辑：日线Buy + 30m Buy = ✅高确信 | 日线Buy + 30m非Buy = 🟡等次级别
-- 30m报错 `ValueError: invalid literal for int() with base 10: '17 09:30'` 说明日期解析没兼容时间格式
+- **chan.py 不支持 30m K线直接分析** — CTime `auto=True/False` 均会产生 "kline time err, cur=2026/06/17, last=2026/06/17" 错误。日内做 T 策略用价格区间+量价代替 30m 缠论分析（见 `t0_trade.py`）
+- 30m 报错 `ValueError: invalid literal for int() with base 10: '17 09:30'` 说明日期解析没兼容时间格式
 
 ### 全市场扫描综合评分
 
