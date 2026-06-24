@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+*.pkl
+chanpy/Image/
+chanpy/Debug/
+references/smc_kb/cases/

@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0",
+  "built_at": "2026-05-24T08:56:55+00:00",
+  "visual_use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+  "cards": [
+    {
+      "id": "buy_sell_points",
+      "file": "references/chanlun/figures/buy_sell_points.svg",
+      "title": "Chanlun Buy Sell Points Reference",
+      "desc": "Abstract comparison card for first, second, and third buy/sell points. Use only with level, structure basis, and invalidation.",
+      "viewBox": "0 0 960 620",
+      "width": "960",
+      "height": "620",
+      "text_labels": [
+        "Buy/Sell Point Reference",
+        "This card shows relative positions. The actual level must be named before use.",
+        "Buy side: divergence, retest, third-buy pullback",
+        "1st buy",
+        "2nd buy",
+        "3rd buy",
+        "old center",
+        "Sell side: top divergence, rebound, third-sell pullback",
+        "1st sell",
+        "2nd sell",
+        "3rd sell",
+        "old center"
+      ],
+      "use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+      "sha256": "c8f8e15bdf7161b7d48bbee542e098246695d0bc164a155da6acc40e7d473f75",
+      "size": 2363,
+      "use_for": "relative positions of first, second, and third buy/sell points",
+      "do_not_use_for": "declaring a buy/sell point without level, structure basis, and invalidation",
+      "related_concepts": [
+        "buy_sell_points"
+      ],
+      "related_keywords": [
+        "一买",
+        "一卖",
+        "三买",
+        "三卖",
+        "买卖点",
+        "买点",
+        "二买",
+        "二卖",
+        "卖点",
+        "第一类买点",
+        "第一类卖点",
+        "第三类买点",
+        "第三类卖点",
+        "第二类买点",
+        "第二类卖点"
+      ]
+    },
+    {
+      "id": "center_zg_zd",
+      "file": "references/chanlun/figures/center_zg_zd.svg",
+      "title": "Chanlun Center ZG ZD Reference",
+      "desc": "Abstract comparison card for center overlap, ZG/ZD, extension, and upgrade. Exact measurement requires OHLC data.",
+      "viewBox": "0 0 960 560",
+      "width": "960",
+      "height": "560",
+      "text_labels": [
+        "Center ZG/ZD Reference",
+        "A center is the overlapping zone of at least three consecutive same-level moves.",
+        "ZG = min highs",
+        "ZD = max lows",
+        "overlap zone",
+        "If ZD <= ZG, the three moves overlap and define a center.",
+        "After repeated extensions, reassess whether a larger-level center is forming."
+      ],
+      "use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+      "sha256": "50897a148487def0d764c65e00cfb17da0d67cbda76382924a770de8a40ebbe6",
+      "size": 1726,
+      "use_for": "center overlap, ZG/ZD, extension, and upgrade",
+      "do_not_use_for": "exact measurement without OHLC data",
+      "related_concepts": [
+        "center"
+      ],
+      "related_keywords": [
+        "ZD",
+        "ZG",
+        "中枢",
+        "延伸",
+        "扩展"
+      ]
+    },
+    {
+      "id": "divergence_macd",
+      "file": "references/chanlun/figures/divergence_macd.svg",
+      "title": "Chanlun Divergence MACD Reference",
+      "desc": "Abstract comparison card for divergence and MACD auxiliary force comparison. MACD is not the primary Chanlun rule.",
+      "viewBox": "0 0 960 560",
+      "width": "960",
+      "height": "560",
+      "text_labels": [
+        "Divergence And MACD Auxiliary Check",
+        "MACD helps compare force. It does not replace center/trend qualification.",
+        "move A",
+        "move B",
+        "price makes new high",
+        "larger area",
+        "smaller area",
+        "Possible top divergence",
+        "Only valid if same-level trend conditions are met."
+      ],
+      "use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+      "sha256": "54893d1a032dcf821ee56580cacda4a481d17993c98742c57c3ede0a7337ab55",
+      "size": 2086,
+      "use_for": "divergence shape plus MACD auxiliary force comparison",
+      "do_not_use_for": "treating MACD as the primary Chanlun rule",
+      "related_concepts": [
+        "divergence"
+      ],
+      "related_keywords": [
+        "MACD",
+        "力度",
+        "盘整背驰",
+        "背驰"
+      ]
+    },
+    {
+      "id": "fractal_stroke",
+      "file": "references/chanlun/figures/fractal_stroke.svg",
+      "title": "Chanlun Fractal And Stroke Reference",
+      "desc": "Abstract comparison card for fractals, inclusion normalization, and strokes. Confirm from OHLC sequence, not from this drawing alone.",
+      "viewBox": "0 0 960 560",
+      "width": "960",
+      "height": "560",
+      "text_labels": [
+        "Fractal And Stroke Reference",
+        "Use as an abstract comparison card. Confirm from OHLC sequence, not from this drawing alone.",
+        "Top fractal",
+        "middle bar has highest high and higher low",
+        "Bottom fractal",
+        "middle bar has lowest low and lower high",
+        "Inclusion normalization",
+        "merge contained bars before fractal detection",
+        "Valid stroke: opposite fractals with enough processed bars",
+        "bottom fractal",
+        "top fractal",
+        "Practical guard: if there are fewer than 5 processed K bars, do not claim a confirmed stroke."
+      ],
+      "use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+      "sha256": "8aed8c7f5a68d3e0aa872b15705cb294ef18aac713308fbb74de41b42a4aa5c2",
+      "size": 3398,
+      "use_for": "fractal, inclusion processing, and stroke confirmation",
+      "do_not_use_for": "automatic K-line recognition or stroke confirmation without enough processed bars",
+      "related_concepts": [
+        "fractal",
+        "stroke"
+      ],
+      "related_keywords": [
+        "5根K线",
+        "分型",
+        "包含关系",
+        "底分型",
+        "相邻分型",
+        "笔",
+        "顶分型"
+      ]
+    },
+    {
+      "id": "interval_nesting",
+      "file": "references/chanlun/figures/interval_nesting.svg",
+      "title": "Chanlun Interval Nesting Reference",
+      "desc": "Abstract comparison card for large-level direction and small-level timing. Do not mix unrelated levels.",
+      "viewBox": "0 0 960 560",
+      "width": "960",
+      "height": "560",
+      "text_labels": [
+        "Interval Nesting",
+        "Large level sets direction; small level times entry.",
+        "Daily",
+        "possible larger-level buy area",
+        "30m",
+        "center no longer breaks down",
+        "5m",
+        "entry"
+      ],
+      "use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+      "sha256": "2db92b11bba287846fb46e7b4b1e484c20a719c099bba06ae42fb91377e35b90",
+      "size": 2040,
+      "use_for": "large-level direction and small-level timing",
+      "do_not_use_for": "mixing unrelated levels or overriding a larger-level sell point",
+      "related_concepts": [
+        "interval_nesting"
+      ],
+      "related_keywords": [
+        "区间套",
+        "当下",
+        "级别"
+      ]
+    },
+    {
+      "id": "overview",
+      "file": "references/chanlun/figures/overview.svg",
+      "title": "Chanlun Visual Card Overview",
+      "desc": "Portable abstract comparison card for agent-stock Chanlun analysis. Use with rules.md; not for automatic chart recognition.",
+      "viewBox": "0 0 1200 840",
+      "width": "1200",
+      "height": "840",
+      "text_labels": [
+        "Chanlun Visual Card Overview",
+        "Portable abstract cards for structure comparison. Use with ../rules.md and do not treat as automatic chart recognition.",
+        "Fractal + Stroke",
+        "opposite fractals plus enough processed bars",
+        "Segment Break",
+        "requires characteristic sequence evidence",
+        "Center ZG/ZD",
+        "three same-level moves overlap: ZD <= ZG",
+        "Buy/Sell Points",
+        "buy point type must include level and invalidation",
+        "Divergence",
+        "MACD area is auxiliary, not the primary rule",
+        "Interval Nesting",
+        "large level direction, small level timing",
+        "Use Sequence",
+        "1. name level -> 2. normalize bars -> 3. find fractals/strokes/segments -> 4. locate center -> 5. check divergence/buy-sell point -> 6. fuse money/sector/news -> 7. output invalidation.",
+        "If data is summarized or insufficient, lower confidence and state what cannot be confirmed."
+      ],
+      "use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+      "sha256": "e54f2aedeea85ed5f586ae7b5fca93126c18ae7928625f9b6d4f57d573b990ab",
+      "size": 4139,
+      "use_for": "one-page routing map for all Chanlun visual cards",
+      "do_not_use_for": "replacing detailed rules.md reasoning",
+      "related_concepts": [],
+      "related_keywords": []
+    },
+    {
+      "id": "segment_break",
+      "file": "references/chanlun/figures/segment_break.svg",
+      "title": "Chanlun Segment Break Reference",
+      "desc": "Abstract comparison card for segment composition and break reasoning. Do not use as a simple price breakout rule.",
+      "viewBox": "0 0 960 560",
+      "width": "960",
+      "height": "560",
+      "text_labels": [
+        "Segment And Segment Break",
+        "A segment needs at least three strokes. A break needs valid opposite sequence evidence.",
+        "Segment formed by at least 3 strokes",
+        "stroke 1",
+        "stroke 2",
+        "stroke 3",
+        "Break: new opposite sequence confirms old segment ended",
+        "Do not treat a simple price poke as a segment break.",
+        "Check whether the characteristic sequence belongs to the same opposite structure."
+      ],
+      "use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+      "sha256": "6b9c2c97a4a3f65803787929eb29167871a17dd98d77d60de5d4514e5ee8ac0e",
+      "size": 2418,
+      "use_for": "segment composition and break reasoning",
+      "do_not_use_for": "simple price breakout judgment without characteristic-sequence reasoning",
+      "related_concepts": [
+        "segment"
+      ],
+      "related_keywords": [
+        "特征序列",
+        "线段",
+        "线段破坏"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560">
+  <title>Chanlun Center ZG ZD Reference</title>
+  <desc>Abstract comparison card for center overlap, ZG/ZD, extension, and upgrade. Exact measurement requires OHLC data.</desc>
+  <rect width="960" height="560" fill="#ffffff"/>
+  <style>
+    .title{font:700 24px Arial,sans-serif;fill:#111827}
+    .label{font:16px Arial,sans-serif;fill:#111827}
+    .small{font:13px Arial,sans-serif;fill:#374151}
+    .line{stroke:#111827;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .zone{fill:#dbeafe;stroke:#2563eb;stroke-width:2;fill-opacity:.75}
+    .dash{stroke:#9ca3af;stroke-width:2;stroke-dasharray:6 6}
+    .box{fill:#f9fafb;stroke:#d1d5db;stroke-width:2;rx:10}
+  </style>
+  <text x="32" y="44" class="title">Center ZG/ZD Reference</text>
+  <text x="32" y="74" class="small">A center is the overlapping zone of at least three consecutive same-level moves.</text>
+
+  <rect x="70" y="110" width="820" height="375" class="box"/>
+  <rect x="310" y="235" width="330" height="105" class="zone"/>
+  <polyline points="110,380 210,215 310,330 410,220 520,340 640,240 760,390 850,300" class="line"/>
+  <line x1="90" y1="235" x2="875" y2="235" class="dash"/>
+  <line x1="90" y1="340" x2="875" y2="340" class="dash"/>
+  <text x="660" y="240" class="label">ZG = min highs</text>
+  <text x="660" y="345" class="label">ZD = max lows</text>
+  <text x="320" y="225" class="small">overlap zone</text>
+  <text x="98" y="430" class="small">If ZD &lt;= ZG, the three moves overlap and define a center.</text>
+  <text x="98" y="455" class="small">After repeated extensions, reassess whether a larger-level center is forming.</text>
+</svg>

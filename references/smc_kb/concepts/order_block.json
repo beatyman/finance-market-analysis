@@ -1,0 +1,6079 @@
+{
+  "card_id": "order_block",
+  "type": "merged_concept",
+  "canonical_term": "Order Block",
+  "aliases": [
+    "Bearish Order Block",
+    "bearish order block",
+    "bullish order block",
+    "Bullish Order Block",
+    "Continuation Order Block",
+    "Down-close candle",
+    "OB",
+    "ob",
+    "opposing candle",
+    "Opposing Candle",
+    "opposing candle series",
+    "Opposing Candle Series",
+    "opposing candles",
+    "Opposing Candles",
+    "Order Block Candle",
+    "protected swing order block",
+    "Protected Swing Order Block",
+    "Up-close candle",
+    "订单块"
+  ],
+  "school": "ICT",
+  "definition": "A supply or demand zone formed by the last opposing-close candle(s) immediately preceding a strong displacement move that sweeps liquidity and shifts market structure. Validated when price closes through the opening price of the candle series (Change in State of Delivery). On retest, the opening price or mean threshold (50% of body) serves as entry reference, with stop beyond the zone.",
+  "identification_rules": [
+    "Locate a displacement move that sweeps a prior swing high/low (liquidity sweep) and shifts market structure (Break of Structure or Change of Character).",
+    "Identify the last opposing-close candle(s) (down-close for bullish OB, up-close for bearish OB) immediately preceding the displacement.",
+    "Validate the order block with a close through the opposing candle series (Change in State of Delivery), ideally closing beyond the opening price of the first candle in the series.",
+    "Ensure the order block is at a significant point of interest (higher timeframe PD array, fair value gap, liquidity level) and within the discount (longs) or premium (shorts) of the range.",
+    "Mark the body range (or full range including wicks) as the OB zone; use the opening price or mean threshold (50% of body) for entry.",
+    "On retest, bodies should not close through the order block; wick penetration alone does not invalidate.",
+    "Prefer full-bodied, large candles; avoid weak, small candles during consolidation. If multiple same-direction candles, reference the opening price of the first candle.",
+    "For a three-candle pattern: first candle against trend, second strong momentum, third continuation; mark the first candle's range as OB.",
+    "If the OB candle range is less than 60% of 14-period ATR, widen the zone by one ATR on each side.",
+    "The OB candle must sweep liquidity: in a bearish OB, break above previous candle's high; in a bullish OB, break below previous candle's low.",
+    "Before considering a trade, confirm that relevant liquidity (e.g., lower FVG, equal highs/lows) has been swept to avoid false signals.",
+    "If the identified OB is mitigated before a trade is taken, the next candle creating a fresh FVG becomes the new OB.",
+    "Filter out OBs lacking market structure confirmation and, where volume data is available, significant trading volume.",
+    "Key session times (02:00–05:00 London, 08:30, 09:30, midnight open New York) frequently coincide with OB formation; alignment with these times adds confluence.",
+    "In a bullish context, locate down-close candle(s) that retrace into the buy-side POI; in a bearish context, locate up-close candle(s) that retrace into the sell-side POI. If retracement is messy, group the entire series as one opposing candle set.",
+    "If no clear POI is reached, the candle can still qualify only if paired with SMT divergence on a correlated asset."
+  ],
+  "trading_implication": "After CISD confirmation, enter on retest at the opening price or mean threshold (50% of body) for better risk-to-reward. Stop beyond the OB's opposing boundary or the swept swing high/low. Target at least 2R toward opposing liquidity (previous day high/low, failure swings, external range liquidity). Combine with fair value gaps, OTE, discount/premium context, and session kill zones for higher probability. Use multi-timeframe alignment: higher timeframe OB for bias, lower timeframe nested OB for precise entry.",
+  "common_mistakes": [
+    "Entering before a confirmed close through opposing candles (no CISD).",
+    "Ignoring higher timeframe bias or not aligning with a relevant point of interest.",
+    "Using an OB without a confirmed liquidity sweep and market structure shift.",
+    "Choosing weak, small-bodied candles instead of the largest full-bodied candle.",
+    "Using the opening price entry on a large OB, leading to poor risk-to-reward, instead of the mean threshold.",
+    "Treating wick penetration as invalidation when bodies have not closed through.",
+    "Misidentifying the OB by using a retracement or consolidation move instead of a genuine displacement.",
+    "Taking the OB in premium when seeking longs (or discount for shorts).",
+    "Not waiting for a closer continuation OB when the initial OB is too far for acceptable risk-to-reward.",
+    "Confusing order blocks with breaker blocks or fair value gaps.",
+    "Placing stop losses too tightly, especially on small OBs, or failing to adjust stops/entries for block size.",
+    "Assuming all OBs will hold without requiring confirmations such as break of structure, change of character, or volume.",
+    "Ignoring nearby liquidity (lower FVGs, equal highs/lows) that may cause a liquidity grab before setup works.",
+    "Treating any supply/demand area as an OB without requiring a Fair Value Gap and break of market structure.",
+    "Treating an already mitigated OB as a fresh trading opportunity.",
+    "Entering before price sweeps the inducement level or relevant liquidity.",
+    "Opening full-risk positions on multiple concurrent OBs instead of reducing risk.",
+    "Assuming a break of the OB does not invalidate the reversal signal.",
+    "Over-refining entries to the exact high/low of the OB, leading to missed trades.",
+    "Failing to filter OBs without significant volume (where volume data is available).",
+    "Ignoring left-side structure (nearby gaps or OBs) that can cause false signals.",
+    "Expecting price to always reverse exactly from the OB without confirmation.",
+    "Trading reversal OBs against a strong trend without additional confirmations.",
+    "Misinterpreting a price sweep that fills a lower OB as a valid change of character.",
+    "Entering at the extreme of the OB rather than waiting for price to reach the mean threshold (discount), reducing risk/reward quality.",
+    "Treating a Change in the State of Delivery as confirmed before price actually closes beyond the same-direction candle series — an unconfirmed series is not yet a valid OB.",
+    "Placing the stop-loss at the individual candle low/high rather than at the boundary of the full Order Block rectangle, which may result in premature stop-outs.",
+    "Identifying an Order Block without confirming that a relevant higher time frame PD Array or liquidity level was reached first, leading to low-probability setups.",
+    "Using the OB in isolation without checking alignment with premium/discount of the broader range, session timing (kill zones), or higher time frame context.",
+    "Confusing a lower time frame Order Block formed during a manipulation move (e.g., 08:30 opposing run) with the primary directional Order Block — the manipulation OB is used for entry refinement, not as the primary bias signal.",
+    "Ignoring session context: an Order Block formed outside of London or New York kill zones carries lower conviction.",
+    "Failing to recognize a Propulsion Block when a prior OB is retested and holds — missing the stacked institutional interest signal.",
+    "Not requiring a prior liquidity sweep (turtle soup) or reversal confirmation before validating an opposing candle.",
+    "Entering or treating an opposing candle as valid before price closes through the series (no change in state of delivery confirmed).",
+    "Treating a candle as opposing without price first reaching a valid point of interest (e.g., fair value gap, swing high/low sweep).",
+    "Confusing the initial reversal entry with a continuation entry; opposing candles are only for continuation after reversal is confirmed.",
+    "Forcing an entry without SMT confirmation when the candle did not interact with a POI.",
+    "Attempting to combine too many PD arrays, leading to confusion and missed entries.",
+    "Expecting expansion off opposing candles after a prolonged trend (e.g., three consecutive expansion days) when a consolidation or reversal is more likely.",
+    "Treating opposing candles inside consolidation as a reliable order block; use the range high/low as the POI instead.",
+    "Focusing on individual small candles in a messy retracement instead of grouping the entire series as the opposing set.",
+    "Chasing a one-directional grind without a qualifying retrace, when no opposing candle has formed.",
+    "Trading order blocks without considering higher timeframe market structure and overall context (liquidity, session timing).",
+    "Assuming every order block will hold without requiring lower timeframe confirmation (e.g., change of character).",
+    "Placing stop losses at arbitrary levels instead of using the order block's high/low boundary as invalidation.",
+    "Choosing arbitrarily among multiple confluences (e.g., OB and FVG) without multi-timeframe refinement.",
+    "Trading order blocks against the higher time frame trend or without trend alignment.",
+    "Entering before price reaches the order block zone or without lower time frame confirmation (e.g., change of character, rejection signal).",
+    "Placing stop losses too tightly, especially on small order blocks, or failing to adjust stops/entries for block size (e.g., widening per ATR thresholds).",
+    "Assuming all order blocks will hold without requiring confirmations such as break of structure, change of character, or volume.",
+    "Treating any supply/demand area as an order block without requiring a Fair Value Gap and break of market structure.",
+    "Treating an already mitigated order block as a fresh trading opportunity.",
+    "Opening full-risk positions on multiple concurrent order blocks instead of reducing risk.",
+    "Assuming a break of the order block does not invalidate the reversal signal.",
+    "Over-refining entries to the exact high/low of the order block, leading to missed trades.",
+    "Failing to filter order blocks without significant volume (where volume data is available).",
+    "Ignoring left-side structure (nearby gaps or order blocks) that can cause false signals.",
+    "Expecting price to always reverse exactly from the order block without confirmation.",
+    "Trading reversal order blocks against a strong trend without additional confirmations.",
+    "Misinterpreting a price sweep that fills a lower order block as a valid change of character.",
+    "未等待CISD（收盘价穿过系列K线开盘价）即提前将候选K线区域标记为有效Order Block",
+    "价格仅触及但未收盘穿越关键开盘价水平时误判为有效CISD",
+    "多根同向K线时，错误使用最后一根K线的开盘价作为验证水平，而非第一根",
+    "未等待流动性被扫取（Liquidity Sweep）即将普通K线当作Order Block入场",
+    "Order Block范围较大时仍以开盘价入场，导致风险回报比偏低，应改用Mean Threshold",
+    "将止损直接置于Order Block另一端而非Swing High/Low，价格轻微Wick即可触发止损",
+    "忽略高时间框架方向偏差，在不符合更高时间框架偏差的方向上使用Order Block入场",
+    "未结合高时间框架Internal/External Range Liquidity框架确认方向，孤立使用Order Block",
+    "价格回测Order Block时未等待低时间框架CISD确认即入场，缺少入场序列验证",
+    "将Order Block与Breaker Block混淆：部分描述中Order Block仅标记开盘价水平线，而Breaker Block标记含影线的矩形区域",
+    "Order Block不在折扣/溢价区时直接入场，而非等待Mean Threshold或第二次入场机会",
+    "回测Order Block时忽略同时形成的Fair Value Gap，错失更精确的入场确认信号",
+    "试图同时掌握所有PD Array概念导致分析混乱，建议专注精通单一概念",
+    "在没有重要价格水平支撑的随机位置识别Order Block，导致无效信号",
+    "未确认市场结构转变（MSS）就在OB处交易，忽视OB必须在结构转变前形成的前置条件",
+    "将任意反转K线或普通支撑阻力误认为OB，忽视其必须位于高时间框架重要水平附近的要求",
+    "OB被完全突破后仍依赖其作为支撑阻力，未识别其已转变为Breaker Block或Mitigation Block",
+    "忽视OB所处的折价/溢价区域，在不利价格位置（如溢价区做多）入场",
+    "未在多时间框架上确认OB有效性，仅依赖单一时间框架识别导致信号不可靠",
+    "止损设置过紧，设在OB边界而非OB极值或受保护摆动点，导致被虚假突破扫出",
+    "在OB区域内交易而非等待价格回测后远离该区域的确认",
+    "混淆OB与Breaker Block的标记范围（OB标记开盘价水平，Breaker Block标记整个K线范围含影线）",
+    "选择扫盘后的小实体K线而非扫盘过程中的大实体K线作为OB",
+    "在非趋势环境中使用低概率OB（小实体大影线），应仅在明确趋势中使用",
+    "同时标记所有PD array概念导致图表混乱，应专注于OB等少数核心概念并深入掌握",
+    "在OB被首次回测时过早移动止损至盈亏平衡点，导致被扫出而错过后续目标",
+    "在盘整区域内将K线误识别为OB，盘整区间高低点应作为兴趣点而非OB",
+    "未结合流动性扫荡验证OB，缺乏流动性扫荡背景的OB可靠性降低"
+  ],
+  "related_concepts": [
+    {
+      "term": "Change in the State of Delivery"
+    },
+    {
+      "term": "Fair Value Gap"
+    },
+    {
+      "term": "Displacement"
+    },
+    {
+      "term": "Premium"
+    },
+    {
+      "term": "Discount"
+    },
+    {
+      "term": "Equilibrium"
+    },
+    {
+      "term": "Kill Zone"
+    },
+    {
+      "term": "Propulsion Block"
+    },
+    {
+      "term": "Liquidity Sweep"
+    },
+    {
+      "term": "Market Structure Shift"
+    },
+    {
+      "term": "Power of Three"
+    },
+    {
+      "term": "Previous Day High"
+    },
+    {
+      "term": "Previous Day Low"
+    },
+    {
+      "term": "Midnight Open"
+    },
+    {
+      "term": "Low Resistance Liquidity"
+    },
+    {
+      "term": "Failure Swing"
+    },
+    {
+      "term": "New York Open"
+    },
+    {
+      "term": "Higher Time Frame"
+    },
+    {
+      "term": "Lower Time Frame"
+    },
+    {
+      "term": "Sell-Side Liquidity"
+    },
+    {
+      "term": "Buy-Side Liquidity"
+    },
+    {
+      "term": "Daily Profile"
+    },
+    {
+      "term": "London Session"
+    },
+    {
+      "term": "Breaker Block"
+    },
+    {
+      "term": "Mitigation Block"
+    },
+    {
+      "term": "PD array"
+    },
+    {
+      "term": "Optimal Trade Entry"
+    },
+    {
+      "term": "Protected Swing"
+    },
+    {
+      "term": "Swing High"
+    },
+    {
+      "term": "Inducement"
+    },
+    {
+      "term": "Smart Money Technique"
+    },
+    {
+      "term": "Balanced Price Range"
+    },
+    {
+      "term": "Mean Threshold"
+    },
+    {
+      "term": "Inversion"
+    },
+    {
+      "term": "Internal Range Liquidity"
+    },
+    {
+      "term": "External Range Liquidity"
+    },
+    {
+      "term": "High Resistance Liquidity"
+    },
+    {
+      "term": "Accumulation, Manipulation, Distribution"
+    },
+    {
+      "term": "Judas swing"
+    },
+    {
+      "term": "Turtle Soup"
+    },
+    {
+      "term": "Standard Deviation Projection"
+    },
+    {
+      "term": "Unicorn Model"
+    },
+    {
+      "term": "Failure to Displace"
+    },
+    {
+      "term": "Relative Strength"
+    },
+    {
+      "term": "Confluence"
+    },
+    {
+      "term": "Expansion"
+    },
+    {
+      "term": "Point of Interest"
+    },
+    {
+      "term": "Continuation OB"
+    },
+    {
+      "term": "Volume Imbalance"
+    },
+    {
+      "term": "Continuation Entry"
+    },
+    {
+      "term": "Swing Point"
+    },
+    {
+      "term": "AMD"
+    },
+    {
+      "term": "Box Setup"
+    },
+    {
+      "term": "Break of Structure"
+    },
+    {
+      "term": "Candle 2 Closure"
+    },
+    {
+      "term": "Candle 3 Closure"
+    },
+    {
+      "term": "Candle 4"
+    },
+    {
+      "term": "Consequent Encroachment"
+    },
+    {
+      "term": "Draw on Liquidity"
+    },
+    {
+      "term": "Fractal Model"
+    },
+    {
+      "term": "Intermediate-Term High"
+    },
+    {
+      "term": "Manipulation Leg"
+    },
+    {
+      "term": "Market Maker Buy Model"
+    },
+    {
+      "term": "Market Maker Model"
+    },
+    {
+      "term": "Phases of Price"
+    },
+    {
+      "term": "Smart Money Reversal"
+    },
+    {
+      "term": "T-Spot"
+    },
+    {
+      "term": "V-Shape Reversal"
+    },
+    {
+      "term": "Weekly Profile"
+    },
+    {
+      "term": "Supply and Demand"
+    },
+    {
+      "term": "Smart Money"
+    },
+    {
+      "term": "Accumulation"
+    },
+    {
+      "term": "Distribution"
+    },
+    {
+      "term": "Change of Character"
+    },
+    {
+      "term": "Average True Range"
+    },
+    {
+      "term": "Demand Zone"
+    },
+    {
+      "term": "Equal Highs"
+    },
+    {
+      "term": "Equal Lows"
+    },
+    {
+      "term": "Fibonacci Retracement"
+    },
+    {
+      "term": "Imbalance"
+    },
+    {
+      "term": "Inversion Fair Value Gap"
+    },
+    {
+      "term": "Liquidity Pool"
+    },
+    {
+      "term": "Liquidity Zone"
+    },
+    {
+      "term": "Multi-Timeframe Analysis"
+    },
+    {
+      "term": "Order Block Entry Types"
+    },
+    {
+      "term": "Pullback"
+    },
+    {
+      "term": "Risk-to-Reward Ratio"
+    },
+    {
+      "term": "Stop Loss"
+    },
+    {
+      "term": "Supply Zone"
+    },
+    {
+      "term": "Swing Low"
+    },
+    {
+      "term": "Take Profit"
+    },
+    {
+      "term": "Change In State Of Delivery"
+    },
+    {
+      "term": "Top Down Analysis"
+    },
+    {
+      "term": "Timeframe Alignment"
+    },
+    {
+      "term": "Standard Deviation"
+    },
+    {
+      "term": "Directional Candle"
+    },
+    {
+      "term": "Projection"
+    }
+  ],
+  "merge_strategy": "llm_synthesis",
+  "merge_model": "deepseek/deepseek-chat",
+  "merge_notes": "6 ICT + 1 SMC; picked ICT by majority. One SMC card defined OB as a three-candle pattern with FVG and BOS; this nuance is preserved in identification_rules. The 'Opposing Candle' concept from Education - ICT (Updated) is treated as synonymous with OB; its continuation entry focus is included. Some cards mention Propulsion Block as a stacked OB; retained. No major conflicts beyond school.",
+  "warnings": [
+    "school_conflict: ['ICT', 'Smart Money Concepts (SMC)']"
+  ],
+  "illustrated_by_cases": [
+    {
+      "card_id": "IeXtmeKqjnQ_case_001_nasdaq_100_e_mini_futures_nq1_bu",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "NQ1! Bullish NY Manipulation Profile – 26 April 2024 Long Trade"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_002_light_crude_oil_futures_cl1_bull",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "CL1! Bullish NY Manipulation Profile on 9 February 2024 – Range Sweep and Reversal"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_003_light_crude_oil_futures_cl1_bear",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "CL1! Bearish NY Manipulation Profile – London Consolidation, NY Double Sweep, Short Entry 3 May 2024"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_004_nasdaq_100_e_mini_futures_nq1_bu",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "NQ1! Bullish NY Manipulation Profile on 7 May 2024 – CHoCH Entry to PDH"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_001_light_crude_oil_cl1_new_york_rev",
+      "video_id": "xdzyejskSKE",
+      "title": "CL1! 15M New York Reversal: Sell-Side Liquidity Sweep and Bullish Recovery"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_002_light_crude_oil_cl1_fake_london_",
+      "video_id": "xdzyejskSKE",
+      "title": "CL1! Fake London Reversal Becomes New York Reversal with Low Resistance Liquidity Run"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_003_light_crude_oil_cl1_daily_revers",
+      "video_id": "xdzyejskSKE",
+      "title": "CL1! New York Reversal with Propulsion Block Formation for Bearish Continuation"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_004_nasdaq_100_nq1_new_york_reversal",
+      "video_id": "xdzyejskSKE",
+      "title": "NQ1! New York Reversal: London Sweeps Low, NY Takes Previous Day High and Reverses"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_005_s_p_500_es1_new_york_reversal_wi",
+      "video_id": "xdzyejskSKE",
+      "title": "ES1! New York Reversal Using HTF Fair Value Gap and Order Block Entry"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_001_bullish_london_reversal_in_light",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bullish London Reversal in CL1! – London Sweeps Low, NY Continues Higher to 2R"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_002_bearish_london_reversal_in_light",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bearish London Reversal in CL1! – February 2024 Short from Order Block at 2R"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_003_london_reversal_with_new_york_re",
+      "video_id": "y6SnEdASVLY",
+      "title": "London Reversal with New York Retracement – Light Crude Oil CL1! Short Setup"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_004_es_s_p_500_london_reversal_with_",
+      "video_id": "y6SnEdASVLY",
+      "title": "ES London Reversal: 8:30 News Manipulation into OB, Short to 9:30 and 10:00 AM Levels"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_005_multi_day_bullish_reversal_in_li",
+      "video_id": "y6SnEdASVLY",
+      "title": "Light Crude Oil Multi-Day Bullish Reversal: London OB Retest and NY Continuation"
+    },
+    {
+      "card_id": "-GkOTMYoJT4_case_004_纳斯达克100四小时图多重诱导案例",
+      "video_id": "-GkOTMYoJT4",
+      "title": "纳斯达克100四小时图多重诱导案例"
+    },
+    {
+      "card_id": "-GkOTMYoJT4_case_005_上升趋势中的多重低点扫除案例",
+      "video_id": "-GkOTMYoJT4",
+      "title": "上升趋势中的多重低点扫除与诱导入场"
+    },
+    {
+      "card_id": "-KKuZb5Z5aU_case_005_gbpusd小时线到5分钟线反转案例",
+      "video_id": "-KKuZb5Z5aU",
+      "title": "GBPUSD小时线11点反转到5分钟线CSD下行交易"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_001_eur_usd日线与小时线的受保护摆动追踪",
+      "video_id": "-wr4xATE37g",
+      "title": "EUR/USD日线反转与小时线受保护摆动追踪"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_002_es_4小时图表的受保护摆动确认与交易",
+      "video_id": "-wr4xATE37g",
+      "title": "ES 4小时图表：日线看跌收盘确认受保护摆动卖出"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_003_白银1小时图表的受保护摆动与风险管理",
+      "video_id": "-wr4xATE37g",
+      "title": "白银1小时图表的受保护摆动与风险管理"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_004_apoz_usd的买方受保护摆动形成与延续",
+      "video_id": "-wr4xATE37g",
+      "title": "APOZ/USD买方受保护摆动形成与低风险买入延续"
+    },
+    {
+      "card_id": "0R61Y6Pn74Q_case_001_cpi后黄金反转交易案例",
+      "video_id": "0R61Y6Pn74Q",
+      "title": "CPI后黄金日线订单块与5分钟FVG叠加做空案例"
+    },
+    {
+      "card_id": "0xygpCMwxbQ_case_002_nasdaq_5分钟图表的breaker_block与fvg嵌套",
+      "video_id": "0xygpCMwxbQ",
+      "title": "NASDAQ 5分钟Breaker Block内嵌FVG的精准入场"
+    },
+    {
+      "card_id": "0xygpCMwxbQ_case_003_标普500_1分钟图表的高点突破交易",
+      "video_id": "0xygpCMwxbQ",
+      "title": "标普500 1分钟图表的高点突破与OTE回测交易"
+    },
+    {
+      "card_id": "0xygpCMwxbQ_case_004_nasdaq_1分钟图表的box_setup交易",
+      "video_id": "0xygpCMwxbQ",
+      "title": "NASDAQ 1分钟Box Setup交易——无结构转变的范围突破"
+    },
+    {
+      "card_id": "0xygpCMwxbQ_case_005_标普500多时间框架从日线到5分钟的交易分析",
+      "video_id": "0xygpCMwxbQ",
+      "title": "标普500多时间框架分析：日线Stop Raid到5分钟精确入场"
+    },
+    {
+      "card_id": "1YRs4Z1lMws_case_001_nq1日线看跌ote案例",
+      "video_id": "1YRs4Z1lMws",
+      "title": "NQ1日线看跌OTE案例：从摆动高低点绘制斐波那契寻找空头入场"
+    },
+    {
+      "card_id": "1YRs4Z1lMws_case_005_es日线周度目标到5分钟ote执行",
+      "video_id": "1YRs4Z1lMws",
+      "title": "ES日线周度目标到5分钟OTE最优入场执行"
+    },
+    {
+      "card_id": "1oco9lesido_case_001_es1标普500期货的位移与fvg交易案例",
+      "video_id": "1oco9lesido",
+      "title": "ES1期货两次突破对比：不足位移vs充分位移与FVG交易"
+    },
+    {
+      "card_id": "27S9gjgcSlI_case_002_es与nq_11_00低点的多时间框架smt",
+      "video_id": "27S9gjgcSlI",
+      "title": "ES与NQ 11:00低点的多时间框架SMT确认反转"
+    },
+    {
+      "card_id": "27S9gjgcSlI_case_004_cpi发布后nq与es的smt空头交易",
+      "video_id": "27S9gjgcSlI",
+      "title": "CPI发布后NQ与ES的SMT空头交易"
+    },
+    {
+      "card_id": "27S9gjgcSlI_case_007_es与nq在fvg内的smt分析",
+      "video_id": "27S9gjgcSlI",
+      "title": "ES与NQ在15分钟FVG内的SMT分析与1分钟下钻验证"
+    },
+    {
+      "card_id": "2lIaRUtJqpU_case_001_纳斯达克期货15分钟看跌交易",
+      "video_id": "2lIaRUtJqpU",
+      "title": "纳斯达克期货15分钟看跌交易：低阻力流动性目标验证"
+    },
+    {
+      "card_id": "2lIaRUtJqpU_case_002_英镑美元日线连续失败摇摆分析",
+      "video_id": "2lIaRUtJqpU",
+      "title": "英镑美元日线连续失败摇摆与低阻力流动性分析"
+    },
+    {
+      "card_id": "2lIaRUtJqpU_case_003_纳斯达克期货5分钟和1分钟多时间框架交易",
+      "video_id": "2lIaRUtJqpU",
+      "title": "纳斯达克期货5分钟和1分钟多时间框架交易"
+    },
+    {
+      "card_id": "3OivsP1j_UE_case_001_标普期货周线的外部到内部流动性转换",
+      "video_id": "3OivsP1j_UE",
+      "title": "ES1周线：外部流动性到内部流动性的循环转换"
+    },
+    {
+      "card_id": "3OivsP1j_UE_case_002_黄金60分钟到1分钟的多时间框架做空交易",
+      "video_id": "3OivsP1j_UE",
+      "title": "黄金60分钟FVG确认后的多时间框架做空交易"
+    },
+    {
+      "card_id": "3eVxTV_7L2U_case_004_指数三角_nq_ym_的9点开盘驱动交易",
+      "video_id": "3eVxTV_7L2U",
+      "title": "NQ/YM指数三角9点开盘驱动交易"
+    },
+    {
+      "card_id": "3eVxTV_7L2U_case_006_指数三角smt失败触发反转_nq_es_ym周线到日线",
+      "video_id": "3eVxTV_7L2U",
+      "title": "指数三角SMT失败触发反转（周线到日线）"
+    },
+    {
+      "card_id": "3eVxTV_7L2U_case_007_指数三角完整顶部交易_nq_ym从日线到3分钟",
+      "video_id": "3eVxTV_7L2U",
+      "title": "NQ/YM日线三角顶部：从SMT到PSP再到3分钟CSD确认交易"
+    },
+    {
+      "card_id": "3eVxTV_7L2U_case_009_rbob汽油4小时到30分钟的两阶段smt交易",
+      "video_id": "3eVxTV_7L2U",
+      "title": "RBOB汽油4H-30M两阶段SMT确认V形反转交易"
+    },
+    {
+      "card_id": "3eVxTV_7L2U_case_010_rbob汽油继续psp与目标追踪",
+      "video_id": "3eVxTV_7L2U",
+      "title": "RBOB汽油小时图继续PSP确认目标开放"
+    },
+    {
+      "card_id": "4Gm8p6O7Ebs_case_001_黄金小时图扩张走势分析",
+      "video_id": "4Gm8p6O7Ebs",
+      "title": "黄金1小时图三天扩张走势追踪"
+    },
+    {
+      "card_id": "4Gm8p6O7Ebs_case_004_纳指伦敦_纽约会话扩张分析",
+      "video_id": "4Gm8p6O7Ebs",
+      "title": "纳指1H伦敦-纽约会话扩张-回撤-扩张循环分析"
+    },
+    {
+      "card_id": "4WCiIyCiBrQ_case_001_第一个seek_and_destroy案例_看跌示例",
+      "video_id": "4WCiIyCiBrQ",
+      "title": "Seek and Destroy看跌案例：亚洲区间固守，伦敦无法突破，纽约形成犹豫"
+    },
+    {
+      "card_id": "4WCiIyCiBrQ_case_002_欧美15分钟seek_and_destroy案例",
+      "video_id": "4WCiIyCiBrQ",
+      "title": "欧美15分钟双向失败与区间盘整案例"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_003_欧元美元日线看涨设置",
+      "video_id": "5fnFOh5YuM0",
+      "title": "欧元美元日线看涨设置：低阻力流动性与摆动结构确认"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_004_btc日线看跌扩张交易",
+      "video_id": "5fnFOh5YuM0",
+      "title": "日线扩张K线的多时间框架看跌交易"
+    },
+    {
+      "card_id": "5rbFskdmEmU_case_001_标普500_e_mini期货11月4日日内走势分析",
+      "video_id": "5rbFskdmEmU",
+      "title": "标普500 E-mini期货11月4日位移与位移缺失分析"
+    },
+    {
+      "card_id": "6zTz7WMdMWg_case_003_eth_4小时图的多次反转和流动性扫盘",
+      "video_id": "6zTz7WMdMWg",
+      "title": "ETH 4小时图多次反转与流动性扫盘分析"
+    },
+    {
+      "card_id": "6zTz7WMdMWg_case_006_gbp_usd从4小时到1分钟的多时间框架交易执行",
+      "video_id": "6zTz7WMdMWg",
+      "title": "GBP/USD 4小时到1分钟多时间框架交易执行"
+    },
+    {
+      "card_id": "6zTz7WMdMWg_case_007_gbp_usd_1分钟图的订单块和fvg低风险入场",
+      "video_id": "6zTz7WMdMWg",
+      "title": "GBP/USD 1分钟图订单块与FVG重叠的低风险买入"
+    },
+    {
+      "card_id": "6zTz7WMdMWg_case_009_ym期货从4小时到15分钟的反转交易",
+      "video_id": "6zTz7WMdMWg",
+      "title": "YM期货4小时到15分钟的反转交易"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_001_gbpusd_5分钟看涨breaker_block交易",
+      "video_id": "75S4vwD4P1U",
+      "title": "GBPUSD 5分钟看涨Breaker Block识别与回测"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_002_eurusd_5分钟看跌breaker_block交易",
+      "video_id": "75S4vwD4P1U",
+      "title": "EURUSD 5分钟看跌Breaker Block交易设置"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_003_eurusd_5分钟unicorn_model交易设置",
+      "video_id": "75S4vwD4P1U",
+      "title": "EURUSD 5分钟Unicorn Model交易设置与止损策略"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_004_nq1期货多时间框架breaker_block分析",
+      "video_id": "75S4vwD4P1U",
+      "title": "NQ1期货多时间框架Breaker Block与投影目标分析"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_005_gbpusd_60分钟到5分钟的自上而下交易",
+      "video_id": "75S4vwD4P1U",
+      "title": "GBPUSD 60分钟到5分钟自上而下交易：Breaker Block与Unicorn Model"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_006_eurusd_60分钟看跌unicorn_model",
+      "video_id": "75S4vwD4P1U",
+      "title": "EURUSD 60分钟看跌Unicorn Model交易设置"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_001_dxy日线订单块反转案例",
+      "video_id": "7p9MBFk8EEM",
+      "title": "DXY日线订单块反转案例"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_002_美油usoil多周期联动案例",
+      "video_id": "7p9MBFk8EEM",
+      "title": "美油USOIL日线多周期联动：周线FVG支撑与订单块突破"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_003_纳指nq5分钟扫盘与订单块案例",
+      "video_id": "7p9MBFk8EEM",
+      "title": "NQ5分钟日线摆动低点扫盘与订单块支撑案例"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_004_黄金xauusd周线到4小时多级别案例",
+      "video_id": "7p9MBFk8EEM",
+      "title": "黄金XAUUSD周线到4小时多级别订单块与标准差投影案例"
+    },
+    {
+      "card_id": "8BWkRGhuj1k_case_001_nq1_5月27日至6月2日的扩张_整理_反转交易案例",
+      "video_id": "8BWkRGhuj1k",
+      "title": "NQ1! 5月27日-6月2日扩张-整理-反转交易案例"
+    },
+    {
+      "card_id": "8BWkRGhuj1k_case_003_usd_日线7月2日至7月29日的整理_反转_延续案例",
+      "video_id": "8BWkRGhuj1k",
+      "title": "USD日线7月2-29日整理-反转-延续案例分析"
+    },
+    {
+      "card_id": "8BWkRGhuj1k_case_004_usd_日线7月23日至7月29日的空头交易设置",
+      "video_id": "8BWkRGhuj1k",
+      "title": "USD日线空头交易设置：从日线识别到15分钟精确入场"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_001_黄金期货_gc_周线至小时线的看跌交易",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "黄金期货(GC)周线看跌至小时线2R获利交易"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_002_gld月线至小时线的看涨交易",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "GLD月线至小时线的看涨交易——受保护摆动入场"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_003_btc日线至小时线的看跌交易",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "BTC日线至小时线的看跌交易：双次入场与止损管理"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_005_btc周线至4小时线的看跌交易",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "BTC周线至4小时线的看跌交易设置"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_006_eth_1小时线的看跌交易",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "ETH 1小时线多时间框架看跌交易"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_001_原油期货日线propulsion_block交易案例",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "原油期货日线Propulsion Block交易案例"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_002_原油期货小时线低时间框架入场",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "原油期货日线Propulsion Block在小时线的低时间框架入场"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_003_英镑美元60分钟propulsion_block案例",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "GBPUSD 60分钟Propulsion Block突破案例"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_004_英镑美元继续下行的order_block形成",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "英镑美元扫损后下行位移形成Order Block"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_005_原油期货纽约时段操纵交易",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "原油期货纽约时段扫低后位移交易"
+    },
+    {
+      "card_id": "A8UpRZlRzlg_case_002_纳指100迷你期货模型二案例",
+      "video_id": "A8UpRZlRzlg",
+      "title": "纳指100迷你期货内部流动性扫除后的上升突破与OT入场"
+    },
+    {
+      "card_id": "A8UpRZlRzlg_case_003_纳指100迷你期货看跌bpr案例",
+      "video_id": "A8UpRZlRzlg",
+      "title": "纳指100迷你期货看跌BPR做空入场案例"
+    },
+    {
+      "card_id": "A8UpRZlRzlg_case_004_纳指100迷你期货看涨bpr案例",
+      "video_id": "A8UpRZlRzlg",
+      "title": "纳指100迷你期货看涨BPR形成与做多入场"
+    },
+    {
+      "card_id": "AdmnWLjf8rY_case_001_nq_1分钟多头入场案例_纽约开盘前",
+      "video_id": "AdmnWLjf8rY",
+      "title": "NQ 1分钟多头入场：伦敦高点流动性扫盘后的折价区入场"
+    },
+    {
+      "card_id": "AdmnWLjf8rY_case_004_es_5分钟空头案例_伦敦会话扫盘",
+      "video_id": "AdmnWLjf8rY",
+      "title": "ES 5分钟空头案例：伦敦会话扫盘后的drawn liquidity狙击"
+    },
+    {
+      "card_id": "AdmnWLjf8rY_case_005_nq_日线到5分钟多头案例_标准差投影",
+      "video_id": "AdmnWLjf8rY",
+      "title": "NQ日线到5分钟多头案例（标准差投影）"
+    },
+    {
+      "card_id": "CHIK5oBRKiw_case_004_nq11月1日box_setup与订单块结合案例",
+      "video_id": "CHIK5oBRKiw",
+      "title": "NQ1! 11月1日Box Setup与订单块结合做多案例"
+    },
+    {
+      "card_id": "CqMIh-Vvhbg_case_002_eur_aud小时线与5分钟线的多时间框架分析",
+      "video_id": "CqMIh-Vvhbg",
+      "title": "EUR/AUD多时间框架Fractal模型分析与指标参数调整"
+    },
+    {
+      "card_id": "CqMIh-Vvhbg_case_003_eur_aud_5分钟线的t_spot重叠交易",
+      "video_id": "CqMIh-Vvhbg",
+      "title": "GC1! 5分钟线T-Spot与1小时线重叠的高概率做多设置"
+    },
+    {
+      "card_id": "CqMIh-Vvhbg_case_004_黄金期货gc1小时线与5分钟线的看涨设置",
+      "video_id": "CqMIh-Vvhbg",
+      "title": "黄金期货GC1小时线C2与5分钟线的看涨Order Block设置"
+    },
+    {
+      "card_id": "CqMIh-Vvhbg_case_005_es标普500指数日线至小时线的看跌延续",
+      "video_id": "CqMIh-Vvhbg",
+      "title": "ES日线C2与CSD确认后的小时线看跌延续至投影目标"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_001_nq_5分钟图_订单块验证失败案例",
+      "video_id": "DMUiDBnTYc8",
+      "title": "NQ 5分钟图：缺乏HTF支撑的订单块验证失败案例"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_003_usoil_5分钟图_大型订单块与平均阈值应用",
+      "video_id": "DMUiDBnTYc8",
+      "title": "USOIL 5分钟：大型订单块与平均阈值优化入场"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_004_nq_15分钟图_纽约开盘扫盘与订单块",
+      "video_id": "DMUiDBnTYc8",
+      "title": "NQ 15分钟：纽约开盘扫盘与订单块多重入场"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_005_日线图_多重订单块延续趋势",
+      "video_id": "DMUiDBnTYc8",
+      "title": "日线多重订单块延续趋势分析"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_006_nq_5分钟图_二级订单块入场",
+      "video_id": "DMUiDBnTYc8",
+      "title": "NQ 5分钟图：二级订单块入场获得2.5R"
+    },
+    {
+      "card_id": "E6bpY4dQvlE_case_002_s_p_500_e_mini期货15秒图多个box_setup示",
+      "video_id": "E6bpY4dQvlE",
+      "title": "ES期货15秒图Box Setup多周期分析与买方曲线入场"
+    },
+    {
+      "card_id": "E6bpY4dQvlE_case_003_s_p_500_e_mini期货5分钟图高时间框架偏向分析",
+      "video_id": "E6bpY4dQvlE",
+      "title": "ES 5分钟图盘整突破回测识别与看涨偏向判断"
+    },
+    {
+      "card_id": "E6bpY4dQvlE_case_004_s_p_500_e_mini期货盘整区间突破回测交易",
+      "video_id": "E6bpY4dQvlE",
+      "title": "E-mini期货盘整区间突破回测交易"
+    },
+    {
+      "card_id": "E89d1HArbgM_case_001_nq1分钟级别的csd与mss对比",
+      "video_id": "E89d1HArbgM",
+      "title": "NQ1分钟级别CSD与MSS的时间差异对比"
+    },
+    {
+      "card_id": "E89d1HArbgM_case_002_原油期货月线至日线的多级别分析",
+      "video_id": "E89d1HArbgM",
+      "title": "原油期货月线至日线的多级别订单流分析"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_001_cl原油期货看跌案例",
+      "video_id": "EYzP7c24AwM",
+      "title": "CL原油期货日线看跌确认与多时间框架派发"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_002_cl原油期货看涨案例",
+      "video_id": "EYzP7c24AwM",
+      "title": "CL原油期货午夜开盘支撑看涨结构验证"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_003_nq纳指期货多个时间框架分析",
+      "video_id": "EYzP7c24AwM",
+      "title": "NQ纳指期货多时间框架时间水平与订单块验证"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_004_es标普500期货15分钟案例",
+      "video_id": "EYzP7c24AwM",
+      "title": "ES标普500期货15分钟：时间水平与订单块验证流程"
+    },
+    {
+      "card_id": "F0G31iLVpVg_case_001_nq1小时线回撤案例",
+      "video_id": "F0G31iLVpVg",
+      "title": "NQ1小时线扩张-回撤-扩张循环分析"
+    },
+    {
+      "card_id": "F0G31iLVpVg_case_003_eurusd_5分钟强势扩张中的浅层回撤",
+      "video_id": "F0G31iLVpVg",
+      "title": "EURUSD 5分钟强势扩张中的浅层回撤特征"
+    },
+    {
+      "card_id": "FAKWJ-1NlLE_case_005_nq_多时间框架综合分析案例",
+      "video_id": "FAKWJ-1NlLE",
+      "title": "NQ 多时间框架综合分析：6点反转到10点延续交易"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_001_es1期货5分钟图的高低阻力流动性应用",
+      "video_id": "FGkb_50BfT8",
+      "title": "ES1期货5分钟图中的高低阻力流动性识别与应用"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_002_nq日线多日低点未扫除的流动性分析",
+      "video_id": "FGkb_50BfT8",
+      "title": "NQ日线多日低点未扫除的低阻力流动性分析"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_003_nq日线范围交易中的高低阻力识别",
+      "video_id": "FGkb_50BfT8",
+      "title": "NQ日线范围交易中的高低阻力识别"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_004_nq日线上升趋势中的流动性扫除与反应",
+      "video_id": "FGkb_50BfT8",
+      "title": "NQ日线上升趋势中的流动性扫除与失败摆动分析"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_006_es1期货60分钟图的订单块与流动性链条",
+      "video_id": "FGkb_50BfT8",
+      "title": "ES1 60分钟图：低阻力流动性扫荡与订单块反向运行"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_007_es1期货5分钟图的多层级订单块与推进块形成",
+      "video_id": "FGkb_50BfT8",
+      "title": "ES1 5分钟图多层级订单块与推进块的形成与验证"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_008_es1期货1分钟图的精细订单块入场与止损设置",
+      "video_id": "FGkb_50BfT8",
+      "title": "ES1 1分钟图：订单块入场、均值阈值止损与高阻力流动性无效化"
+    },
+    {
+      "card_id": "FXJBFbZQbck_case_001_usd日线上升趋势中的前日高点反复触及",
+      "video_id": "FXJBFbZQbck",
+      "title": "USD日线上升趋势中连续触及前日高点的流动性扫荡"
+    },
+    {
+      "card_id": "FXJBFbZQbck_case_002_usd日线下降趋势中的前日低点扫盘",
+      "video_id": "FXJBFbZQbck",
+      "title": "USD日线下降趋势中的前日低点反复扫盘"
+    },
+    {
+      "card_id": "FXJBFbZQbck_case_003_nasdaq日线多日偏差与订单块验证",
+      "video_id": "FXJBFbZQbck",
+      "title": "NASDAQ日线多日偏差与订单块验证"
+    },
+    {
+      "card_id": "FXJBFbZQbck_case_005_8_30新闻操纵后的amd分布交易",
+      "video_id": "FXJBFbZQbck",
+      "title": "8:30新闻操纵后的ETH分布交易"
+    },
+    {
+      "card_id": "FgP2lc9nneM_case_001_eth_4小时日线对齐交易案例",
+      "video_id": "FgP2lc9nneM",
+      "title": "ETH 4小时日线对齐交易案例：多时间框架联动反转"
+    },
+    {
+      "card_id": "FgP2lc9nneM_case_003_原油_ol_周线到日线的高级对齐案例",
+      "video_id": "FgP2lc9nneM",
+      "title": "原油(OL)周线到日线的高级多时间框架对齐案例"
+    },
+    {
+      "card_id": "Gu7FjYYcKhI_case_001_标普500期货周五日内行情分析",
+      "video_id": "Gu7FjYYcKhI",
+      "title": "ES1!日内折价溢价区域识别与交易偏向确定"
+    },
+    {
+      "card_id": "HFfChGFHD44_case_001_e_mini_s_p_500期货_1小时_box_setup案例",
+      "video_id": "HFfChGFHD44",
+      "title": "ES 1H Box Setup：区间突破回测与偏差重测交易"
+    },
+    {
+      "card_id": "HFfChGFHD44_case_002_e_mini_s_p_500期货_15分钟_box_setup案",
+      "video_id": "HFfChGFHD44",
+      "title": "ES 15分钟 低点Box Setup：激进下行后激进回升"
+    },
+    {
+      "card_id": "HFfChGFHD44_case_003_e_mini_s_p_500期货_15分钟_box_setup案",
+      "video_id": "HFfChGFHD44",
+      "title": "ES 15分钟 Box Setup案例3：高点激进回入与2R目标设置"
+    },
+    {
+      "card_id": "HFfChGFHD44_case_004_e_mini_s_p_500期货_1分钟_box_setup案例",
+      "video_id": "HFfChGFHD44",
+      "title": "1分钟Box Setup做空案例：高点回落产生5R+收益"
+    },
+    {
+      "card_id": "HFfChGFHD44_case_005_e_mini_s_p_500期货_1分钟_使用影线的box_se",
+      "video_id": "HFfChGFHD44",
+      "title": "E-MINI S&P 500期货 1分钟 使用影线标记Box Setup低点案例"
+    },
+    {
+      "card_id": "HFfChGFHD44_case_006_e_mini_s_p_500期货_4小时和日线_偏差识别案例",
+      "video_id": "HFfChGFHD44",
+      "title": "E-MINI S&P 500期货 4小时和日线偏差识别"
+    },
+    {
+      "card_id": "HbOeD_JVens_case_001_xagusd日线相关摆动点识别与反应",
+      "video_id": "HbOeD_JVens",
+      "title": "XAGUSD日线堆积低点中的相关摆动点识别与价格反应"
+    },
+    {
+      "card_id": "HbOeD_JVens_case_002_原油日线失败摆动与相关摆动点的构建",
+      "video_id": "HbOeD_JVens",
+      "title": "原油日线失败摆动与堆积低点的交易目标识别"
+    },
+    {
+      "card_id": "HbOeD_JVens_case_003_xageur日线反转与目标位置确认",
+      "video_id": "HbOeD_JVens",
+      "title": "XAGEUR日线反转确认与失败摆动堆积目标"
+    },
+    {
+      "card_id": "HrjYoxAUb3s_case_003_美元盘整时的eur_cad_eur_nzd_eur_aud配对",
+      "video_id": "HrjYoxAUb3s",
+      "title": "美元盘整时的EUR/CAD、EUR/NZD、EUR/AUD配对分析"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_001_黄金期货_gc_日线至5分钟多时间框架延续交易",
+      "video_id": "IJcfC6wAPZU",
+      "title": "黄金期货(GC)日线至5分钟多时间框架延续交易"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_004_纳指期货_nq_盘整突破后的多次延续机会",
+      "video_id": "IJcfC6wAPZU",
+      "title": "NQ盘整突破后的多次延续交易机会"
+    },
+    {
+      "card_id": "IPZjNI1B5a0_case_001_btc日线扩张走势中的均衡点应用",
+      "video_id": "IPZjNI1B5a0",
+      "title": "ETH日线扩张走势中的均衡点应用与PD数组匹配"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_001_纳斯达克期货_nq_看涨操纵案例",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "NQ看涨操纵：伦敦整理后纽约开盘下行操纵突破前高"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_003_原油期货_cl_范围突破案例",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "原油期货CL日内范围突破与CSD交易案例"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_004_纳斯达克期货_nq_多日连续突破案例",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "NQ日线三日连续突破与纽约操纵后突破案例"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_003_apoz_某资产_4小时图到15分钟图的空头交易",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "APOZ 4H到15M空头交易：受保护高点与反转入场"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_004_原油_bll_小时图到5分钟图的空头交易",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "原油BLL小时图到5分钟图的受保护高点空头交易"
+    },
+    {
+      "card_id": "LKNQDAdId4s_case_001_btc日线wick被尊重后的小时级扩展",
+      "video_id": "LKNQDAdId4s",
+      "title": "BTC日线wick被尊重后的小时级扩展"
+    },
+    {
+      "card_id": "LKNQDAdId4s_case_002_前一日高点被扫后的wick尊重案例",
+      "video_id": "LKNQDAdId4s",
+      "title": "前一日高点被扫后的wick尊重案例"
+    },
+    {
+      "card_id": "LKNQDAdId4s_case_004_高点被扫后wick被不尊重的案例",
+      "video_id": "LKNQDAdId4s",
+      "title": "高点被扫后wick被不尊重导致反转失败"
+    },
+    {
+      "card_id": "LKNQDAdId4s_case_005_es小时图wick被不尊重后的高点扫除",
+      "video_id": "LKNQDAdId4s",
+      "title": "ES小时图wick被不尊重后的高点扫除"
+    },
+    {
+      "card_id": "LKNQDAdId4s_case_008_原油_cl_多时间框架wick分析",
+      "video_id": "LKNQDAdId4s",
+      "title": "原油(CL)多时间框架wick 0.5位置尊重分析"
+    },
+    {
+      "card_id": "LZZAaILYNyI_case_002_es_1分钟图破坏块结构交易案例",
+      "video_id": "LZZAaILYNyI",
+      "title": "ES 1分钟破坏块结构回测FVG折价区入场与止损追踪"
+    },
+    {
+      "card_id": "MPeeE55rNOw_case_001_eurusd亚洲_伦敦_纽约会话交易案例",
+      "video_id": "MPeeE55rNOw",
+      "title": "EURUSD 15分钟四大会话Killzone识别与波动特征分析"
+    },
+    {
+      "card_id": "MPeeE55rNOw_case_002_nq指数killzone标记与nfp事件分析",
+      "video_id": "MPeeE55rNOw",
+      "title": "NQ指数Killzone标记与NFP事件分析"
+    },
+    {
+      "card_id": "MPeeE55rNOw_case_003_nq日内完整交易流程分析",
+      "video_id": "MPeeE55rNOw",
+      "title": "NQ日内完整交易流程：亚洲扫盘到纽约会话的FVG与OB应用"
+    },
+    {
+      "card_id": "MlMsG7li9zY_case_002_美元指数多个范围内的折价溢价交互",
+      "video_id": "MlMsG7li9zY",
+      "title": "美元指数多个嵌套范围的折价溢价交互分析"
+    },
+    {
+      "card_id": "MmvC4rsmmcM_case_001_nq_4小时图的价格走势分析",
+      "video_id": "MmvC4rsmmcM",
+      "title": "NQ 4小时图缺口上升到下跌的完整走势分析"
+    },
+    {
+      "card_id": "MsuEQQl7L6s_case_003_nq_4小时图candle_three_closure案例",
+      "video_id": "MsuEQQl7L6s",
+      "title": "NQ 4小时图Candle Three Closure确认上升延续"
+    },
+    {
+      "card_id": "MsuEQQl7L6s_case_004_usd_4小时图多个candle_closure案例",
+      "video_id": "MsuEQQl7L6s",
+      "title": "USD 4小时图多个Candle Three Closure案例分析"
+    },
+    {
+      "card_id": "MsuEQQl7L6s_case_005_usd_4小时图摆动点筛选案例",
+      "video_id": "MsuEQQl7L6s",
+      "title": "USD 4小时图摆动点筛选：Candle Two/Three Closure与Point of Interest验证"
+    },
+    {
+      "card_id": "MsuEQQl7L6s_case_006_usd_4小时图candle_three_closure与pro",
+      "video_id": "MsuEQQl7L6s",
+      "title": "USD 4H Candle Three Closure与Protected Swing形成案例"
+    },
+    {
+      "card_id": "MsuEQQl7L6s_case_007_usd_15分钟图交易设置案例",
+      "video_id": "MsuEQQl7L6s",
+      "title": "USD 15分钟图基于4H FVG的Candle Three Closure交易设置"
+    },
+    {
+      "card_id": "MsuEQQl7L6s_case_008_usd_15分钟图无效candle_closure案例",
+      "video_id": "MsuEQQl7L6s",
+      "title": "USD 15分钟盘整扫低后无效Candle Closure案例"
+    },
+    {
+      "card_id": "NgFIza9qsGQ_case_001_s_p_500_e_mini期货看涨诱导入场案例",
+      "video_id": "NgFIza9qsGQ",
+      "title": "ES期货看涨诱导入场：高点突破后回到区间的做多机会"
+    },
+    {
+      "card_id": "NgFIza9qsGQ_case_003_s_p_500_e_mini期货多重mitigation_blo",
+      "video_id": "NgFIza9qsGQ",
+      "title": "ES期货下行趋势中多重Mitigation Block低风险入场"
+    },
+    {
+      "card_id": "Njs-eRpeP9Q_case_001_es期货5分钟图流动性识别案例",
+      "video_id": "Njs-eRpeP9Q",
+      "title": "ES期货5分钟图流动性识别与扫荡分析"
+    },
+    {
+      "card_id": "Njs-eRpeP9Q_case_002_es期货15分钟图范围交易案例",
+      "video_id": "Njs-eRpeP9Q",
+      "title": "ES期货15分钟图范围交易中的流动性识别"
+    },
+    {
+      "card_id": "Njs-eRpeP9Q_case_003_2022导师设置交易案例",
+      "video_id": "Njs-eRpeP9Q",
+      "title": "1分钟图上的2022导师设置交易案例"
+    },
+    {
+      "card_id": "Njs-eRpeP9Q_case_004_相等高低点作为后续目标案例",
+      "video_id": "Njs-eRpeP9Q",
+      "title": "相等高低点作为后续做空目标"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_001_btc_1小时图_理想的v形反转continuation",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "BTC 1小时图：理想的V形反转continuation"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_002_uni日线图_consolidation导致的continuat",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "UNI日线：consolidation后continuation失败的反向运动"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_003_eurusd_1小时图_扫除短期高点的continuation失",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "EURUSD 1H：Continuation失败与高点扫除的识别"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_004_btc_1小时图_consolidation范围内的虚假突破",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "BTC 1小时：盘整内虚假突破的识别与风险规避"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_006_btc_1小时图_扫除高点后的continuation等待",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "BTC 1小时图：扫除高点后的continuation等待"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_007_多资产图表_consolidation范围的操纵与突破",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "BTC 1H：Consolidation范围内的低点操纵与突破确认"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_008_btc_1小时图_短期低点扫除后的continuation",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "BTC 1小时：短期低点扫除后的continuation确认等待"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_009_xau_usd_1小时图_范围突破的continuation确认",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "XAU/USD 1H：范围突破后的continuation确认"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_010_btc_日线图_高时间框架目标达成后的反转",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "HTF目标达成后的看跌交付状态改变"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_011_twitter用户案例_缓慢closure的continuati",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "BTC缓慢closure失败：consolidation而非continuation"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_012_twitter用户案例_扫除高点的虚假continuation",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "价格穿过FVG但同时扫除高点的虚假continuation"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_014_nq与btc_多次expansion后的continuation",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "BTC多次expansion后continuation失败的避坑案例"
+    },
+    {
+      "card_id": "Pcbyc9TdNsU_case_002_box设置与标准差结合的交易案例",
+      "video_id": "Pcbyc9TdNsU",
+      "title": "Box框架与标准差结合的操纵腿投影与反转交易"
+    },
+    {
+      "card_id": "PlZD45uLPjE_case_001_标普500_1小时线seek_and_destroy模式分析",
+      "video_id": "PlZD45uLPjE",
+      "title": "标普500 1小时线Seek and Destroy模式识别与交易入场"
+    },
+    {
+      "card_id": "PlZD45uLPjE_case_002_纳指100亚洲时段高低点扫盘案例",
+      "video_id": "PlZD45uLPjE",
+      "title": "纳指100亚洲时段高低点扫盘与流动性建立"
+    },
+    {
+      "card_id": "PlZD45uLPjE_case_003_纳指100多次偏离与流动性扫除",
+      "video_id": "PlZD45uLPjE",
+      "title": "纳指100多次偏离与流动性扫除分析"
+    },
+    {
+      "card_id": "SlWxhzhLo3A_case_002_nq指数大对抗运动反转案例",
+      "video_id": "SlWxhzhLo3A",
+      "title": "NQ指数大对抗运动反转案例"
+    },
+    {
+      "card_id": "SlWxhzhLo3A_case_003_原油日线范围交易案例",
+      "video_id": "SlWxhzhLo3A",
+      "title": "原油日线范围交易：失败摇摆反转与目标设定"
+    },
+    {
+      "card_id": "SlWxhzhLo3A_case_004_黄金15分钟多重反转扩张案例",
+      "video_id": "SlWxhzhLo3A",
+      "title": "黄金15分钟多重反转扩张案例"
+    },
+    {
+      "card_id": "SlWxhzhLo3A_case_005_1分钟图反转扩张细节案例",
+      "video_id": "SlWxhzhLo3A",
+      "title": "1分钟图反转扩张细节案例"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_001_纽约开盘后的_6_分钟图_amd_案例",
+      "video_id": "TCFvsZeYvV8",
+      "title": "纽约开盘后 NQ 6分钟图：AMD模式中的反转与Box Setup做多"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_003_日线_olhc_案例_伦敦操纵与纽约派发",
+      "video_id": "TCFvsZeYvV8",
+      "title": "日线OLHC案例：伦敦操纵与纽约派发的AMD模型"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_004_日线第二个_amd_案例_伦敦盘整与操纵",
+      "video_id": "TCFvsZeYvV8",
+      "title": "NQ日线AMD：伦敦盘整、操纵扫低、纽约派发"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_005_1_分钟图中的新日开盘缺口与多层_amd",
+      "video_id": "TCFvsZeYvV8",
+      "title": "1分钟新日开盘缺口中的多层AMD与标准差投影"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_008_日线收盘形成与派发完成",
+      "video_id": "TCFvsZeYvV8",
+      "title": "日线AMD模式：午夜操纵形成下影线，派发完成实体"
+    },
+    {
+      "card_id": "TNybDCtwBnc_case_002_黄金第二个交易案例_扫盘后反转做多",
+      "video_id": "TNybDCtwBnc",
+      "title": "黄金日线扫盘后反转做多——多时间框架确认"
+    },
+    {
+      "card_id": "TNybDCtwBnc_case_003_nq第三个交易案例_日线反转后多日延续",
+      "video_id": "TNybDCtwBnc",
+      "title": "NQ日线反转后多日延续，小时线CSD确认，5分钟扫盘后入场获5.63R"
+    },
+    {
+      "card_id": "TNybDCtwBnc_case_004_英镑第四个交易案例_简化分析做多",
+      "video_id": "TNybDCtwBnc",
+      "title": "GBPUSD日线四根K线判断看涨，小时线CSD确认后5分钟做多"
+    },
+    {
+      "card_id": "TNybDCtwBnc_case_005_黄金第五个交易案例_复杂结构做空",
+      "video_id": "TNybDCtwBnc",
+      "title": "黄金日线扫高点后小时线CSD确认，5分钟线等待CSD后做空"
+    },
+    {
+      "card_id": "TfHlNgAZ_II_case_001_黄金周线至15分钟多时间框架交易案例",
+      "video_id": "TfHlNgAZ_II",
+      "title": "黄金周线至15分钟多时间框架交易案例"
+    },
+    {
+      "card_id": "TfHlNgAZ_II_case_004_usd_jpy日线趋势延续案例",
+      "video_id": "TfHlNgAZ_II",
+      "title": "USD/JPY日线趋势延续：从内部流动性到外部流动性的机制化交易"
+    },
+    {
+      "card_id": "Tjk9bXERZy0_case_001_nasdaq_100_15分钟图表的扩张形态识别",
+      "video_id": "Tjk9bXERZy0",
+      "title": "NQ 15分钟扩张形态的实时识别与流动性扫荡"
+    },
+    {
+      "card_id": "Tjk9bXERZy0_case_004_新闻事件前后的扩张形态演变",
+      "video_id": "Tjk9bXERZy0",
+      "title": "新闻事件前后的扩张形态演变与Power of 3应用"
+    },
+    {
+      "card_id": "U8xH2dEgH5A_case_001_eurusd_4小时图流动性识别案例",
+      "video_id": "U8xH2dEgH5A",
+      "title": "EURUSD 4小时图流动性识别与摆动点追踪"
+    },
+    {
+      "card_id": "U8xH2dEgH5A_case_002_eurusd_日线与小时线多时间框架流动性分析",
+      "video_id": "U8xH2dEgH5A",
+      "title": "EURUSD多时间框架流动性分析与交易目标确定"
+    },
+    {
+      "card_id": "VD4xb9VfMHA_case_002_usd_1小时图_前期高点反转案例",
+      "video_id": "VD4xb9VfMHA",
+      "title": "USD 1小时图：扩张反转与低点扫除的理想结构"
+    },
+    {
+      "card_id": "WFqLwOp2pXw_case_003_spy_1小时多重盘整的延续交易",
+      "video_id": "WFqLwOp2pXw",
+      "title": "SPY 1小时多重盘整的延续交易策略"
+    },
+    {
+      "card_id": "WFqLwOp2pXw_case_004_eurusd_日线反转至1小时盘整反弹",
+      "video_id": "WFqLwOp2pXw",
+      "title": "EURUSD日线反转至1小时盘整反弹"
+    },
+    {
+      "card_id": "WFqLwOp2pXw_case_005_usd_jpy_1小时18小时盘整的空头延续",
+      "video_id": "WFqLwOp2pXw",
+      "title": "USD/JPY 1H盘整18小时后空头延续至2R目标"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_001_标普500_5分钟看涨订单块案例",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "标普500 5分钟看涨订单块识别与回测案例"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_002_纳斯达克100_1小时看跌订单块案例",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "纳斯达克100 1小时看跌订单块识别与回测"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_003_标普500_15分钟多层订单块支撑案例",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "标普500 15分钟多层订单块支撑案例"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_004_标普500_5分钟均值阈值入场对比",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "标普500 5分钟均值阈值入场对比"
+    },
+    {
+      "card_id": "YESqIoA7Wyg_case_001_黄金日线月度高低点回测案例",
+      "video_id": "YESqIoA7Wyg",
+      "title": "黄金日线月度高低点回测与流动性识别"
+    },
+    {
+      "card_id": "YESqIoA7Wyg_case_003_标普500指数会话流动性操纵案例",
+      "video_id": "YESqIoA7Wyg",
+      "title": "ES 15分钟会话流动性操纵与缺乏位移预测"
+    },
+    {
+      "card_id": "YESqIoA7Wyg_case_004_纳斯达克月线至15分钟自上而下分析",
+      "video_id": "YESqIoA7Wyg",
+      "title": "纳斯达克月线至15分钟自上而下分析与流动性狙击"
+    },
+    {
+      "card_id": "YXoNowXQirM_case_002_nasdaq_15分钟至4小时多周期联动分析",
+      "video_id": "YXoNowXQirM",
+      "title": "4小时看跌K线后的5分钟OLHC结构与流动性扫荡分析"
+    },
+    {
+      "card_id": "YmdC_LKT-Pk_case_003_错误偏差下的做空尝试与转向做多",
+      "video_id": "YmdC_LKT-Pk",
+      "title": "失败位移识别：从错误做空转向正确做多"
+    },
+    {
+      "card_id": "YmdC_LKT-Pk_case_004_15秒级别bpr内的激进做空与反向做多",
+      "video_id": "YmdC_LKT-Pk",
+      "title": "15秒BPR内激进做空转向做多的快速调整"
+    },
+    {
+      "card_id": "ZVUDpCyvxfQ_case_003_缺口反转后作为支撑阻力的应用",
+      "video_id": "ZVUDpCyvxfQ",
+      "title": "缺口反转后作为支撑阻力的应用"
+    },
+    {
+      "card_id": "ZVUDpCyvxfQ_case_004_成交量不平衡与真实缺口的对比",
+      "video_id": "ZVUDpCyvxfQ",
+      "title": "成交量不平衡与真实缺口的对比分析"
+    },
+    {
+      "card_id": "Zm2oKad3Tb8_case_001_标普500期货早盘交易准备分析",
+      "video_id": "Zm2oKad3Tb8",
+      "title": "标普500期货早盘交易准备：从日线到1分钟的多时间框架分析流程"
+    },
+    {
+      "card_id": "_94CPMjWi9E_case_002_eth小时图上升结构分析",
+      "video_id": "_94CPMjWi9E",
+      "title": "ETH小时图激进上升Displacement与MSS结构分析"
+    },
+    {
+      "card_id": "_94CPMjWi9E_case_003_dxy日线结构转变与pd_array应用",
+      "video_id": "_94CPMjWi9E",
+      "title": "DXY日线MSS与PD Array折价区反应分析"
+    },
+    {
+      "card_id": "b6yvRKf8haE_case_001_伦敦开盘后的买卖日案例分析",
+      "video_id": "b6yvRKf8haE",
+      "title": "伦敦开盘后亚洲低点被取，纽约时段激进位移跌破深折价区案例"
+    },
+    {
+      "card_id": "b6yvRKf8haE_case_002_经典卖出日的范围捕捉",
+      "video_id": "b6yvRKf8haE",
+      "title": "经典卖出日的范围捕捉与伦敦偏离后的纽约交易机会"
+    },
+    {
+      "card_id": "b6yvRKf8haE_case_003_震荡盘整日的枢轴反弹",
+      "video_id": "b6yvRKf8haE",
+      "title": "震荡盘整日的枢轴反弹——午夜开盘与8:30开盘的失败信号分析"
+    },
+    {
+      "card_id": "b6yvRKf8haE_case_004_操纵后的买入日低点回升",
+      "video_id": "b6yvRKf8haE",
+      "title": "买入日操纵后的低点回升至深溢价区"
+    },
+    {
+      "card_id": "b6yvRKf8haE_case_005_新闻事件驱动的亚洲伦敦操纵",
+      "video_id": "b6yvRKf8haE",
+      "title": "8:30新闻事件驱动的亚洲伦敦操纵与深溢价区反转"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_001_gbpusd_1小时图的mitigation_block交易",
+      "video_id": "bbWPoajy2MY",
+      "title": "GBPUSD 1小时图的两个Mitigation Block案例分析"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_003_黄金4小时图的多重mitigation_block应用",
+      "video_id": "bbWPoajy2MY",
+      "title": "黄金4小时图多重Mitigation Block的识别与应用"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_004_原油日线图的order_block与mitigation_blo",
+      "video_id": "bbWPoajy2MY",
+      "title": "原油日线Order Block与Mitigation Block的多层级回测"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_005_美日日线图的流动性与mitigation_block确认",
+      "video_id": "bbWPoajy2MY",
+      "title": "美日日线买方流动性与Mitigation Block的交易汇聚"
+    },
+    {
+      "card_id": "c_mh19e3mhI_case_001_周三7月19日es与nq摆动点对比",
+      "video_id": "c_mh19e3mhI",
+      "title": "ES与NQ摆动点对比：识别相对强弱与SMT"
+    },
+    {
+      "card_id": "c_mh19e3mhI_case_003_周五8月4日es与nq_order_block表现",
+      "video_id": "c_mh19e3mhI",
+      "title": "ES与NQ周五8月4日Order Block均值阈值表现对比"
+    },
+    {
+      "card_id": "c_mh19e3mhI_case_004_周一至周五每日相对强弱预测与验证",
+      "video_id": "c_mh19e3mhI",
+      "title": "周一至周五ES相对强、NQ相对弱的逐日验证"
+    },
+    {
+      "card_id": "caaS6_Q7O78_case_002_btc日线与小时线的联动交易",
+      "video_id": "caaS6_Q7O78",
+      "title": "BTC日线反转信号与小时线精确入场执行"
+    },
+    {
+      "card_id": "caaS6_Q7O78_case_003_小时线上的扩张_回撤_扩张模式",
+      "video_id": "caaS6_Q7O78",
+      "title": "小时线扩张-回撤-扩张模式与5分钟精确入场"
+    },
+    {
+      "card_id": "caaS6_Q7O78_case_004_5分钟线上的csd入场与快速获利",
+      "video_id": "caaS6_Q7O78",
+      "title": "5分钟线CSD识别V形反转，2倍风险回报快速获利"
+    },
+    {
+      "card_id": "dSccSI7uqvE_case_001_es_15分钟图broadening_formation交易案例",
+      "video_id": "dSccSI7uqvE",
+      "title": "ES 15分钟图Broadening Formation识别与流动性扫除交易"
+    },
+    {
+      "card_id": "dcIdzqD3kMU_case_001_e_mini_s_p_500期货熊市破坏块案例",
+      "video_id": "dcIdzqD3kMU",
+      "title": "E-MINI S&P 500期货熊市破坏块识别与均值阈值反应"
+    },
+    {
+      "card_id": "dcIdzqD3kMU_case_003_长影线破坏块案例",
+      "video_id": "dcIdzqD3kMU",
+      "title": "长影线破坏块：用收盘价到最低点标记熊市破坏块"
+    },
+    {
+      "card_id": "eywpZT3z6GQ_case_001_黄金小时线看涨扩张交易案例",
+      "video_id": "eywpZT3z6GQ",
+      "title": "黄金小时线看涨扩张交易案例"
+    },
+    {
+      "card_id": "eywpZT3z6GQ_case_003_btc多时间框架延续交易案例",
+      "video_id": "eywpZT3z6GQ",
+      "title": "BTC小时线摆动点内多时间框架延续交易"
+    },
+    {
+      "card_id": "eywpZT3z6GQ_case_004_整理范围突破后的看涨交易案例",
+      "video_id": "eywpZT3z6GQ",
+      "title": "整理范围突破后的看涨交易案例"
+    },
+    {
+      "card_id": "eywpZT3z6GQ_case_005_高级反转k线看跌交易案例",
+      "video_id": "eywpZT3z6GQ",
+      "title": "高级反转K线看跌交易：930时间窗口入场达成2R目标"
+    },
+    {
+      "card_id": "g3oDYq4P9ZE_case_002_btc_usdt前一周高低点反转案例",
+      "video_id": "g3oDYq4P9ZE",
+      "title": "BTC/USDT前一周高低点反转案例"
+    },
+    {
+      "card_id": "g3oDYq4P9ZE_case_003_dxy日线多日偏差追踪案例",
+      "video_id": "g3oDYq4P9ZE",
+      "title": "DXY日线多日偏差追踪与Next Day Model应用"
+    },
+    {
+      "card_id": "g3oDYq4P9ZE_case_004_eurusd日线到小时图伦敦时段交易",
+      "video_id": "g3oDYq4P9ZE",
+      "title": "GBPUSD日线看跌偏差到小时图伦敦时段FVG交易"
+    },
+    {
+      "card_id": "g3oDYq4P9ZE_case_005_gbp_usd日线到小时图纽约时段交易",
+      "video_id": "g3oDYq4P9ZE",
+      "title": "GBP/USD纽约时段小时图FVG交易设置"
+    },
+    {
+      "card_id": "hKCMqh0ZsY0_case_001_nasdaq周线交易案例",
+      "video_id": "hKCMqh0ZsY0",
+      "title": "FOMC/NFP周期内的周线操纵-分布交易案例"
+    },
+    {
+      "card_id": "hKCMqh0ZsY0_case_002_core_pce新闻交易案例",
+      "video_id": "hKCMqh0ZsY0",
+      "title": "Core PCE新闻交易：周四扫低反转，周五标准差投影目标"
+    },
+    {
+      "card_id": "hKCMqh0ZsY0_case_003_audcad周线交易案例",
+      "video_id": "hKCMqh0ZsY0",
+      "title": "AUDCAD周线交易案例：CPI后的订单块与公允价值缺口确认"
+    },
+    {
+      "card_id": "iEaMbuFZb24_case_001_pdf示例_从看涨到看跌的多时间框架转变",
+      "video_id": "iEaMbuFZb24",
+      "title": "低时间框架看涨订单块被高时间框架看跌结构破坏"
+    },
+    {
+      "card_id": "iEaMbuFZb24_case_002_日线到5分钟的三层级交易案例",
+      "video_id": "iEaMbuFZb24",
+      "title": "日线偏向到小时线结构再到5分钟入场的三层级交易"
+    },
+    {
+      "card_id": "iEaMbuFZb24_case_003_白银周线_4小时_15分钟的看跌扩张",
+      "video_id": "iEaMbuFZb24",
+      "title": "白银周线看跌交付状态改变与多时间框架对齐的3R交易"
+    },
+    {
+      "card_id": "iEaMbuFZb24_case_005_黄金日线看涨结构的回测和扩张",
+      "video_id": "iEaMbuFZb24",
+      "title": "黄金日线看涨结构回测判断与小时线扩张"
+    },
+    {
+      "card_id": "jKuXaC84Qx4_case_002_第二个例子_汽油期货反向交易",
+      "video_id": "jKuXaC84Qx4",
+      "title": "汽油期货日线V形反转配合小时线CSD的反向交易"
+    },
+    {
+      "card_id": "k3hTgbHBz1U_case_001_标普500期货15分钟诱导模型案例",
+      "video_id": "k3hTgbHBz1U",
+      "title": "标普500期货15分钟诱导模型：流动性扫荡与止损运行"
+    },
+    {
+      "card_id": "k3hTgbHBz1U_case_003_1分钟图表等量低点诱导案例",
+      "video_id": "k3hTgbHBz1U",
+      "title": "1分钟图表等量低点诱导案例"
+    },
+    {
+      "card_id": "kTWXpAo1uE8_case_001_第一个反转案例_上升后下跌的标准差投影",
+      "video_id": "kTWXpAo1uE8",
+      "title": "NQ1! 60m上升后激进下跌的标准差投影分析"
+    },
+    {
+      "card_id": "kTWXpAo1uE8_case_002_第二个案例_下跌后上升的标准差投影与pd数组对齐",
+      "video_id": "kTWXpAo1uE8",
+      "title": "NQ1! 下跌后反弹：标准差投影与Order Block及Equal Highs对齐"
+    },
+    {
+      "card_id": "kTWXpAo1uE8_case_003_第三个案例_多重投影的汇聚与目标确认",
+      "video_id": "kTWXpAo1uE8",
+      "title": "多重投影汇聚：-4与-2.5标准差重合确认目标"
+    },
+    {
+      "card_id": "kTWXpAo1uE8_case_005_伦敦时段到纽约时段的完整交易设置",
+      "video_id": "kTWXpAo1uE8",
+      "title": "伦敦积累操纵到纽约分布的完整交易设置"
+    },
+    {
+      "card_id": "kTWXpAo1uE8_case_006_经典卖方周的标准差投影应用",
+      "video_id": "kTWXpAo1uE8",
+      "title": "卖方周标准差投影确认黄色目标区域交易"
+    },
+    {
+      "card_id": "k_Qoou9vi5c_case_001_15秒快速入场交易示例",
+      "video_id": "k_Qoou9vi5c",
+      "title": "多入场点快速做空交易设置示例"
+    },
+    {
+      "card_id": "klaiq36QnEM_case_002_nzdusd周五至周五的交易演变",
+      "video_id": "klaiq36QnEM",
+      "title": "NZDUSD周五日线订单块与纽约盘卖出设置"
+    },
+    {
+      "card_id": "klaiq36QnEM_case_003_纳斯达克100周一至周三的看涨案例",
+      "video_id": "klaiq36QnEM",
+      "title": "纳斯达克100周一至周三看涨结构扩展案例"
+    },
+    {
+      "card_id": "klaiq36QnEM_case_005_eurusd另一周期的多层级交易案例",
+      "video_id": "klaiq36QnEM",
+      "title": "EURUSD多周期流动性扫荡与FVG回测交易案例"
+    },
+    {
+      "card_id": "klaiq36QnEM_case_006_gbpusd周一至周五的看涨周期案例",
+      "video_id": "klaiq36QnEM",
+      "title": "GBPUSD周一至周五看涨周期：订单块、FVG与流动性扫荡"
+    },
+    {
+      "card_id": "lpam8F-N3EM_case_001_纳斯达克100期货15分钟到1分钟的做空案例",
+      "video_id": "lpam8F-N3EM",
+      "title": "NQ1! 15分钟等高点流动性扫除到1分钟位移做空案例"
+    },
+    {
+      "card_id": "lpam8F-N3EM_case_002_5分钟图表的做多案例",
+      "video_id": "lpam8F-N3EM",
+      "title": "NQ 5分钟图表MSS+位移后的折价区FVG做多案例"
+    },
+    {
+      "card_id": "m4k_1pF5zFI_case_002_spy大影线反转案例",
+      "video_id": "m4k_1pF5zFI",
+      "title": "大影线反转：调整目标至日开盘价和会话低点"
+    },
+    {
+      "card_id": "m4k_1pF5zFI_case_003_usd日线盘整突破案例",
+      "video_id": "m4k_1pF5zFI",
+      "title": "GLL日线盘整突破后流动性枯竭案例"
+    },
+    {
+      "card_id": "m4k_1pF5zFI_case_004_gll货币对范围交易案例",
+      "video_id": "m4k_1pF5zFI",
+      "title": "GLL范围交易：低点突破后的CSD与流动性缺失分析"
+    },
+    {
+      "card_id": "m4k_1pF5zFI_case_005_gbpusd反转失败案例",
+      "video_id": "m4k_1pF5zFI",
+      "title": "GBPUSD反转失败案例：CSD信号止损，转向EUR成功"
+    },
+    {
+      "card_id": "m4k_1pF5zFI_case_006_usd日线大幅扩张后反转案例",
+      "video_id": "m4k_1pF5zFI",
+      "title": "USD日线大幅扩张后反转交易案例"
+    },
+    {
+      "card_id": "mwmWNCTEYtY_case_003_nq日线低阻力流动性扫盘案例",
+      "video_id": "mwmWNCTEYtY",
+      "title": "NQ日线低阻力流动性扫盘与小时图MSS+FVG入场"
+    },
+    {
+      "card_id": "nWHint4Yano_case_002_美元继续上升时的gbpusd做空机会",
+      "video_id": "nWHint4Yano",
+      "title": "美元反转上升时通过相对强度确认GBPUSD做空"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_001_第一个silver_bullet交易案例",
+      "video_id": "o0v4KQxZbpU",
+      "title": "Silver Bullet交易案例：9AM高点扫盘后做空至9AM低点"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_002_第二个silver_bullet交易案例",
+      "video_id": "o0v4KQxZbpU",
+      "title": "Silver Bullet窗口内价格未能有效扫盘的反转失败案例"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_003_回测第一天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "7月第一个Silver Bullet做空交易回测"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_004_回测第二天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "次日Silver Bullet会话中的扫低反弹做多交易"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_005_回测第三天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第三天交易——10-11AM窗口无扫盘，交易跳过"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_006_回测第四天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第四天：FVG入场失效，订单被取消"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_007_回测第五天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "NAS100日线扫高后做空，Order Block入场获3R收益"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_008_回测第六天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第六天交易：11AM无有效扫盘，订单取消"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_009_回测第七天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第七天：FVG入场做空未成交"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_011_回测第九天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第九天：FVG入场做多被止损出局"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_012_回测第十天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第十天：FVG入场做多被止损出局"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_013_回测第十一天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第十一天：11 AM无交易机会分析"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_016_回测第十四天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "第27天低点扫荡后反弹不足，放弃交易"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_017_回测第十五天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第十五天：FVG做多入场被止损出局"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_018_回测第十六天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "回测第十六天：Order Block入场做多被止损出局"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_020_回测第十八天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "扫低后Breaker Block做多，3R获利移至保本"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_022_回测第二十天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "NAS100回测第20天：扫低后FVG入场做多获3R收益"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_023_回测第二十一天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "NAS100扫低后FVG入场做多，3R获利后移至保本"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_024_回测第二十二天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "第22天：低点扫荡后Breaker Block入场被止损"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_025_回测第二十三天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "第23天：低点扫荡后Breaker Block入场被止损"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_026_回测第二十四天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "第16天扫低后FVG入场做多，获3R收益后移至保本"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_027_回测第二十五天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "第25天回测：扫低后FVG入场做多，获3R收益后移至保本"
+    },
+    {
+      "card_id": "o0v4KQxZbpU_case_029_回测第二十七天交易",
+      "video_id": "o0v4KQxZbpU",
+      "title": "第27天：扫低后FVG入场做多被止损"
+    },
+    {
+      "card_id": "pWAjzKndWXo_case_003_反向头皮交易中的多层目标运用",
+      "video_id": "pWAjzKndWXo",
+      "title": "ES反向头皮交易中的多层FVG与流动性目标运用"
+    },
+    {
+      "card_id": "pWAjzKndWXo_case_004_15分钟图订单块与fvg目标链",
+      "video_id": "pWAjzKndWXo",
+      "title": "ES 15分钟订单块入场与FVG链式目标"
+    },
+    {
+      "card_id": "q1NmxUTm4n4_case_004_es_2分钟图的低时间框架交易",
+      "video_id": "q1NmxUTm4n4",
+      "title": "ES 2分钟图基于15分钟SMT信号的低时间框架做空交易"
+    },
+    {
+      "card_id": "q1NmxUTm4n4_case_005_es_1分钟图的订单块入场",
+      "video_id": "q1NmxUTm4n4",
+      "title": "ES 1分钟图订单块二次入场与目标达成"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_001_nq第一个例子_从外部流动性到内部流动性",
+      "video_id": "q40pRwjuPYQ",
+      "title": "NQ 15分钟外部流动性到内部流动性的三步交易模型"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_002_nq第二个例子_从内部流动性到外部流动性",
+      "video_id": "q40pRwjuPYQ",
+      "title": "NQ从15分钟内部流动性到5分钟扫盘再到30秒FVG入场"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_004_调整策略第一个例子_使用displacement和breaker",
+      "video_id": "q40pRwjuPYQ",
+      "title": "使用Displacement和Breaker Block在30秒图表上获得1.55R"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_005_调整策略第二个例子_从内部到外部流动性的displacement",
+      "video_id": "q40pRwjuPYQ",
+      "title": "30秒图表Displacement突破与FVG入场"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_006_调整策略第三个例子_区间震荡中的多次扫盘",
+      "video_id": "q40pRwjuPYQ",
+      "title": "周一区间震荡中的多次扫盘与小型FVG入场"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_003_usd_30分钟与1分钟的candle_3交易",
+      "video_id": "qdQYhePcvGE",
+      "title": "USD 30分钟反转与1分钟Candle 3延续交易"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_004_日线反转与小时图延续的多层级交易",
+      "video_id": "qdQYhePcvGE",
+      "title": "日线反转与小时图V形反转的多层级延续交易"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_006_15分钟图的多次protected_swing交易",
+      "video_id": "qdQYhePcvGE",
+      "title": "15分钟图多次Protected Swing的连续交易机会"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_008_usd多层级延续交易的完整案例",
+      "video_id": "qdQYhePcvGE",
+      "title": "USD多层级延续交易：日线延续+小时图反转入场达成2R"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_010_gll_5分钟图的candle_3与candle_4交易",
+      "video_id": "qdQYhePcvGE",
+      "title": "GLL 5分钟图candle 3失败后的candle 4延续交易"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_011_spx_1小时反转与5分钟延续",
+      "video_id": "qdQYhePcvGE",
+      "title": "USD 1小时反转失败后5分钟延续交易"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_013_xagusd多时间框架的反转与延续",
+      "video_id": "qdQYhePcvGE",
+      "title": "XAGUSD日线反转后的小时图延续交易"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_014_es_1小时与5分钟的candle_3交易",
+      "video_id": "qdQYhePcvGE",
+      "title": "ES 1小时反转后的5分钟Candle 3延续交易"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_016_usd_4小时与15分钟的反转与延续交易",
+      "video_id": "qdQYhePcvGE",
+      "title": "USD 4H反转后15分钟反转与延续交易"
+    },
+    {
+      "card_id": "rXMVPUZPw4A_case_001_nasdaq_2分钟图_breaker_block与fvg的第一",
+      "video_id": "rXMVPUZPw4A",
+      "title": "NASDAQ 2分钟图：Breaker Block与FVG的Unicorn模型交易"
+    },
+    {
+      "card_id": "rXMVPUZPw4A_case_002_es_5分钟图_被甩出的交易案例",
+      "video_id": "rXMVPUZPw4A",
+      "title": "ES 5分钟图：价格提前触及目标导致交易被甩出"
+    },
+    {
+      "card_id": "sIcsLFSNoXM_case_006_原油日线三日扩张后的整理与反转",
+      "video_id": "sIcsLFSNoXM",
+      "title": "原油日线三日扩张后的整理与看涨反转"
+    },
+    {
+      "card_id": "sgAnVR6RSDg_case_002_usd_5分钟图从上升到下降的结构转变",
+      "video_id": "sgAnVR6RSDg",
+      "title": "USD 5分钟图从上升到下降的结构转变"
+    },
+    {
+      "card_id": "tZMgGsTqqVM_case_002_15分钟和5分钟图表的交易设置",
+      "video_id": "tZMgGsTqqVM",
+      "title": "ES期货15分钟和5分钟多时间框架交易设置"
+    },
+    {
+      "card_id": "tyoxl1l-6iI_case_001_apoz日线上的多个k线2收盘识别",
+      "video_id": "tyoxl1l-6iI",
+      "title": "APOZ日线多个K线2收盘的识别与验证"
+    },
+    {
+      "card_id": "tyoxl1l-6iI_case_003_usd期货月线到日线到小时线的多级分形",
+      "video_id": "tyoxl1l-6iI",
+      "title": "USD期货月线到日线到小时线的多级分形交易"
+    },
+    {
+      "card_id": "tyoxl1l-6iI_case_004_usd_4小时线上的k线2收盘与延续",
+      "video_id": "tyoxl1l-6iI",
+      "title": "USD 4小时线K线2收盘形态识别与下钻交易"
+    },
+    {
+      "card_id": "uDJI2AbyyCs_case_001_eurusd_60分钟与5分钟反演交易案例",
+      "video_id": "uDJI2AbyyCs",
+      "title": "EURUSD 60分钟与5分钟反演交易案例"
+    },
+    {
+      "card_id": "uDJI2AbyyCs_case_002_usd_jpy_1分钟趋势中的反演应用",
+      "video_id": "uDJI2AbyyCs",
+      "title": "USD/JPY 1分钟上升趋势中的反演与推进块应用"
+    },
+    {
+      "card_id": "uDJI2AbyyCs_case_003_黄金日线智能货币反转与旧fvg支撑案例",
+      "video_id": "uDJI2AbyyCs",
+      "title": "黄金日线智能货币反转与旧FVG支撑案例"
+    },
+    {
+      "card_id": "ubCe509_JLY_case_002_黄金日线到5分钟的反转交易",
+      "video_id": "ubCe509_JLY",
+      "title": "黄金日线3天扩张反转至5分钟做空"
+    },
+    {
+      "card_id": "ubCe509_JLY_case_003_道琼斯30分钟到3分钟的纽约会话反转",
+      "video_id": "ubCe509_JLY",
+      "title": "道琼斯30分钟到3分钟纽约会话反转交易"
+    },
+    {
+      "card_id": "ubCe509_JLY_case_004_欧元兑美元日线到5分钟的整固交易",
+      "video_id": "ubCe509_JLY",
+      "title": "欧元兑美元日线整固到5分钟多时间框架做空"
+    },
+    {
+      "card_id": "umyCqr_0NsI_case_003_伦敦时段订单块与纽约时段回测",
+      "video_id": "umyCqr_0NsI",
+      "title": "伦敦上收盘订单块在纽约时段的长期高点回测与卖方流动性交付"
+    },
+    {
+      "card_id": "upHS7SDL9kg_case_001_btc_4小时图周线级别投影案例",
+      "video_id": "upHS7SDL9kg",
+      "title": "BTC 4小时图周线级别投影案例"
+    },
+    {
+      "card_id": "upHS7SDL9kg_case_002_黄金1小时图投影目标验证",
+      "video_id": "upHS7SDL9kg",
+      "title": "黄金1小时图斐波那契投影目标验证"
+    },
+    {
+      "card_id": "upHS7SDL9kg_case_003_ym_5分钟图大操纵腿处理",
+      "video_id": "upHS7SDL9kg",
+      "title": "YM 5分钟图大操纵腿使用-1标准差目标反转"
+    },
+    {
+      "card_id": "upHS7SDL9kg_case_004_bll_1小时图多阶段投影追踪",
+      "video_id": "upHS7SDL9kg",
+      "title": "BLL 1小时图多阶段投影追踪与目标命中"
+    },
+    {
+      "card_id": "upHS7SDL9kg_case_005_rty_5分钟图双向投影与获利管理",
+      "video_id": "upHS7SDL9kg",
+      "title": "RTY 5分钟双向投影与获利管理实战"
+    },
+    {
+      "card_id": "vn1RYjhJUnQ_case_002_月线到日线的多时间框架验证",
+      "video_id": "vn1RYjhJUnQ",
+      "title": "月线C2闭合与日线CSD的多时间框架验证"
+    },
+    {
+      "card_id": "vn1RYjhJUnQ_case_005_1小时c2闭合配合15分钟延续",
+      "video_id": "vn1RYjhJUnQ",
+      "title": "1小时C2闭合配合15分钟延续订单块确认"
+    },
+    {
+      "card_id": "vn1RYjhJUnQ_case_006_usd_cad_15分钟v形反转与smt确认",
+      "video_id": "vn1RYjhJUnQ",
+      "title": "USD/CAD 15分钟V形反转与SMT确认的高质量设置"
+    },
+    {
+      "card_id": "wDXTIDbIMwU_case_001_s_p_500_e_mini期货日内交易分析",
+      "video_id": "wDXTIDbIMwU",
+      "title": "ES日内顶级分析：从日线到15秒的多级联动交易"
+    },
+    {
+      "card_id": "wik00c9_2nk_case_002_日线偏差与小时线反转案例",
+      "video_id": "wik00c9_2nk",
+      "title": "日线偏差后小时线反转与亚洲高点突破"
+    },
+    {
+      "card_id": "wik00c9_2nk_case_004_btc_1小时盘整与反转案例",
+      "video_id": "wik00c9_2nk",
+      "title": "BTC 1小时盘整与反转案例：Turtle Soup到Propulsion Block"
+    },
+    {
+      "card_id": "wwMjc9RfpCg_case_001_标普500期货小时图操纵腿案例",
+      "video_id": "wwMjc9RfpCg",
+      "title": "标普500期货1小时图操纵腿与标准差目标确认"
+    },
+    {
+      "card_id": "wwMjc9RfpCg_case_003_标普500期货日线到五分钟完整交易案例",
+      "video_id": "wwMjc9RfpCg",
+      "title": "ES日线订单块到五分钟操纵腿完整交易案例"
+    },
+    {
+      "card_id": "wy3OSPxu5U0_case_002_nasdaq_8月24日的日线到5分钟交易设置",
+      "video_id": "wy3OSPxu5U0",
+      "title": "纳斯达克8月24日日线到5分钟交易设置"
+    },
+    {
+      "card_id": "wy3OSPxu5U0_case_003_usd_8月15日的多级别空头交易分析",
+      "video_id": "wy3OSPxu5U0",
+      "title": "USD 8月15日多级别空头交易分析：从日线OB到5分钟FVG入场"
+    },
+    {
+      "card_id": "wy3OSPxu5U0_case_004_enq_8月17日的日线到5分钟看空交易",
+      "video_id": "wy3OSPxu5U0",
+      "title": "ENQ 8月17日日线到5分钟看空交易"
+    },
+    {
+      "card_id": "xP-o11jRCyg_case_001_rb范围突破与breaker_block延续交易",
+      "video_id": "xP-o11jRCyg",
+      "title": "RB小时图范围突破与5分钟Breaker Block延续交易"
+    },
+    {
+      "card_id": "xP-o11jRCyg_case_003_btc扫盘与多时间框架breaker_block交易",
+      "video_id": "xP-o11jRCyg",
+      "title": "BTC多时间框架Breaker Block空头交易"
+    },
+    {
+      "card_id": "xP-o11jRCyg_case_004_扩张_回撤_扩张后的breaker_block空头交易",
+      "video_id": "xP-o11jRCyg",
+      "title": "ETH 1H扩张-回撤-扩张后的Breaker Block空头延续交易"
+    },
+    {
+      "card_id": "xP-o11jRCyg_case_005_nq等值高点与smt配合的1分钟breaker交易",
+      "video_id": "xP-o11jRCyg",
+      "title": "ETH 1分钟等值高点SMT配合Breaker交易"
+    },
+    {
+      "card_id": "xdm_OexQWJY_case_001_es期货向下位移与ote做空案例",
+      "video_id": "xdm_OexQWJY",
+      "title": "ES期货向下位移后OTE做空至等低点"
+    },
+    {
+      "card_id": "xdm_OexQWJY_case_004_下行后反弹做多延续案例",
+      "video_id": "xdm_OexQWJY",
+      "title": "ES下行后反弹做多延续案例"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_001_轻质原油期货的纽约反转案例",
+      "video_id": "xdzyejskSKE",
+      "title": "轻质原油期货纽约反转：高时间框架位触及与流动性扫荡"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_003_原油期货的推进块交易",
+      "video_id": "xdzyejskSKE",
+      "title": "原油期货推进块交易：多时间框架汇聚点的连续交易"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_004_外部流动性扫除与范围反转",
+      "video_id": "xdzyejskSKE",
+      "title": "轻质原油外部流动性扫除与范围反转交易"
+    },
+    {
+      "card_id": "xdzyejskSKE_case_005_纳斯达克100的纽约反转与操纵",
+      "video_id": "xdzyejskSKE",
+      "title": "NQ纽约开盘8:30操纵反转与时间窗口交易"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_001_轻质原油期货看涨伦敦反转案例",
+      "video_id": "y6SnEdASVLY",
+      "title": "轻质原油期货伦敦反转看涨交易案例"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_002_轻质原油期货看跌伦敦反转案例",
+      "video_id": "y6SnEdASVLY",
+      "title": "轻质原油伦敦反转后纽约延续看跌交易"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_005_轻质原油期货看涨反转延续案例",
+      "video_id": "y6SnEdASVLY",
+      "title": "轻质原油期货看涨反转延续交易案例"
+    },
+    {
+      "card_id": "yOPESX2aWkI_case_003_巩固区间突破与回测交易",
+      "video_id": "yOPESX2aWkI",
+      "title": "ES巩固区间突破与低点回测长仓设置"
+    },
+    {
+      "card_id": "ynFA6E3qHj0_case_002_btc_usdt_1分钟图_多次结构测试与反向运动",
+      "video_id": "ynFA6E3qHj0",
+      "title": "BTC/USDT 1分钟：多次结构测试与反向运动分析"
+    },
+    {
+      "card_id": "ynFA6E3qHj0_case_003_es日线图_识别日线级别的摆动点与位移",
+      "video_id": "ynFA6E3qHj0",
+      "title": "ES日线图：识别摆动点与位移判断日线偏向"
+    },
+    {
+      "card_id": "yq4Z7q4E6nU_case_001_标普500期货从3876下跌至3818的bpr交易案例",
+      "video_id": "yq4Z7q4E6nU",
+      "title": "ES期货3876-3818下跌中的BPR交易设置"
+    },
+    {
+      "card_id": "yq4Z7q4E6nU_case_002_ote区域交易与5分钟精确入场案例",
+      "video_id": "yq4Z7q4E6nU",
+      "title": "1小时OTE区域多时间框架精确入场与4R获利案例"
+    },
+    {
+      "card_id": "yq4Z7q4E6nU_case_003_多时间框架联动的小时线到5分钟交易案例",
+      "video_id": "yq4Z7q4E6nU",
+      "title": "1小时低点扫除后激进回升，5分钟OTE精确入场"
+    },
+    {
+      "card_id": "4Gm8p6O7Ebs_case_002_gold_xauusd_reversal_at_previous",
+      "video_id": "4Gm8p6O7Ebs",
+      "title": "Gold (XAUUSD) Reversal at Previous Day High Triggers New Expansion Phase Lower"
+    },
+    {
+      "card_id": "IPZjNI1B5a0_case_004_eur_usd_short_setup_with_opposin",
+      "video_id": "IPZjNI1B5a0",
+      "title": "EUR/USD Hourly Short at Previous Daily EQ with Opposing Candle and CISD Confirmation"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_003_gold_4_hour_to_15_minute_protect",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "Gold 4H retest of fair value gap, dropping to 15M to identify protected swing for bearish reversal entry"
+    },
+    {
+      "card_id": "-GkOTMYoJT4_case_001_s_p_500_5_minute_bearish_to_bull",
+      "video_id": "-GkOTMYoJT4",
+      "title": "S&P 500 5-minute Bearish-to-Bullish Inducement at Order Block and Fair Value Gap"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_004_silver_1_hour_protected_swing_en",
+      "video_id": "-wr4xATE37g",
+      "title": "Silver 1H Bearish Protected Swing Entry at Fair Value Gap Targeting 2R"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_005_silver_bullish_reversal_with_pro",
+      "video_id": "-wr4xATE37g",
+      "title": "Silver 1H Bullish Reversal: Protected Low Confirmation After Previous Day Low Sweep"
+    },
+    {
+      "card_id": "0xygpCMwxbQ_case_001_nasdaq_15_minute_daily_fvg_fill_",
+      "video_id": "0xygpCMwxbQ",
+      "title": "NASDAQ 15-minute: Daily FVG Fill with Stop Raid, MSS, and Nested FVG/OB Entry at OTE"
+    },
+    {
+      "card_id": "0xygpCMwxbQ_case_004_es_daily_to_5_minute_multi_timef",
+      "video_id": "0xygpCMwxbQ",
+      "title": "ES Daily-to-5min Top-Down Short Entry Using Volume Imbalance POI"
+    },
+    {
+      "card_id": "1YRs4Z1lMws_case_002_ym_bullish_ote_example_with_orde",
+      "video_id": "1YRs4Z1lMws",
+      "title": "YM Daily Bullish OTE Entry Using Order Block Mean Threshold"
+    },
+    {
+      "card_id": "1YRs4Z1lMws_case_004_gold_xauusd_hourly_to_5_minute_t",
+      "video_id": "1YRs4Z1lMws",
+      "title": "Gold (XAUUSD) Hourly to 5-Minute to 1-Minute OTE Entry with 3R Trade"
+    },
+    {
+      "card_id": "3OivsP1j_UE_case_002_gold_xauusd_60_minute_to_1_minut",
+      "video_id": "3OivsP1j_UE",
+      "title": "Gold XAUUSD top-down short from 60-minute fair value gap to 1-minute order block entry"
+    },
+    {
+      "card_id": "3OivsP1j_UE_case_003_gbp_jpy_weekly_to_4_hour_market_",
+      "video_id": "3OivsP1j_UE",
+      "title": "GBP/JPY Weekly External-to-Internal Liquidity with 4-Hour Market Maker Buy Model Entry"
+    },
+    {
+      "card_id": "3eVxTV_7L2U_case_006_indices_triad_ym_top_down_trade_",
+      "video_id": "3eVxTV_7L2U",
+      "title": "YM Top-Down Bearish Trade: Daily Range High to 3-Minute CSD Entry Targeting Range Low"
+    },
+    {
+      "card_id": "4jU547ocod4_case_001_eth_reversal_off_previous_day_hi",
+      "video_id": "4jU547ocod4",
+      "title": "ETH Reversal Off Previous Day High with Hourly–5-Minute Alignment and 1-Minute Inversion Entry"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_002_usd_daily_consolidation_with_swi",
+      "video_id": "5fnFOh5YuM0",
+      "title": "ETH Daily Consolidation Sweep with Confirmed Swing Low and Hourly/5-Minute Continuation Entry"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_004_btc_daily_expansion_candle_with_",
+      "video_id": "5fnFOh5YuM0",
+      "title": "BTC/ETH Daily Expansion Candle Continuation Short via 5-Minute Protected High Entry"
+    },
+    {
+      "card_id": "6zTz7WMdMWg_case_004_gbp_usd_multi_timeframe_entry_fr",
+      "video_id": "6zTz7WMdMWg",
+      "title": "GBP/USD Top-Down Analysis: 4-Hour Bias to 1-Minute Order Block Entry"
+    },
+    {
+      "card_id": "6zTz7WMdMWg_case_005_gbp_usd_hourly_to_30_second_char",
+      "video_id": "6zTz7WMdMWg",
+      "title": "GBP/USD Multi-Timeframe Drill-Down: Hourly Bias to 30-Second Execution Targeting Previous Hour High"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_001_bullish_breaker_block_on_gbpusd_",
+      "video_id": "75S4vwD4P1U",
+      "title": "Bullish Breaker Block Identification and Retest on GBPUSD 5-Minute Chart"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_004_bullish_breaker_block_with_proje",
+      "video_id": "75S4vwD4P1U",
+      "title": "Bullish Breaker Block Entry with Standard Deviation Projection Targets on 5-Minute Chart"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_001_dxy_daily_reversal_using_order_b",
+      "video_id": "7p9MBFk8EEM",
+      "title": "DXY Daily Bullish Reversal Using Order Block and Fair Value Gap"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_002_us_oil_daily_reversal_with_previ",
+      "video_id": "7p9MBFk8EEM",
+      "title": "US Oil Daily Reversal Using Previous Month's High and Weekly FVG as Overlapping PD Arrays"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_003_nq_5_minute_reversal_from_daily_",
+      "video_id": "7p9MBFk8EEM",
+      "title": "NQ 5-Minute Bullish Reversal Using Down-Close Candle as Support After Daily Swing Low Sweep"
+    },
+    {
+      "card_id": "7p9MBFk8EEM_case_004_gold_weekly_to_4_hour_order_bloc",
+      "video_id": "7p9MBFk8EEM",
+      "title": "Gold Weekly Order Block Cascades Down via 4-Hour Sweeps and Standard Deviation Targets"
+    },
+    {
+      "card_id": "9AL41xON3hA_case_003_crude_oil_hourly_consolidation_w",
+      "video_id": "9AL41xON3hA",
+      "title": "Crude Oil Hourly: Failed Continuations Turn Into Consolidation, Avoided Until Range Breakout"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_001_crude_oil_futures_daily_propulsi",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "Crude Oil Futures Daily Propulsion Block Short Entry off Bearish Order Block Retest"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_002_crude_oil_hourly_propulsion_bloc",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "Crude Oil Hourly Entry Using Daily Propulsion Block Context"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_003_gbp_usd_60_minute_propulsion_blo",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "GBP/USD 60-Minute Propulsion Block Long Entry with SMT Confirmation Targeting Buy-Side Liquidity"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_004_usd_jpy_daily_propulsion_block_e",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "USD/JPY Daily Propulsion Block Short After Buy-Stop Sweep and Displacement Lower"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_005_crude_oil_futures_60_minute_new_",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "Crude Oil Futures 60-Minute New York Session Propulsion Block Long Setup"
+    },
+    {
+      "card_id": "AdmnWLjf8rY_case_004_es_midnight_open_bias_with_londo",
+      "video_id": "AdmnWLjf8rY",
+      "title": "ES Short Setup: London Sweeps Hourly High Above Midnight Open Targeting Daily FVG"
+    },
+    {
+      "card_id": "CHIK5oBRKiw_case_001_nq_5_minute_reversal_with_cisd_a",
+      "video_id": "CHIK5oBRKiw",
+      "title": "NQ 5-minute CISD reversal after buy-side sweep targeting London lows (8/11/2023)"
+    },
+    {
+      "card_id": "CHIK5oBRKiw_case_003_es_1_minute_bearish_entry_with_o",
+      "video_id": "CHIK5oBRKiw",
+      "title": "ES 1-minute bearish entry: range manipulation, CISD, order block entry with projection targets"
+    },
+    {
+      "card_id": "CHIK5oBRKiw_case_004_es_1_minute_bullish_reversal_wit",
+      "video_id": "CHIK5oBRKiw",
+      "title": "ES 1-minute bullish reversal: manipulation below range, CISD entry, targeting -2 to -2.5 standard deviations"
+    },
+    {
+      "card_id": "CHIK5oBRKiw_case_005_nq_box_setup_with_order_block_co",
+      "video_id": "CHIK5oBRKiw",
+      "title": "NQ Box setup with order block confirmation and FVG confluence on 11/1/2023"
+    },
+    {
+      "card_id": "CHIK5oBRKiw_case_006_nq_bullish_box_setup_with_order_",
+      "video_id": "CHIK5oBRKiw",
+      "title": "NQ 1-minute bullish box setup: order block entry after manipulation with FVG target"
+    },
+    {
+      "card_id": "CqMIh-Vvhbg_case_003_gc_gold_hourly_to_5_minute_confl",
+      "video_id": "CqMIh-Vvhbg",
+      "title": "GC Gold Hourly-to-5-Minute T-Spot Confluence Long Setup"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_001_nq_5_minute_order_block_entry_wi",
+      "video_id": "DMUiDBnTYc8",
+      "title": "NQ 5-minute order block entry fails due to absence of higher time frame POI"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_002_eth_hourly_fair_value_gap_with_5",
+      "video_id": "DMUiDBnTYc8",
+      "title": "ETH hourly fair value gap paired with 5-minute order block entry reaches 2R target"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_003_oil_5_minute_order_block_with_me",
+      "video_id": "DMUiDBnTYc8",
+      "title": "Oil 5-minute order block entry using mean threshold to improve risk-to-reward"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_004_eth_15_minute_smart_money_revers",
+      "video_id": "DMUiDBnTYc8",
+      "title": "ETH 15-minute smart money reversal entry with continuation order block on retest"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_005_crude_oil_daily_continuation_wit",
+      "video_id": "DMUiDBnTYc8",
+      "title": "Crude oil daily continuation using stacked order blocks at previous month high"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_006_nq_5_minute_secondary_order_bloc",
+      "video_id": "DMUiDBnTYc8",
+      "title": "NQ 5-minute secondary bullish order block entry after missing initial setup"
+    },
+    {
+      "card_id": "E89d1HArbgM_case_001_dxy_daily_chart_change_in_state_",
+      "video_id": "E89d1HArbgM",
+      "title": "Conceptual Comparison: Change in State of Delivery vs Market Structure Shift Timing"
+    },
+    {
+      "card_id": "E89d1HArbgM_case_002_eth_and_nq_1_minute_chart_order_",
+      "video_id": "E89d1HArbgM",
+      "title": "NQ 1-Minute: Comparing Change in State of Delivery vs Market Structure Shift for Short Entries"
+    },
+    {
+      "card_id": "E89d1HArbgM_case_003_oil_futures_cl_monthly_to_daily_",
+      "video_id": "E89d1HArbgM",
+      "title": "Oil Futures (CL) Monthly-to-Daily: Three Sequential Order Flow Shift Signals After Buy-Stop Raid"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_001_eth_bearish_daily_reversal_with_",
+      "video_id": "EYzP7c24AwM",
+      "title": "ETH bearish daily reversal using midnight open and 8:30 as support/resistance to form Judas swing OB"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_002_cl_bullish_continuation_with_10_",
+      "video_id": "EYzP7c24AwM",
+      "title": "CL bullish continuation: 6 AM sweep and closure above down-close candles, 10 AM forms 4H low, 2 PM expands to take liquidity highs"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_003_nq_bullish_setup_with_8_30_oppos",
+      "video_id": "EYzP7c24AwM",
+      "title": "NQ Bullish Setup: 8:30 Opposing Run Forms Order Block, 10 AM Drives Continuation Higher"
+    },
+    {
+      "card_id": "EYzP7c24AwM_case_004_es_bearish_order_block_formation",
+      "video_id": "EYzP7c24AwM",
+      "title": "ES 15-minute: 8:30 bearish order block formation followed by 9:30 distribution lower"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_006_es_60_minute_smt_divergence_with",
+      "video_id": "FGkb_50BfT8",
+      "title": "ES 60-minute: SMT divergence with low resistance lows above order block drives reversal to highs"
+    },
+    {
+      "card_id": "FGkb_50BfT8_case_007_es_5_minute_order_block_entries_",
+      "video_id": "FGkb_50BfT8",
+      "title": "ES 5-minute: Order block entries validated by mean threshold and propulsion block formation"
+    },
+    {
+      "card_id": "FXJBFbZQbck_case_002_downtrend_with_pdl_sweeps_and_fa",
+      "video_id": "FXJBFbZQbck",
+      "title": "Daily Downtrend Confirmed by Repeated Previous Day Low Sweeps with FVG Retracements"
+    },
+    {
+      "card_id": "FXJBFbZQbck_case_004_bearish_structure_with_order_blo",
+      "video_id": "FXJBFbZQbck",
+      "title": "Bearish Daily Structure: Validating Up-Close Candles as Order Blocks Targeting PDL"
+    },
+    {
+      "card_id": "FvOUvQ7odiw_case_004_gc1_and_bll_friday_reversal_enab",
+      "video_id": "FvOUvQ7odiw",
+      "title": "GC1 and BLL Friday candle-two closure enables Monday continuation; SMT with RB validates intraweek reversal"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_001_gc_gold_3_hour_continuation_entr",
+      "video_id": "IJcfC6wAPZU",
+      "title": "GC Gold 5-Minute Continuation Short via Fair Value Gap Retest and Closure Through Up-Close Candles"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_002_gc_gold_4_hour_to_15_minute_cont",
+      "video_id": "IJcfC6wAPZU",
+      "title": "GC (Gold) 4H to 15M Continuation: Shallow Retracement into FVG with Multiple Order Block Entries"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_003_cl_oil_daily_reversal_with_aggre",
+      "video_id": "IJcfC6wAPZU",
+      "title": "CL (Oil) 1H Reversal: Aggressive Displacement Lower with Retest Continuation Entry"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_004_nq_nasdaq_consolidation_range_br",
+      "video_id": "IJcfC6wAPZU",
+      "title": "NQ Consolidation Range Breakout with Multiple 5-Minute Continuation Entries"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_005_es_s_p_500_premium_zone_continua",
+      "video_id": "IJcfC6wAPZU",
+      "title": "ES Premium Zone Bearish Continuation: Candle 2 Closure with Multiple 5-Minute Continuation Entries"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_006_gbp_usd_daily_to_monthly_range_c",
+      "video_id": "IJcfC6wAPZU",
+      "title": "GBP/USD Daily Range Reversal Sequence with Inversion, CISD, and Continuation Entries to Range High"
+    },
+    {
+      "card_id": "IPZjNI1B5a0_case_003_multi_day_price_action_with_eq_a",
+      "video_id": "IPZjNI1B5a0",
+      "title": "Multi-Day Walkthrough Pairing Daily Closures with Equilibrium to Anticipate Directional Expansion"
+    },
+    {
+      "card_id": "IPZjNI1B5a0_case_007_eth_4_hour_fractal_model_with_mu",
+      "video_id": "IPZjNI1B5a0",
+      "title": "ETH 4-Hour Fractal Application of Equilibrium Across Multiple Expansion Phases"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_002_oil_bearish_new_york_manipulatio",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "Oil bearish New York manipulation: range sweep with discount order block entry"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_004_nq_continuation_with_ob_and_fvg_",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "NQ Long Continuation: Daily Bias to 5-Min OB/FVG Entry Targeting Previous Day High"
+    },
+    {
+      "card_id": "MPeeE55rNOw_case_001_nq1_daily_price_action_through_m",
+      "video_id": "MPeeE55rNOw",
+      "title": "NQ1! Intraday Session Analysis: Asia Sweep, London Manipulation, and New York Distribution"
+    },
+    {
+      "card_id": "MlMsG7li9zY_case_002_us_dollar_index_multiple_range_i",
+      "video_id": "MlMsG7li9zY",
+      "title": "DXY Nested Range Equilibrium Tracking with Discount PD Array Entries"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_014_twitter_case_continuation_at_sho",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "ETH 5-minute: Avoiding a Failed Continuation by Waiting for Higher Time Frame Wick Formation"
+    },
+    {
+      "card_id": "Pcbyc9TdNsU_case_001_nq_5_minute_amd_with_standard_de",
+      "video_id": "Pcbyc9TdNsU",
+      "title": "NQ 5-minute AMD setup with standard deviation projections for distribution targets"
+    },
+    {
+      "card_id": "Pcbyc9TdNsU_case_002_nq_1_minute_box_setup_with_amd_p",
+      "video_id": "Pcbyc9TdNsU",
+      "title": "NQ 1-minute Box Setup combined with AMD and Standard Deviation Projections"
+    },
+    {
+      "card_id": "Qt7Ek4keMzs_case_001_tsla_classic_expansion_with_tues",
+      "video_id": "Qt7Ek4keMzs",
+      "title": "TSLA Classic Expansion: Tuesday Low Confirmed by Hourly CISD Drives Wednesday–Thursday Continuation"
+    },
+    {
+      "card_id": "SlWxhzhLo3A_case_004_gold_gc_15_minute_fractal_contin",
+      "video_id": "SlWxhzhLo3A",
+      "title": "Gold 15-Minute Fractal Continuation: Small Wick Expansion Lower After CISD and SMT Confirmation"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_001_low_time_frame_amd_on_nq1_1_minu",
+      "video_id": "TCFvsZeYvV8",
+      "title": "NQ1! 1-minute: NY Open sweep of morning low, consolidation, manipulation lower, then distribution higher with inversion/box setup entry"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_004_daily_candle_amd_london_consolid",
+      "video_id": "TCFvsZeYvV8",
+      "title": "NQ1! 15-min London Session: Consolidation followed by downward manipulation into range, anticipating higher distribution"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_006_nested_amd_patterns_identifying_",
+      "video_id": "TCFvsZeYvV8",
+      "title": "Nested AMD Patterns: Identifying Consolidation by First Locating Aggressive Manipulation Legs"
+    },
+    {
+      "card_id": "TCFvsZeYvV8_case_007_daily_candle_amd_with_standard_d",
+      "video_id": "TCFvsZeYvV8",
+      "title": "Daily AMD Setup on NQ1! with Standard Deviation Distribution Targets and Box Entry"
+    },
+    {
+      "card_id": "TfHlNgAZ_II_case_001_gold_gc_weekly_bullish_continuat",
+      "video_id": "TfHlNgAZ_II",
+      "title": "Gold weekly bullish continuation using 4H internal range liquidity (FVG) and external range liquidity (previous week high) with 15-minute CISD entry"
+    },
+    {
+      "card_id": "TfHlNgAZ_II_case_003_crude_oil_cl_trend_continuation_",
+      "video_id": "TfHlNgAZ_II",
+      "title": "Crude Oil (CL) Trend Continuation with Higher Lows and Retracement into Hourly Fair Value Gap"
+    },
+    {
+      "card_id": "TfHlNgAZ_II_case_004_usd_jpy_daily_trend_continuation",
+      "video_id": "TfHlNgAZ_II",
+      "title": "USD/JPY Daily Bullish Trend Continuation via Daily IRL (FVG) and ERL (High) with Hourly CISD Confirmation"
+    },
+    {
+      "card_id": "Tjk9bXERZy0_case_004_seek_and_destroy_examples_with_s",
+      "video_id": "Tjk9bXERZy0",
+      "title": "NQ1! 15-min Seek and Destroy with London-swept Asia range and NY session boxes"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_001_bullish_order_block_on_es_5_minu",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "Bullish Order Block on ES 5-Minute Chart after Liquidity Sweep of Low"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_002_bearish_order_block_on_nq_1_hour",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "Bearish Order Block on NQ 1-Hour Chart after High Sweep and Structure Break"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_003_trend_continuation_order_blocks",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "Trend Continuation Order Blocks: Using Down-Close Candles in a Downtrend as Support Zones"
+    },
+    {
+      "card_id": "Y8DkNYhq0X0_case_004_order_blocks_along_a_higher_time",
+      "video_id": "Y8DkNYhq0X0",
+      "title": "Price respects a sequence of intermediate order blocks while moving toward a higher time frame PD array objective"
+    },
+    {
+      "card_id": "_94CPMjWi9E_case_002_s_p_500_futures_hourly_sweep_of_",
+      "video_id": "_94CPMjWi9E",
+      "title": "S&P 500 Futures Hourly Sweep of Previous Week Low Leading to Market Structure Shift and Continuation Higher"
+    },
+    {
+      "card_id": "_94CPMjWi9E_case_003_dxy_daily_sweep_into_fair_value_",
+      "video_id": "_94CPMjWi9E",
+      "title": "DXY Daily Chart: Sweep of Low into Fair Value Gap Followed by Market Structure Shift and Order Block Reaction"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_002_ym_nq_smt_mitigation_block",
+      "video_id": "bbWPoajy2MY",
+      "title": "YM 5-minute mitigation block trade validated by NQ higher high SMT divergence"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_003_gold_4h_reaccumulation_using_mit",
+      "video_id": "bbWPoajy2MY",
+      "title": "Gold 4H Reaccumulation Using Old Bearish Order Blocks as Mitigation Zones After Smart Money Reversal"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_004_es_eth_breaker_as_mitigation",
+      "video_id": "bbWPoajy2MY",
+      "title": "ES/ETH Breaker Block Used as Mitigation Zone for Bullish Continuation"
+    },
+    {
+      "card_id": "bbWPoajy2MY_case_005_oil_daily_mitigation_blocks",
+      "video_id": "bbWPoajy2MY",
+      "title": "USOIL Daily Chart: Short Setups Using Old Bearish Order Blocks as Mitigation Blocks with FVG Confluence"
+    },
+    {
+      "card_id": "c_mh19e3mhI_case_001_july_19_swing_high_comparison",
+      "video_id": "c_mh19e3mhI",
+      "title": "July 19, 2023 Swing High Comparison: ES made higher high while NQ formed lower high, confirming SMT and NQ relative weakness"
+    },
+    {
+      "card_id": "c_mh19e3mhI_case_003_week_of_jul_31_aug_4_daily_relat",
+      "video_id": "c_mh19e3mhI",
+      "title": "Daily Relative Strength Analysis of ES vs NQ for Week of Jul 31–Aug 4, 2023 Using Ratio Chart and SMT"
+    },
+    {
+      "card_id": "caaS6_Q7O78_case_001_daily_chart_example_on_ty_10_yea",
+      "video_id": "caaS6_Q7O78",
+      "title": "TY Daily Chart Next-Day Model Application with Hourly Propulsion Block Entry"
+    },
+    {
+      "card_id": "caaS6_Q7O78_case_002_bitcoin_daily_and_hourly_bias_wi",
+      "video_id": "caaS6_Q7O78",
+      "title": "Bitcoin daily bias using Next Day Model, confirmed on hourly with OB and propulsion block for 2R short"
+    },
+    {
+      "card_id": "eywpZT3z6GQ_case_001_gold_daily_bullish_trend_scalpin",
+      "video_id": "eywpZT3z6GQ",
+      "title": "Gold Daily Bullish Trend Scalping Setup Using Hourly Bias, 15m Swing Point, and 1m Fractal Entry"
+    },
+    {
+      "card_id": "eywpZT3z6GQ_case_003_eth_hourly_consolidation_breakou",
+      "video_id": "eywpZT3z6GQ",
+      "title": "ETH Hourly Consolidation Breakout with Gap Fill and 15m/1m Continuation Entries"
+    },
+    {
+      "card_id": "eywpZT3z6GQ_case_004_advanced_reversal_candle_scalpin",
+      "video_id": "eywpZT3z6GQ",
+      "title": "Advanced bearish reversal scalping using hourly candle 3 closure, 15-min CISD, and 1-min protected swing continuation"
+    },
+    {
+      "card_id": "iEaMbuFZb24_case_001_crude_oil_bullish_continuation_f",
+      "video_id": "iEaMbuFZb24",
+      "title": "Crude Oil Bullish Continuation from Daily Swing Low with Propulsion Block Entry"
+    },
+    {
+      "card_id": "iEaMbuFZb24_case_002_silver_bearish_continuation_afte",
+      "video_id": "iEaMbuFZb24",
+      "title": "Silver Bearish Continuation After Weekly Swing High Sweep and CISD on 4H/15M"
+    },
+    {
+      "card_id": "iEaMbuFZb24_case_003_usdjpy_bullish_bias_with_multipl",
+      "video_id": "iEaMbuFZb24",
+      "title": "USDJPY Bullish Bias with Multiple Lower Timeframe Entries After Daily FVG Retest and Protected Low"
+    },
+    {
+      "card_id": "nWHint4Yano_case_001_dxy_reversal_off_july_low_with_b",
+      "video_id": "nWHint4Yano",
+      "title": "DXY reversal off July low confirmed by EURGBP bullish trend leading to GBPUSD short setup"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_001_nq_bearish_setup_external_to_int",
+      "video_id": "q40pRwjuPYQ",
+      "title": "NQ Bearish Setup: External to Internal Liquidity via Cameron's Model on Sep 25, 2023"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_003_nq_bearish_setup_sweeping_previo",
+      "video_id": "q40pRwjuPYQ",
+      "title": "NQ Bearish Setup: Sweep of Previous High on 15-min, Entry via 30-sec FVG with 10-point Stop"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_002_gll_5_minute_bearish_continuatio",
+      "video_id": "qdQYhePcvGE",
+      "title": "GLL 5-Minute Bearish Continuation After Hourly Reversal Candle with FVG and CISD"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_003_ym1_3_minute_less_than_ideal_can",
+      "video_id": "qdQYhePcvGE",
+      "title": "YM1! 3-minute continuation trade after less-than-ideal candle 2 that leaves short-term liquidity intact"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_008_xageur_strong_hourly_bias_and_lo",
+      "video_id": "qdQYhePcvGE",
+      "title": "XAGEUR bearish hourly bias with 1-minute reversal entry using SMT and order block stop"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_010_es1_monthly_daily_blending_candl",
+      "video_id": "qdQYhePcvGE",
+      "title": "ES1! Monthly high sweep with V-shaped reversal, candle 2-3-4 blending for bearish bias and lower timeframe entries"
+    },
+    {
+      "card_id": "r_UF8U-hsL8_case_001_apoz_5_minute_reversal_and_conti",
+      "video_id": "r_UF8U-hsL8",
+      "title": "apoZ 5-minute reversal and continuation using change in state of delivery as primary PD array"
+    },
+    {
+      "card_id": "uDJI2AbyyCs_case_001_eurusd_5_minute_inversion_trade",
+      "video_id": "uDJI2AbyyCs",
+      "title": "EURUSD 5-Minute Inversion Trade: Sweep of Buy Stops, FVG Inversion, and Consequent Encroachment Retest"
+    },
+    {
+      "card_id": "uDJI2AbyyCs_case_002_nq_2_minute_inversion_in_trend",
+      "video_id": "uDJI2AbyyCs",
+      "title": "NQ 2-Minute Inversion at Propulsion Block During Uptrend Continuation"
+    },
+    {
+      "card_id": "uPUNOi_R9fA_case_003_successful_thursday_counter_on_n",
+      "video_id": "uPUNOi_R9fA",
+      "title": "Successful Thursday Counter on NQ after Friday Reversal: hourly CISD confirms bearish reversal for Friday continuation"
+    },
+    {
+      "card_id": "uPUNOi_R9fA_case_005_thursday_counter_on_tsla_with_in",
+      "video_id": "uPUNOi_R9fA",
+      "title": "Thursday Counter Weekly Profile on TSLA with ES/NQ Intermarket Reversal Confirmation"
+    },
+    {
+      "card_id": "umyCqr_0NsI_case_003_nq_5_minute_advanced_structure_d",
+      "video_id": "umyCqr_0NsI",
+      "title": "NQ 5-Minute Advanced Structure: London Sweep of Asia Highs, Order Block Formation, and NY Retrace to Sell-Side Liquidity"
+    },
+    {
+      "card_id": "vn1RYjhJUnQ_case_001_nq_1_hour_bearish_c2_with_cisd_a",
+      "video_id": "vn1RYjhJUnQ",
+      "title": "NQ 1-hour bearish Candle 2 closure with lower-time-frame CISD confirming continuation lower"
+    },
+    {
+      "card_id": "wik00c9_2nk_case_001_cl1_consolidation_range_reversal",
+      "video_id": "wik00c9_2nk",
+      "title": "CL1! 3-minute consolidation range reversal: manipulation of low, inversion, change in state of delivery, then expansion to range high"
+    },
+    {
+      "card_id": "wik00c9_2nk_case_002_gc1_bullish_bias_with_asia_highs",
+      "video_id": "wik00c9_2nk",
+      "title": "GC1! Bullish Bias with Asia Highs: Turtle Soup, Inversion, and Change in State of Delivery Leading to Continuation Higher"
+    },
+    {
+      "card_id": "wik00c9_2nk_case_003_ym1_bearish_reversal_with_sweep_",
+      "video_id": "wik00c9_2nk",
+      "title": "YM1! Bearish Reversal After Sweep of High with Turtle Soup, Inversion, and Breaker Block"
+    },
+    {
+      "card_id": "xP-o11jRCyg_case_003_eth_nq_after_selloff_bullish_bre",
+      "video_id": "xP-o11jRCyg",
+      "title": "NQ1! After Selloff: Bullish Breaker Continuation Entry Validated by SMT on 5-Minute Chart"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_001_bullish_oil_london_reversal_exam",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bullish Oil London Reversal: CISD during London session followed by NY continuation to range equilibrium and daily FVG"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_002_bearish_oil_london_reversal_exam",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bearish Oil London Reversal: Sweep of High, CISD on 30-min, NY Manipulation into OB then Continuation Lower"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_003_another_bearish_oil_new_york_con",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bearish Oil Continuation After London Reversal and NY 8:30 Manipulation"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_004_bearish_es_london_reversal_examp",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bearish ES London Reversal: Sweep of Asia Range High, CISD, 8:30 Manipulation into OB, then Lower Move at 9:30"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_005_bullish_oil_reversal_candle_and_",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bullish Oil Daily Reversal Candle with Sweep Below Prior Day Low and Next-Day London Continuation"
+    },
+    {
+      "card_id": "ynFA6E3qHj0_case_001_eth_1_minute_price_action_analys",
+      "video_id": "ynFA6E3qHj0",
+      "title": "ETH 1-Minute Analysis: Distinguishing Displacement Moves from Liquidity Grabs Using Order Blocks and Fair Value Gaps"
+    },
+    {
+      "card_id": "IQHoLIinfJ4_case_001_eurusd_1h_failed_high_break",
+      "video_id": "IQHoLIinfJ4",
+      "title": "EURUSD 1H: Repeated failed high breaks with wick rejections before confirmed bullish break and close"
+    },
+    {
+      "card_id": "IQHoLIinfJ4_case_002_london_session_long_trade_on_eur",
+      "video_id": "IQHoLIinfJ4",
+      "title": "London Session Long Trade on EURUSD using buyer absorption at order block after liquidity sweep"
+    },
+    {
+      "card_id": "OhE__u454wo_case_001_live_eurusd_trade_example",
+      "video_id": "OhE__u454wo",
+      "title": "Live EURUSD long trade setup using bias identification, liquidity sweep, FVG entry, and partial profit taking"
+    },
+    {
+      "card_id": "c9m88P3TInc_case_001_eurusd_bearish_trade_using_sweep",
+      "video_id": "c9m88P3TInc",
+      "title": "EURUSD Bearish Trade Using Liquidity Sweep of Asia High and FVG Break Confirmation on 5min"
+    },
+    {
+      "card_id": "t9BR9g8P6z8_case_002_bullish_bias_invalidated_by_chan",
+      "video_id": "t9BR9g8P6z8",
+      "title": "Bullish Bias Invalidated by Break of Key Swing Low, Triggering Change of Character to Bearish"
+    },
+    {
+      "card_id": "t9BR9g8P6z8_case_003_short_setup_with_inverted_fvg_an",
+      "video_id": "t9BR9g8P6z8",
+      "title": "Short Setup After CHoCH Using Inverted FVG and Order Block with 5R Partial Profit"
+    },
+    {
+      "card_id": "wF38l2hG-DI_case_001_eurusd_short_trade_during_new_yo",
+      "video_id": "wF38l2hG-DI",
+      "title": "EURUSD Short Trade on May 1st New York Session: Bearish 15-min Structure, London Equal Highs Liquidity Sweep, 1-min Bearish Shift for Entry"
+    },
+    {
+      "card_id": "1ErfpOJTGUg_case_001_gbpusd_short_trade_using_premium",
+      "video_id": "1ErfpOJTGUg",
+      "title": "GBPUSD Short Trade Using Premium Zone, FVG, OB, Liquidity Sweep, and CHoCH on 4H/1H/15M"
+    },
+    {
+      "card_id": "2u9oYfx5xdY_case_001_eurusd_order_block_trade_example",
+      "video_id": "2u9oYfx5xdY",
+      "title": "EURUSD 1H Order Block Trade: First OB rejected without confirmation, second OB triggered multiple long entries after CHoCH"
+    },
+    {
+      "card_id": "7u16VE_oj6o_case_001_eur_usd_bullish_trade_example",
+      "video_id": "7u16VE_oj6o",
+      "title": "EUR/USD Bullish Trade Using Daily Breakout, 1H FVGs, and 5M CHoCH with Multiple Order Block Entries"
+    },
+    {
+      "card_id": "7u16VE_oj6o_case_002_multiple_order_blocks_scenario",
+      "video_id": "7u16VE_oj6o",
+      "title": "Trading successive order blocks on 5-minute chart after HTF zone hit, including stop-loss hit before target"
+    },
+    {
+      "card_id": "8mBSCRsTHdk_case_001_eurusd_short_trade_example_1h_do",
+      "video_id": "8mBSCRsTHdk",
+      "title": "EURUSD 1H short trade triggered by engulfing candle after equal highs sweep and unmitigated order block"
+    },
+    {
+      "card_id": "8mBSCRsTHdk_case_002_eurusd_long_trade_example_1h_upt",
+      "video_id": "8mBSCRsTHdk",
+      "title": "EURUSD 1H long trade triggered by engulfing candle after liquidity sweep and unmitigated order block mitigation"
+    },
+    {
+      "card_id": "8mBSCRsTHdk_case_003_eurusd_second_short_trade_exampl",
+      "video_id": "8mBSCRsTHdk",
+      "title": "EURUSD 1H downtrend: short entry after engulfing candle breaks unmitigated order block with liquidity above"
+    },
+    {
+      "card_id": "ECMYxWuir0A_case_001_gold_30_min_liquidity_sweep_setu",
+      "video_id": "ECMYxWuir0A",
+      "title": "Gold 30-min liquidity sweep below key support followed by reversal into FVG demand zone"
+    },
+    {
+      "card_id": "ECMYxWuir0A_case_002_eurusd_5_min_order_block_and_gap",
+      "video_id": "ECMYxWuir0A",
+      "title": "EURUSD 5-min long setup using order block, gap below, and liquidity sweep"
+    },
+    {
+      "card_id": "ECMYxWuir0A_case_003_eurusd_5_min_order_block_liquidi",
+      "video_id": "ECMYxWuir0A",
+      "title": "EURUSD 5-min uptrend with no inefficiency, liquidity sweep below swing low into order block demand zone"
+    },
+    {
+      "card_id": "H5Z_u8FKajA_case_001_eur_usd_multi_timeframe_trade_se",
+      "video_id": "H5Z_u8FKajA",
+      "title": "EUR/USD Multi-Timeframe Long Setup After Liquidity Sweep of Equal Lows and FVG Confirmation"
+    },
+    {
+      "card_id": "IQPDvCcMfQQ_case_001_usdjpy_daily_to_1h_short_setup",
+      "video_id": "IQPDvCcMfQQ",
+      "title": "USDJPY Daily to 1H Short Setup: Bearish HTF order block, 4H downtrend confirmation, 1H bearish break of bullish order block"
+    },
+    {
+      "card_id": "IQPDvCcMfQQ_case_002_eurjpy_daily_to_1h_short_setup",
+      "video_id": "IQPDvCcMfQQ",
+      "title": "EURJPY Daily-to-1H Short Setup Using Order Block and Change of Character Confirmation"
+    },
+    {
+      "card_id": "JEoEYDmfDrk_case_001_eurusd_bullish_reversal_with_ord",
+      "video_id": "JEoEYDmfDrk",
+      "title": "EURUSD Bullish Reversal with Order Block Entry: HTF OB respected, LTF OB missed, FVG used for refined entry"
+    },
+    {
+      "card_id": "JEoEYDmfDrk_case_002_eurusd_downtrend_price_misses_ex",
+      "video_id": "JEoEYDmfDrk",
+      "title": "EURUSD Downtrend: Price Reverses Before Reaching Extreme Order Block and FVG Due to Retracement Inefficiency"
+    },
+    {
+      "card_id": "JEoEYDmfDrk_case_003_eurusd_15_minute_dual_entry_comp",
+      "video_id": "JEoEYDmfDrk",
+      "title": "EURUSD 15-Minute Dual Entry Comparison: Order Block vs Fair Value Gap after Bullish CHoCH"
+    },
+    {
+      "card_id": "JpQybUVffVI_case_001_eurusd_1_hour_pullback_example",
+      "video_id": "JpQybUVffVI",
+      "title": "EURUSD 1-Hour Pullback into Order Block with Inducement Zone Confirmation"
+    },
+    {
+      "card_id": "Of16xcl1AJc_case_001_eurusd_15_minute_liquidity_and_f",
+      "video_id": "Of16xcl1AJc",
+      "title": "EURUSD 15-minute analysis of sell-side liquidity sweep followed by buy-side delivery and Fair Value Gap refill"
+    },
+    {
+      "card_id": "V6Whc51nI6Q_case_002_bullish_demand_zones_on_eur_usd_",
+      "video_id": "V6Whc51nI6Q",
+      "title": "Bullish Demand Zones on EUR/USD 4H: Identifying Valid Long Entries Using Inefficiency, BOS, and Liquidity Sweep"
+    },
+    {
+      "card_id": "WkuE2lHwsbo_case_001_gold_spot_continuation_trade",
+      "video_id": "WkuE2lHwsbo",
+      "title": "Gold Spot Continuation Sell Setup After CHoCH, BOS, and Liquidity Sweep"
+    },
+    {
+      "card_id": "WkuE2lHwsbo_case_002_eurusd_4h_bullish_setup",
+      "video_id": "WkuE2lHwsbo",
+      "title": "EURUSD 4H Bullish Setup: Liquidity Sweep, BOS with Inefficiency, and Inducement Confirmation"
+    },
+    {
+      "card_id": "WkuE2lHwsbo_case_003_eurusd_change_of_character_trade",
+      "video_id": "WkuE2lHwsbo",
+      "title": "EURUSD CHoCH trade from 4H demand zone with 15m and 1m multi-timeframe confirmation"
+    },
+    {
+      "card_id": "WkuE2lHwsbo_case_005_eurusd_continuation_trade_second",
+      "video_id": "WkuE2lHwsbo",
+      "title": "EURUSD 1-minute continuation buy setup: bullish BOS with inefficiency, demand zone entry, and liquidity sweep above"
+    },
+    {
+      "card_id": "XdEf6_DL_F0_case_001_example_of_selecting_demand_zone",
+      "video_id": "XdEf6_DL_F0",
+      "title": "Selecting a safer demand zone in an uptrend by waiting for liquidity sweep below equal lows"
+    },
+    {
+      "card_id": "sSAGIzQAhuM_case_002_bullish_change_of_character_exam",
+      "video_id": "sSAGIzQAhuM",
+      "title": "Bullish Change of Character after Breaking Major High and Mitigating All Supply Zones"
+    },
+    {
+      "card_id": "sSAGIzQAhuM_case_003_invalid_change_of_character_due_",
+      "video_id": "sSAGIzQAhuM",
+      "title": "Invalid Change of Character due to absence of HTF demand zone interaction before reversal"
+    },
+    {
+      "card_id": "sSAGIzQAhuM_case_004_liquidity_sweep_in_15m_downtrend",
+      "video_id": "sSAGIzQAhuM",
+      "title": "Liquidity Sweep of Equal Highs Before Bearish Change of Character in 15m Downtrend"
+    },
+    {
+      "card_id": "sSAGIzQAhuM_case_005_double_zone_breakout_with_single",
+      "video_id": "sSAGIzQAhuM",
+      "title": "Double Zone Breakout with Single Down Leg: Price breaks two successive demand zones in one bearish move, forming a strong supply zone for short entry"
+    },
+    {
+      "card_id": "sxaR_PjEcuM_case_004_third_optimal_trading_scenario_e",
+      "video_id": "sxaR_PjEcuM",
+      "title": "EURUSD 1H short trade triggered after price reversed from unmitigated 4H supply zone following liquidity sweep and inducement"
+    },
+    {
+      "card_id": "vOgT_KtA-08_case_001_eur_usd_15_minute_order_block_an",
+      "video_id": "vOgT_KtA-08",
+      "title": "EUR/USD 15-minute chart analysis identifying valid order blocks after BOS and CHoCH, including inducement and mitigation checks"
+    },
+    {
+      "card_id": "yr0qiHMd1vw_case_001_uptrend_order_block_and_liquidit",
+      "video_id": "yr0qiHMd1vw",
+      "title": "Uptrend Order Block with Double Bottom and Bullish Liquidity Grab on EURUSD 5-min"
+    },
+    {
+      "card_id": "zE_SNpX-dV8_case_001_eur_usd_1_minute_liquidity_sweep",
+      "video_id": "zE_SNpX-dV8",
+      "title": "EUR/USD 1-minute chart showing liquidity sweep above swing high followed by reversal and break of structure"
+    },
+    {
+      "card_id": "04 - Discount & Premium - ICT Concepts_case_002_美元指数_dxy_日线多范围折扣溢价分析",
+      "video_id": "04 - Discount & Premium - ICT Concepts",
+      "title": "DXY日线多嵌套范围折扣溢价追踪分析"
+    },
+    {
+      "card_id": "05 - ICT Daily Bias - The Only Video You Will Ever Need!_case_003_dxy日线综合偏差分析",
+      "video_id": "05 - ICT Daily Bias - The Only Video You Will Ever Need!",
+      "title": "DXY日线综合偏差分析：前日高低点、FVG与Next Day Model逐日追踪"
+    },
+    {
+      "card_id": "07 - Internal & External Liquidity (Daily Bias) - ICT Concepts_case_002_黄金60分钟自上而下做空案例",
+      "video_id": "07 - Internal & External Liquidity (Daily Bias) - ICT Concepts",
+      "title": "黄金XAUUSD 60分钟FVG看跌偏差自上而下做空案例"
+    },
+    {
+      "card_id": "07 - Internal & External Liquidity (Daily Bias) - ICT Concepts_case_003_gbp_jpy周线至4小时自上而下做多案例",
+      "video_id": "07 - Internal & External Liquidity (Daily Bias) - ICT Concepts",
+      "title": "GBP/JPY周线至4小时自上而下多时间框架做多案例"
+    },
+    {
+      "card_id": "09 - Breaker Blocks Simplified - ICT Concepts_case_001_gbpusd_5分钟多头breaker_block示例_2023",
+      "video_id": "09 - Breaker Blocks Simplified - ICT Concepts",
+      "title": "GBPUSD 5分钟多头Breaker Block自上而下分析（2023-12-27）"
+    },
+    {
+      "card_id": "09 - Breaker Blocks Simplified - ICT Concepts_case_003_nq_1分钟_5分钟多头unicorn_model示例_2023",
+      "video_id": "09 - Breaker Blocks Simplified - ICT Concepts",
+      "title": "NQ 2023-12-12 多头Unicorn Model：Breaker Block与FVG重叠及Projection目标演示"
+    },
+    {
+      "card_id": "10 - Inversion Fair Value Gaps (IFVG) - ICT Concepts_case_004_nq_2分钟_上升趋势中propulsion_block与ifv",
+      "video_id": "10 - Inversion Fair Value Gaps (IFVG) - ICT Concepts",
+      "title": "NQ 2分钟上升趋势中Propulsion Block与IFVG顺势做多"
+    },
+    {
+      "card_id": "11 - Order Blocks Simplified - ICT Concepts_case_001_nq1_5分钟图_无效订单块_缺乏高时间框架水平",
+      "video_id": "11 - Order Blocks Simplified - ICT Concepts",
+      "title": "NQ1! 5分钟图——无效订单块因缺乏高时间框架重要水平被止损"
+    },
+    {
+      "card_id": "11 - Order Blocks Simplified - ICT Concepts_case_002_nq1_小时图fvg触发的有效订单块做多",
+      "video_id": "11 - Order Blocks Simplified - ICT Concepts",
+      "title": "NQ1! 小时图FVG触发的有效订单块做多"
+    },
+    {
+      "card_id": "11 - Order Blocks Simplified - ICT Concepts_case_003_usoil_5分钟图_均值阈值入场提升风险回报比",
+      "video_id": "11 - Order Blocks Simplified - ICT Concepts",
+      "title": "USOIL 5分钟图——均值阈值入场将风险回报比从1.3提升至2.6"
+    },
+    {
+      "card_id": "11 - Order Blocks Simplified - ICT Concepts_case_004_nq1_15分钟图_买侧曲线订单块_扫亚洲低点后做多",
+      "video_id": "11 - Order Blocks Simplified - ICT Concepts",
+      "title": "NQ1! 15分钟图——扫亚洲低点后买侧曲线订单块做多"
+    },
+    {
+      "card_id": "11 - Order Blocks Simplified - ICT Concepts_case_005_cl1_日线图_趋势延续中的多层订单块",
+      "video_id": "11 - Order Blocks Simplified - ICT Concepts",
+      "title": "CL1! 日线图——前月高点附近等高点形成后多层订单块趋势延续"
+    },
+    {
+      "card_id": "11 - Order Blocks Simplified - ICT Concepts_case_006_nq1_5分钟图_最终综合案例_止损位置对比与二次入场",
+      "video_id": "11 - Order Blocks Simplified - ICT Concepts",
+      "title": "NQ1! 5分钟图：Order Block首次入场与均值阈值二次入场对比及止损位置讨论"
+    },
+    {
+      "card_id": "12 - Mitigation Blocks Simplified - ICT Concepts_case_003_黄金xauusd_4小时图_market_maker_model",
+      "video_id": "12 - Mitigation Blocks Simplified - ICT Concepts",
+      "title": "黄金XAUUSD 4H图 Market Maker Model中Mitigation Block做多案例"
+    },
+    {
+      "card_id": "12 - Mitigation Blocks Simplified - ICT Concepts_case_004_es期货_breaker_block作为mitigation形式",
+      "video_id": "12 - Mitigation Blocks Simplified - ICT Concepts",
+      "title": "ES期货15分钟图Breaker Block作为Mitigation形式的做多案例"
+    },
+    {
+      "card_id": "12 - Mitigation Blocks Simplified - ICT Concepts_case_005_原油usoil日线图_mitigation_block做空案例",
+      "video_id": "12 - Mitigation Blocks Simplified - ICT Concepts",
+      "title": "原油USOIL日线图多个Mitigation Block叠加做空框架"
+    },
+    {
+      "card_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts_case_001_nq_2023年8月11日_5分钟图_cisd做空案例",
+      "video_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts",
+      "title": "NQ 2023年8月11日 5分钟图 CISD识别与Order Block做空案例"
+    },
+    {
+      "card_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts_case_002_nq_2023年10月13日_多时间框架做空案例",
+      "video_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts",
+      "title": "NQ 2023年10月13日 日线FVG看跌偏差多时间框架做空案例"
+    },
+    {
+      "card_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts_case_003_es_2023年10月11日_1分钟图做空后做多案例",
+      "video_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts",
+      "title": "ES 2023年10月11日1分钟图看跌操纵做空后看涨操纵做多"
+    },
+    {
+      "card_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts_case_004_nq_2023年11月1日_box_setup结合订单块做多案例",
+      "video_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts",
+      "title": "NQ 2023年11月1日 Box Setup结合Order Block做多案例"
+    },
+    {
+      "card_id": "15 - Optimal Trade Entry (OTE) - ICT Concepts_case_002_ym1_日线看涨ote案例",
+      "video_id": "15 - Optimal Trade Entry (OTE) - ICT Concepts",
+      "title": "YM1! 日线看涨OTE：FVG与OB均值阈值入场案例"
+    },
+    {
+      "card_id": "15 - Optimal Trade Entry (OTE) - ICT Concepts_case_004_黄金小时图与5分钟图多时间框架做空案例",
+      "video_id": "15 - Optimal Trade Entry (OTE) - ICT Concepts",
+      "title": "XAUUSD小时图与5分钟图多时间框架做空案例（OTE+FVG+OB）"
+    },
+    {
+      "card_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays_case_001_指数日内盘整区间反转序列完整演示_案例一",
+      "video_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays",
+      "title": "指数日内盘整区间反转序列五步完整演示（Tue 03 Dec）"
+    },
+    {
+      "card_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays_case_002_黄金_gc_日内反转序列案例_案例二",
+      "video_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays",
+      "title": "黄金GC1!日线看涨偏差下15分钟CISD与Breaker Block反转入场"
+    },
+    {
+      "card_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays_case_003_道指_ym_日内看跌反转序列案例_案例三",
+      "video_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays",
+      "title": "道指（YM1!）日内看跌反转四步序列案例（Wed 23 Oct）"
+    },
+    {
+      "card_id": "17 - SMT Divergence - ICT Concepts_case_004_nq_2024年1月11日cpi后smt背离做空案例",
+      "video_id": "17 - SMT Divergence - ICT Concepts",
+      "title": "NQ 2024年1月11日CPI后SMT背离做空案例"
+    },
+    {
+      "card_id": "18 - Trade Like TTrades - Top Down Analysis_case_001_教学示意图_错误的单时间框架ob交易与正确的多时间框架对齐",
+      "video_id": "18 - Trade Like TTrades - Top Down Analysis",
+      "title": "示意图：单时间框架看涨OB入场被止损与多时间框架看跌对齐正确做法"
+    },
+    {
+      "card_id": "18 - Trade Like TTrades - Top Down Analysis_case_002_原油期货_cl1_日线_1小时_5分钟多头案例",
+      "video_id": "18 - Trade Like TTrades - Top Down Analysis",
+      "title": "CL1! 原油期货日线-1小时-5分钟自顶向下多头案例"
+    },
+    {
+      "card_id": "18 - Trade Like TTrades - Top Down Analysis_case_003_白银期货_si1_周线_4小时_15分钟空头案例",
+      "video_id": "18 - Trade Like TTrades - Top Down Analysis",
+      "title": "白银期货SI1!周线-4小时-15分钟三时间框架空头案例"
+    },
+    {
+      "card_id": "18 - Trade Like TTrades - Top Down Analysis_case_004_美元兑日元_usdjpy_日线_1小时_5分钟多头案例",
+      "video_id": "18 - Trade Like TTrades - Top Down Analysis",
+      "title": "USDJPY 日线FVG确立看涨偏差，1小时OB结构，5分钟伦敦时段CISD入场4R多头"
+    },
+    {
+      "card_id": "18 - Trade Like TTrades - Top Down Analysis_case_005_黄金期货_gc1_日线_1小时_5分钟多头案例",
+      "video_id": "18 - Trade Like TTrades - Top Down Analysis",
+      "title": "黄金期货GC1!日线-1小时-5分钟自上而下多头入场案例"
+    },
+    {
+      "card_id": "19 - Timeframe Alignment： How To Align Timeframes For Expansion_case_001_es1_周线_4小时_15分钟三层对齐空头案例",
+      "video_id": "19 - Timeframe Alignment： How To Align Timeframes For Expansion",
+      "title": "ES1! 周线旧高兴趣点驱动的三层时间框架对齐空头案例"
+    },
+    {
+      "card_id": "19 - Timeframe Alignment： How To Align Timeframes For Expansion_case_002_gc1_黄金日线_1小时_5分钟三层对齐空头案例",
+      "video_id": "19 - Timeframe Alignment： How To Align Timeframes For Expansion",
+      "title": "GC1! 黄金日线旧高扫出后1小时CISD确认空头三层时间框架对齐案例"
+    },
+    {
+      "card_id": "20 - High Resistance vs Low Resistance Liquidity - ICT Concepts_case_005_nq_es_smt背离_高阻力流动性高点配合es低阻力低点做多",
+      "video_id": "20 - High Resistance vs Low Resistance Liquidity - ICT Concepts",
+      "title": "NQ/ES SMT背离：NQ高阻力流动性高点配合ES低阻力低点做多"
+    },
+    {
+      "card_id": "20 - High Resistance vs Low Resistance Liquidity - ICT Concepts_case_006_es_5分钟图_扫出前日低点后ob与propulsion_blo",
+      "video_id": "20 - High Resistance vs Low Resistance Liquidity - ICT Concepts",
+      "title": "ES 5分钟图：扫出前日低点后OB与Propulsion Block做多"
+    },
+    {
+      "card_id": "21 - ICT Killzones & Indicator Settings_case_003_nq指数2023年3月10日kill_zone交易分析",
+      "video_id": "21 - ICT Killzones & Indicator Settings",
+      "title": "NQ指数2023年3月10日Kill Zone亚洲低点扫盘至纽约AM做空完整分析"
+    }
+  ],
+  "source_cards": [
+    {
+      "video_id": "IeXtmeKqjnQ",
+      "original_card_id": "IeXtmeKqjnQ_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_003"
+      ],
+      "time_range": [
+        10.08,
+        538.92
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "xdzyejskSKE",
+      "original_card_id": "xdzyejskSKE_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        192.56,
+        726.92
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "y6SnEdASVLY",
+      "original_card_id": "y6SnEdASVLY_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        164.2,
+        675.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "-GkOTMYoJT4",
+      "original_card_id": "-GkOTMYoJT4_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002"
+      ],
+      "time_range": [
+        2.82,
+        345.06
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "-wr4xATE37g",
+      "original_card_id": "-wr4xATE37g_concept_order_block",
+      "segment_ids": [
+        "seg_011"
+      ],
+      "time_range": [
+        746.959,
+        925.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "0R61Y6Pn74Q",
+      "original_card_id": "0R61Y6Pn74Q_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002"
+      ],
+      "time_range": [
+        10.519,
+        306.6
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "0xygpCMwxbQ",
+      "original_card_id": "0xygpCMwxbQ_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        2.82,
+        650.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "1YRs4Z1lMws",
+      "original_card_id": "1YRs4Z1lMws_concept_order_block_ob",
+      "segment_ids": [
+        "seg_007",
+        "seg_014"
+      ],
+      "time_range": [
+        297.44,
+        572.72
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "27S9gjgcSlI",
+      "original_card_id": "27S9gjgcSlI_concept_order_block_ob",
+      "segment_ids": [
+        "seg_003",
+        "seg_005"
+      ],
+      "time_range": [
+        371.8,
+        741.48
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "3OivsP1j_UE",
+      "original_card_id": "3OivsP1j_UE_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_004"
+      ],
+      "time_range": [
+        193.04,
+        713.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "3eVxTV_7L2U",
+      "original_card_id": "3eVxTV_7L2U_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        11.2,
+        414.96
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "5fnFOh5YuM0",
+      "original_card_id": "5fnFOh5YuM0_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_003"
+      ],
+      "time_range": [
+        11.12,
+        548.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "6zTz7WMdMWg",
+      "original_card_id": "6zTz7WMdMWg_concept_order_block",
+      "segment_ids": [
+        "seg_006",
+        "seg_007",
+        "seg_008",
+        "seg_009"
+      ],
+      "time_range": [
+        902.399,
+        1500.24
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "75S4vwD4P1U",
+      "original_card_id": "75S4vwD4P1U_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        372.12,
+        550.079
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "7p9MBFk8EEM",
+      "original_card_id": "7p9MBFk8EEM_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_006",
+        "seg_009",
+        "seg_010",
+        "seg_013",
+        "seg_015"
+      ],
+      "time_range": [
+        10.24,
+        640.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "9PKJ0U1gl4g",
+      "original_card_id": "9PKJ0U1gl4g_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        12.44,
+        542.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "A8UpRZlRzlg",
+      "original_card_id": "A8UpRZlRzlg_concept_order_block",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        6.72,
+        187.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "AdmnWLjf8rY",
+      "original_card_id": "AdmnWLjf8rY_concept_order_block",
+      "segment_ids": [
+        "seg_005"
+      ],
+      "time_range": [
+        495.72,
+        542.18
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "CAuN4tvLInQ",
+      "original_card_id": "CAuN4tvLInQ_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        182.66,
+        350.78
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "CHIK5oBRKiw",
+      "original_card_id": "CHIK5oBRKiw_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        10.48,
+        945.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "CqMIh-Vvhbg",
+      "original_card_id": "CqMIh-Vvhbg_concept_order_block",
+      "segment_ids": [
+        "seg_006"
+      ],
+      "time_range": [
+        903.24,
+        1082.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "DMUiDBnTYc8",
+      "original_card_id": "DMUiDBnTYc8_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        10.4,
+        877.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "E6bpY4dQvlE",
+      "original_card_id": "E6bpY4dQvlE_concept_order_block_ob",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        0.659,
+        182.099
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "E89d1HArbgM",
+      "original_card_id": "E89d1HArbgM_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        10.44,
+        546.92
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "EYzP7c24AwM",
+      "original_card_id": "EYzP7c24AwM_concept_order_block_ob",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        10.84,
+        904.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "F0G31iLVpVg",
+      "original_card_id": "F0G31iLVpVg_concept_order_block",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        11.12,
+        144.4
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "FGkb_50BfT8",
+      "original_card_id": "FGkb_50BfT8_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        370.84,
+        694.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "FXJBFbZQbck",
+      "original_card_id": "FXJBFbZQbck_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        371.88,
+        502.199
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "FXNLGYxfbDc",
+      "original_card_id": "FXNLGYxfbDc_concept_order_block",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        6.319,
+        119.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "Gu7FjYYcKhI",
+      "original_card_id": "Gu7FjYYcKhI_concept_order_block",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        6.48,
+        189.76
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "IJcfC6wAPZU",
+      "original_card_id": "IJcfC6wAPZU_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        10.96,
+        1029.6
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "IPZjNI1B5a0",
+      "original_card_id": "IPZjNI1B5a0_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        191.28,
+        1086.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "IeXtmeKqjnQ",
+      "original_card_id": "IeXtmeKqjnQ_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        369.88,
+        538.92
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "JHVaSKtE1Ys",
+      "original_card_id": "JHVaSKtE1Ys_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        43.52,
+        149.76
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "LZZAaILYNyI",
+      "original_card_id": "LZZAaILYNyI_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002"
+      ],
+      "time_range": [
+        7.759,
+        281.639
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "MPeeE55rNOw",
+      "original_card_id": "MPeeE55rNOw_concept_order_block",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        550.6,
+        729.6
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "MlMsG7li9zY",
+      "original_card_id": "MlMsG7li9zY_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        185.0,
+        509.36
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "MmvC4rsmmcM",
+      "original_card_id": "MmvC4rsmmcM_concept_order_block_ob",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        0.659,
+        496.28
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "NgFIza9qsGQ",
+      "original_card_id": "NgFIza9qsGQ_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002"
+      ],
+      "time_range": [
+        7.359,
+        367.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "Ovotm9l99QQ",
+      "original_card_id": "Ovotm9l99QQ_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        6.859,
+        187.5
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "PQiRV0JMhIQ",
+      "original_card_id": "PQiRV0JMhIQ_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_005"
+      ],
+      "time_range": [
+        10.88,
+        350.15999999999997
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "PlZD45uLPjE",
+      "original_card_id": "PlZD45uLPjE_concept_order_block_ob",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        285.6,
+        429.199
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "TfHlNgAZ_II",
+      "original_card_id": "TfHlNgAZ_II_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        11.0,
+        877.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "VD4xb9VfMHA",
+      "original_card_id": "VD4xb9VfMHA_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        107.03999999999999,
+        204.72
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "WwmS47Gb3M0",
+      "original_card_id": "WwmS47Gb3M0_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        194.28,
+        551.2
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "Y8DkNYhq0X0",
+      "original_card_id": "Y8DkNYhq0X0_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        0.659,
+        498.68
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "YmdC_LKT-Pk",
+      "original_card_id": "YmdC_LKT-Pk_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        7.28,
+        365.82
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "Zm2oKad3Tb8",
+      "original_card_id": "Zm2oKad3Tb8_concept_order_block",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        6.96,
+        187.76
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "_94CPMjWi9E",
+      "original_card_id": "_94CPMjWi9E_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        184.319,
+        478.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "c_mh19e3mhI",
+      "original_card_id": "c_mh19e3mhI_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_003"
+      ],
+      "time_range": [
+        2.82,
+        541.08
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "caaS6_Q7O78",
+      "original_card_id": "caaS6_Q7O78_concept_order_block_ob",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        191.599,
+        904.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "dcIdzqD3kMU",
+      "original_card_id": "dcIdzqD3kMU_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        7.56,
+        187.98
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "eywpZT3z6GQ",
+      "original_card_id": "eywpZT3z6GQ_concept_order_block",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        10.88,
+        122.159
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "g3oDYq4P9ZE",
+      "original_card_id": "g3oDYq4P9ZE_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        365.72,
+        719.04
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "hKCMqh0ZsY0",
+      "original_card_id": "hKCMqh0ZsY0_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        191.76,
+        728.48
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "hh_kKK4Fhrw",
+      "original_card_id": "hh_kKK4Fhrw_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        6.799,
+        368.58
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "iEaMbuFZb24",
+      "original_card_id": "iEaMbuFZb24_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        11.0,
+        1215.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "ivirRu3fc4o",
+      "original_card_id": "ivirRu3fc4o_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002"
+      ],
+      "time_range": [
+        7.12,
+        355.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "k3hTgbHBz1U",
+      "original_card_id": "k3hTgbHBz1U_concept_order_block",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        6.24,
+        187.76
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "kTWXpAo1uE8",
+      "original_card_id": "kTWXpAo1uE8_concept_order_block",
+      "segment_ids": [
+        "seg_004",
+        "seg_007"
+      ],
+      "time_range": [
+        325.08,
+        785.6
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "klaiq36QnEM",
+      "original_card_id": "klaiq36QnEM_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        2.82,
+        812.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "lpam8F-N3EM",
+      "original_card_id": "lpam8F-N3EM_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        6.08,
+        350.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "o0v4KQxZbpU",
+      "original_card_id": "o0v4KQxZbpU_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_004",
+        "seg_007",
+        "seg_011",
+        "seg_013"
+      ],
+      "time_range": [
+        64.28,
+        1526.52
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "pWAjzKndWXo",
+      "original_card_id": "pWAjzKndWXo_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002"
+      ],
+      "time_range": [
+        6.72,
+        232.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "q1NmxUTm4n4",
+      "original_card_id": "q1NmxUTm4n4_concept_order_block_ob",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        396.86,
+        511.46
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "q40pRwjuPYQ",
+      "original_card_id": "q40pRwjuPYQ_concept_order_block",
+      "segment_ids": [
+        "seg_005",
+        "seg_007"
+      ],
+      "time_range": [
+        418.599,
+        690.959
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "qdQYhePcvGE",
+      "original_card_id": "qdQYhePcvGE_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_008",
+        "seg_011"
+      ],
+      "time_range": [
+        122.479,
+        701.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "r_UF8U-hsL8",
+      "original_card_id": "r_UF8U-hsL8_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_003",
+        "seg_004",
+        "seg_007"
+      ],
+      "time_range": [
+        11.12,
+        573.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "uDJI2AbyyCs",
+      "original_card_id": "uDJI2AbyyCs_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        370.199,
+        466.96
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "umyCqr_0NsI",
+      "original_card_id": "umyCqr_0NsI_concept_order_block",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        550.36,
+        729.519
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "wDXTIDbIMwU",
+      "original_card_id": "wDXTIDbIMwU_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        7.22,
+        367.08
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "wik00c9_2nk",
+      "original_card_id": "wik00c9_2nk_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        11.04,
+        1016.639
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "wwMjc9RfpCg",
+      "original_card_id": "wwMjc9RfpCg_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_005"
+      ],
+      "time_range": [
+        187.8,
+        538.3389999999999
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "wy3OSPxu5U0",
+      "original_card_id": "wy3OSPxu5U0_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_005",
+        "seg_006",
+        "seg_007",
+        "seg_010",
+        "seg_013",
+        "seg_014"
+      ],
+      "time_range": [
+        51.52,
+        582.08
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "xdzyejskSKE",
+      "original_card_id": "xdzyejskSKE_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        192.56,
+        775.48
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "xvqsLTpmpsI",
+      "original_card_id": "xvqsLTpmpsI_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        7.099,
+        368.039
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "y6SnEdASVLY",
+      "original_card_id": "y6SnEdASVLY_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        164.2,
+        675.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "ynFA6E3qHj0",
+      "original_card_id": "ynFA6E3qHj0_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        183.78,
+        636.26
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "yq4Z7q4E6nU",
+      "original_card_id": "yq4Z7q4E6nU_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        6.74,
+        188.22
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "4Gm8p6O7Ebs",
+      "original_card_id": "4Gm8p6O7Ebs_concept_opposing_candle",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_005",
+        "seg_006",
+        "seg_007",
+        "seg_010"
+      ],
+      "time_range": [
+        66.24,
+        574.32
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "IJcfC6wAPZU",
+      "original_card_id": "IJcfC6wAPZU_concept_opposing_candle",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        10.96,
+        910.04
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "IPZjNI1B5a0",
+      "original_card_id": "IPZjNI1B5a0_concept_opposing_candle",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        10.96,
+        1156.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "JHVaSKtE1Ys",
+      "original_card_id": "JHVaSKtE1Ys_concept_opposing_candle",
+      "segment_ids": [
+        "seg_012",
+        "seg_014"
+      ],
+      "time_range": [
+        697.12,
+        823.8389999999999
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "r_UF8U-hsL8",
+      "original_card_id": "r_UF8U-hsL8_concept_opposing_candle",
+      "segment_ids": [
+        "seg_007",
+        "seg_008",
+        "seg_009"
+      ],
+      "time_range": [
+        393.84000000000003,
+        684.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "-GkOTMYoJT4",
+      "original_card_id": "-GkOTMYoJT4_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002"
+      ],
+      "time_range": [
+        2.82,
+        345.06
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "-wr4xATE37g",
+      "original_card_id": "-wr4xATE37g_concept_order_block",
+      "segment_ids": [
+        "seg_011",
+        "seg_012"
+      ],
+      "time_range": [
+        746.959,
+        984.399
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "0xygpCMwxbQ",
+      "original_card_id": "0xygpCMwxbQ_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        2.82,
+        650.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "1YRs4Z1lMws",
+      "original_card_id": "1YRs4Z1lMws_concept_order_block",
+      "segment_ids": [
+        "seg_007",
+        "seg_013",
+        "seg_014"
+      ],
+      "time_range": [
+        297.44,
+        572.72
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "27S9gjgcSlI",
+      "original_card_id": "27S9gjgcSlI_concept_order_block",
+      "segment_ids": [
+        "seg_005"
+      ],
+      "time_range": [
+        559.44,
+        741.48
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "3OivsP1j_UE",
+      "original_card_id": "3OivsP1j_UE_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_004"
+      ],
+      "time_range": [
+        193.04,
+        713.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "3eVxTV_7L2U",
+      "original_card_id": "3eVxTV_7L2U_concept_order_block",
+      "segment_ids": [
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        301.12,
+        414.96
+      ],
+      "extraction_confidence": "low"
+    },
+    {
+      "video_id": "4jU547ocod4",
+      "original_card_id": "4jU547ocod4_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        191.48,
+        1077.799
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "5fnFOh5YuM0",
+      "original_card_id": "5fnFOh5YuM0_concept_order_block",
+      "segment_ids": [
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        548.56,
+        904.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "6zTz7WMdMWg",
+      "original_card_id": "6zTz7WMdMWg_concept_order_block",
+      "segment_ids": [
+        "seg_006",
+        "seg_007",
+        "seg_008",
+        "seg_009"
+      ],
+      "time_range": [
+        902.399,
+        1500.24
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "75S4vwD4P1U",
+      "original_card_id": "75S4vwD4P1U_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        372.12,
+        550.079
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "7p9MBFk8EEM",
+      "original_card_id": "7p9MBFk8EEM_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007",
+        "seg_008",
+        "seg_009",
+        "seg_010",
+        "seg_011",
+        "seg_013",
+        "seg_015",
+        "seg_016"
+      ],
+      "time_range": [
+        10.24,
+        687.24
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "8BWkRGhuj1k",
+      "original_card_id": "8BWkRGhuj1k_concept_order_block",
+      "segment_ids": [
+        "seg_008",
+        "seg_018",
+        "seg_022"
+      ],
+      "time_range": [
+        465.44,
+        1179.919
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "9BY-MQRNy-Y",
+      "original_card_id": "9BY-MQRNy-Y_concept_order_block",
+      "segment_ids": [
+        "seg_004",
+        "seg_009"
+      ],
+      "time_range": [
+        144.48,
+        481.68
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "9PKJ0U1gl4g",
+      "original_card_id": "9PKJ0U1gl4g_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        12.44,
+        542.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "AdmnWLjf8rY",
+      "original_card_id": "AdmnWLjf8rY_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        299.759,
+        696.92
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "CHIK5oBRKiw",
+      "original_card_id": "CHIK5oBRKiw_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        10.48,
+        945.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "CqMIh-Vvhbg",
+      "original_card_id": "CqMIh-Vvhbg_concept_order_block",
+      "segment_ids": [
+        "seg_006"
+      ],
+      "time_range": [
+        903.24,
+        1082.88
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "DMUiDBnTYc8",
+      "original_card_id": "DMUiDBnTYc8_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        10.4,
+        877.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "E89d1HArbgM",
+      "original_card_id": "E89d1HArbgM_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        10.44,
+        546.92
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "EYzP7c24AwM",
+      "original_card_id": "EYzP7c24AwM_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        10.84,
+        904.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "F0G31iLVpVg",
+      "original_card_id": "F0G31iLVpVg_concept_order_block",
+      "segment_ids": [
+        "seg_022"
+      ],
+      "time_range": [
+        982.72,
+        1067.72
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "FAKWJ-1NlLE",
+      "original_card_id": "FAKWJ-1NlLE_concept_order_block",
+      "segment_ids": [
+        "seg_015"
+      ],
+      "time_range": [
+        768.72,
+        837.12
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "FGkb_50BfT8",
+      "original_card_id": "FGkb_50BfT8_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        370.84,
+        694.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "FKTBkTzsmUA",
+      "original_card_id": "FKTBkTzsmUA_concept_order_block",
+      "segment_ids": [
+        "seg_010",
+        "seg_015"
+      ],
+      "time_range": [
+        419.72,
+        662.44
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "FXJBFbZQbck",
+      "original_card_id": "FXJBFbZQbck_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_005"
+      ],
+      "time_range": [
+        371.88,
+        738.959
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "FgP2lc9nneM",
+      "original_card_id": "FgP2lc9nneM_concept_order_block",
+      "segment_ids": [
+        "seg_008",
+        "seg_009",
+        "seg_013",
+        "seg_020"
+      ],
+      "time_range": [
+        293.759,
+        876.48
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "IPZjNI1B5a0",
+      "original_card_id": "IPZjNI1B5a0_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        191.28,
+        1156.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "IeXtmeKqjnQ",
+      "original_card_id": "IeXtmeKqjnQ_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        191.48,
+        538.92
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "JHVaSKtE1Ys",
+      "original_card_id": "JHVaSKtE1Ys_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_008",
+        "seg_009",
+        "seg_010"
+      ],
+      "time_range": [
+        43.52,
+        623.04
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "MPeeE55rNOw",
+      "original_card_id": "MPeeE55rNOw_concept_order_block",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        550.6,
+        729.6
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "MlMsG7li9zY",
+      "original_card_id": "MlMsG7li9zY_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        185.0,
+        361.32
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "MsuEQQl7L6s",
+      "original_card_id": "MsuEQQl7L6s_concept_order_block",
+      "segment_ids": [
+        "seg_016"
+      ],
+      "time_range": [
+        696.24,
+        710.16
+      ],
+      "extraction_confidence": "low"
+    },
+    {
+      "video_id": "PQiRV0JMhIQ",
+      "original_card_id": "PQiRV0JMhIQ_concept_order_block",
+      "segment_ids": [
+        "seg_012",
+        "seg_013",
+        "seg_014",
+        "seg_020",
+        "seg_021",
+        "seg_026"
+      ],
+      "time_range": [
+        616.48,
+        1465.76
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "Pcbyc9TdNsU",
+      "original_card_id": "Pcbyc9TdNsU_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        10.36,
+        593.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "Qt7Ek4keMzs",
+      "original_card_id": "Qt7Ek4keMzs_concept_order_block",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        140.12,
+        255.32
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "Y8DkNYhq0X0",
+      "original_card_id": "Y8DkNYhq0X0_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        0.659,
+        498.68
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "_94CPMjWi9E",
+      "original_card_id": "_94CPMjWi9E_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        363.72,
+        478.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "caaS6_Q7O78",
+      "original_card_id": "caaS6_Q7O78_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        11.12,
+        904.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "wik00c9_2nk",
+      "original_card_id": "wik00c9_2nk_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        11.04,
+        1016.639
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "OhE__u454wo",
+      "original_card_id": "OhE__u454wo_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_005"
+      ],
+      "time_range": [
+        961.759,
+        1829.52
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "t9BR9g8P6z8",
+      "original_card_id": "t9BR9g8P6z8_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        539.24,
+        1074.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "wun5p5A3vYQ",
+      "original_card_id": "wun5p5A3vYQ_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        0.08,
+        2106.48
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "1ErfpOJTGUg",
+      "original_card_id": "1ErfpOJTGUg_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        361.08,
+        900.12
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "2u9oYfx5xdY",
+      "original_card_id": "2u9oYfx5xdY_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        43.44,
+        648.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "7u16VE_oj6o",
+      "original_card_id": "7u16VE_oj6o_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        422.28,
+        846.959
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "ECMYxWuir0A",
+      "original_card_id": "ECMYxWuir0A_concept_order_block",
+      "segment_ids": [
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        366.24,
+        799.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "H5Z_u8FKajA",
+      "original_card_id": "H5Z_u8FKajA_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        437.36,
+        771.72
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "IQPDvCcMfQQ",
+      "original_card_id": "IQPDvCcMfQQ_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        403.639,
+        1117.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "JEoEYDmfDrk",
+      "original_card_id": "JEoEYDmfDrk_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        55.92,
+        416.96
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "JpQybUVffVI",
+      "original_card_id": "JpQybUVffVI_concept_order_block",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        16.32,
+        21.359
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "NaWpOBxdsCY",
+      "original_card_id": "NaWpOBxdsCY_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        0.24,
+        764.639
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "vOgT_KtA-08",
+      "original_card_id": "vOgT_KtA-08_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        63.519,
+        785.959
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "yr0qiHMd1vw",
+      "original_card_id": "yr0qiHMd1vw_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_006"
+      ],
+      "time_range": [
+        155.44,
+        470.4
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "04 - Discount & Premium - ICT Concepts",
+      "original_card_id": "04 - Discount & Premium - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_002"
+      ],
+      "time_range": [
+        185.0,
+        361.32
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "07 - Internal & External Liquidity (Daily Bias) - ICT Concepts",
+      "original_card_id": "07 - Internal & External Liquidity (Daily Bias) - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_002",
+        "seg_004"
+      ],
+      "time_range": [
+        193.04,
+        713.88
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "09 - Breaker Blocks Simplified - ICT Concepts",
+      "original_card_id": "09 - Breaker Blocks Simplified - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        372.12,
+        550.079
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "10 - Inversion Fair Value Gaps (IFVG) - ICT Concepts",
+      "original_card_id": "10 - Inversion Fair Value Gaps (IFVG) - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_003"
+      ],
+      "time_range": [
+        370.199,
+        466.96
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "11 - Order Blocks Simplified - ICT Concepts",
+      "original_card_id": "11 - Order Blocks Simplified - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        10.4,
+        877.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts",
+      "original_card_id": "13 - Change In State Of Delivery [CISD] - Orderblock Formation - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        10.48,
+        945.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "15 - Optimal Trade Entry (OTE) - ICT Concepts",
+      "original_card_id": "15 - Optimal Trade Entry (OTE) - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_004",
+        "seg_007"
+      ],
+      "time_range": [
+        240.879,
+        572.72
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays",
+      "original_card_id": "16 - Reversal Sequence (TTRS) - How To Blend PD Arrays_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        11.04,
+        1016.639
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "18 - Trade Like TTrades - Top Down Analysis",
+      "original_card_id": "18 - Trade Like TTrades - Top Down Analysis_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_004",
+        "seg_005",
+        "seg_006",
+        "seg_007"
+      ],
+      "time_range": [
+        11.0,
+        1215.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "19 - Timeframe Alignment： How To Align Timeframes For Expansion",
+      "original_card_id": "19 - Timeframe Alignment： How To Align Timeframes For Expansion_concept_order_block",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        11.04,
+        877.759
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "20 - High Resistance vs Low Resistance Liquidity - ICT Concepts",
+      "original_card_id": "20 - High Resistance vs Low Resistance Liquidity - ICT Concepts_concept_order_block",
+      "segment_ids": [
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        370.84,
+        694.519
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "21 - ICT Killzones & Indicator Settings",
+      "original_card_id": "21 - ICT Killzones & Indicator Settings_concept_order_block",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        550.6,
+        729.6
+      ],
+      "extraction_confidence": "medium"
+    }
+  ],
+  "stats": {
+    "source_count": 150,
+    "source_videos": 112,
+    "n_projects": 6
+  },
+  "merged_at": "2026-05-23T13:00:15.291149+00:00",
+  "_embedding": [
+    0.04724212363362312,
+    0.042733628302812576,
+    -0.17276684939861298,
+    -0.008465692400932312,
+    0.022335348650813103,
+    -0.027153775095939636,
+    0.023276422172784805,
+    0.013134285807609558,
+    0.03447713330388069,
+    -0.025653470307588577,
+    -0.05135710537433624,
+    0.026128297671675682,
+    0.09617184102535248,
+    0.011822754517197609,
+    0.04129692539572716,
+    -0.03759010508656502,
+    0.009895353578031063,
+    -0.015635374933481216,
+    0.031223442405462265,
+    0.038125403225421906,
+    -0.0037188807036727667,
+    -0.016603173688054085,
+    -0.0298270583152771,
+    -0.034625355154275894,
+    -0.009254773147404194,
+    0.00837304163724184,
+    -0.008717580698430538,
+    -0.05779983103275299,
+    -0.03290333226323128,
+    -0.0020475953351706266,
+    0.01135180052369833,
+    -0.028319992125034332,
+    0.021506547927856445,
+    0.002963170874863863,
+    -0.06561905145645142,
+    -0.04323061555624008,
+    0.05146051198244095,
+    0.027733534574508667,
+    -0.022303268313407898,
+    0.01103804912418127,
+    0.08901645243167877,
+    0.047175873070955276,
+    0.04034578800201416,
+    -0.04654332622885704,
+    0.030889542773365974,
+    0.012444082647562027,
+    0.04230259358882904,
+    0.02662753313779831,
+    0.03260957449674606,
+    -0.05624009296298027,
+    0.06303973495960236,
+    -0.006899076979607344,
+    -0.00017259607557207346,
+    0.007385105360299349,
+    0.022513985633850098,
+    0.06189572066068649,
+    0.0013500796630978584,
+    0.060161489993333817,
+    0.031650740653276443,
+    0.018633633852005005,
+    0.021394241601228714,
+    0.028302745893597603,
+    0.03195779770612717,
+    0.03689098730683327,
+    0.07338214665651321,
+    -0.0037884358316659927,
+    -0.016821280121803284,
+    0.05777643248438835,
+    0.027623169124126434,
+    -0.005438060499727726,
+    0.04574408754706383,
+    0.011787677183747292,
+    -0.0022751535288989544,
+    0.02404685690999031,
+    -0.04025668278336525,
+    0.027650222182273865,
+    -0.035739775747060776,
+    -0.019024839624762535,
+    0.0008427067077718675,
+    0.008959264494478703,
+    0.0180883277207613,
+    -0.000418458046624437,
+    0.08104289323091507,
+    0.02758142724633217,
+    0.06409477442502975,
+    -0.014581582508981228,
+    -0.000166162324603647,
+    0.0022856229916214943,
+    0.002469110069796443,
+    0.04676690325140953,
+    -0.002907391404733062,
+    0.007538504432886839,
+    0.01284805778414011,
+    0.038395512849092484,
+    -0.0563267283141613,
+    0.039074964821338654,
+    -0.0019150539301335812,
+    0.03375442698597908,
+    -0.07065635174512863,
+    0.0319233275949955,
+    -0.03507275879383087,
+    -0.038421232253313065,
+    0.013570803217589855,
+    0.028349922969937325,
+    -0.015117411501705647,
+    0.03773782029747963,
+    0.04095807299017906,
+    0.009858714416623116,
+    -0.01013308297842741,
+    0.005109623074531555,
+    -0.07164525240659714,
+    0.016094394028186798,
+    -0.06780107319355011,
+    -0.04346334934234619,
+    0.003337445668876171,
+    0.016618041321635246,
+    0.0924583151936531,
+    -0.007726862095296383,
+    -0.005586856976151466,
+    -0.0023283592890948057,
+    0.0028537733014672995,
+    -0.018676089122891426,
+    0.010403060354292393,
+    0.04671047255396843,
+    -0.0014334303559735417,
+    0.023236680775880814,
+    -0.0450388640165329,
+    -0.006531391758471727,
+    0.05200409144163132,
+    -0.06215022876858711,
+    -0.01010566670447588,
+    0.014440476894378662,
+    -0.01852988637983799,
+    0.028040556237101555,
+    0.007585600949823856,
+    0.05087147653102875,
+    0.00628611259162426,
+    -0.034255072474479675,
+    0.019929420202970505,
+    0.01758650131523609,
+    0.03083920106291771,
+    0.009565096348524094,
+    0.007011575158685446,
+    -0.029268309473991394,
+    -0.009413082152605057,
+    -0.029555484652519226,
+    0.023670626804232597,
+    -0.03743256255984306,
+    -0.04307902231812477,
+    0.03816156089305878,
+    0.035483770072460175,
+    -0.0018695868784561753,
+    -0.005775662139058113,
+    0.0873618945479393,
+    0.027680737897753716,
+    -0.018750682473182678,
+    -0.016877053305506706,
+    -0.0004620811087079346,
+    0.023500047624111176,
+    0.06774494796991348,
+    0.015002233907580376,
+    -0.01002276036888361,
+    -0.05474194511771202,
+    0.02703210338950157,
+    -0.05112699046730995,
+    -0.03506552055478096,
+    0.002272101351991296,
+    0.06813564151525497,
+    0.014509905129671097,
+    -0.007071149535477161,
+    -0.10434629023075104,
+    -0.01053804624825716,
+    -0.030941657721996307,
+    0.018104007467627525,
+    0.0705360621213913,
+    0.01648551970720291,
+    0.09779459983110428,
+    -0.02259821444749832,
+    -0.016430357471108437,
+    -0.06605250388383865,
+    0.01986633986234665,
+    -0.02710738778114319,
+    0.015529396943747997,
+    0.03357383981347084,
+    -0.04578571394085884,
+    -0.05546681955456734,
+    0.0519145205616951,
+    -0.007243775762617588,
+    -0.026509830728173256,
+    -0.009669137187302113,
+    0.031362149864435196,
+    0.014650118537247181,
+    -0.06416887789964676,
+    0.02442803420126438,
+    -0.05326415225863457,
+    -0.06141185015439987,
+    0.03645869344472885,
+    0.017722735181450844,
+    -0.01835961453616619,
+    -0.004383495543152094,
+    0.004023285117000341,
+    0.01340181939303875,
+    -0.042201586067676544,
+    0.0020056329667568207,
+    -0.03400908038020134,
+    0.10205791890621185,
+    -0.02489609085023403,
+    0.01120699755847454,
+    -0.015140699222683907,
+    0.014729426242411137,
+    0.047693490982055664,
+    -0.03955874219536781,
+    0.014288381673395634,
+    -0.005939530208706856,
+    0.011278755031526089,
+    0.014098857529461384,
+    -0.0005692716804333031,
+    -0.032903749495744705,
+    -0.04460175707936287,
+    0.033628035336732864,
+    0.007737509440630674,
+    -0.01452861912548542,
+    -0.022614717483520508,
+    0.011546707712113857,
+    0.019434748217463493,
+    0.029222272336483,
+    -0.050062019377946854,
+    -0.013342516496777534,
+    0.013745716772973537,
+    -0.012747240252792835,
+    -0.04069950059056282,
+    -0.092267245054245,
+    0.04469330608844757,
+    0.0032759623136371374,
+    0.00724896090105176,
+    0.018557459115982056,
+    0.0012667957926169038,
+    0.02416599541902542,
+    0.010769575834274292,
+    0.03167456015944481,
+    -0.006789740175008774,
+    0.01874626614153385,
+    -0.056997060775756836,
+    -0.02388148196041584,
+    -0.034918297082185745,
+    -0.031765446066856384,
+    0.037007950246334076,
+    -0.007358899340033531,
+    -0.005658956244587898,
+    0.0321679525077343,
+    0.013278085738420486,
+    0.01817769929766655,
+    0.06798404455184937,
+    -0.009909125976264477,
+    0.03501896932721138,
+    -0.020560484379529953,
+    -0.08789336681365967,
+    0.03169969841837883,
+    -0.020906785503029823,
+    0.04165317490696907,
+    -0.0077511947602033615,
+    -0.039171379059553146,
+    0.0794171392917633,
+    -0.06615492701530457,
+    -0.016104882583022118,
+    -0.04224341735243797,
+    -0.06973116099834442,
+    -0.029087943956255913,
+    0.027467910200357437,
+    -0.0019390755333006382,
+    0.0043496242724359035,
+    0.00853110570460558,
+    0.02773086167871952,
+    0.046656809747219086,
+    -0.019821714609861374,
+    -0.032762348651885986,
+    0.009811890311539173,
+    -0.04189880192279816,
+    -0.010802086442708969,
+    0.056746501475572586,
+    0.011570129543542862,
+    -0.02041028067469597,
+    -0.0008074664510786533,
+    0.007879864424467087,
+    -0.022749008610844612,
+    0.04317006841301918,
+    -0.025856150314211845,
+    0.012877993285655975,
+    0.008324481546878815,
+    0.0030523512978106737,
+    0.013554876670241356,
+    0.015655888244509697,
+    -0.0239721592515707,
+    0.05889144912362099,
+    0.021774057298898697,
+    0.04258181154727936,
+    0.025331227108836174,
+    0.005548939108848572,
+    -0.010700018145143986,
+    -0.016020258888602257,
+    0.04225005954504013,
+    0.013647639192640781,
+    0.06184881553053856,
+    0.026976382359862328,
+    -0.005134927574545145,
+    -0.0014694193378090858,
+    0.020631153136491776,
+    -0.008074699901044369,
+    -0.008496086113154888,
+    -0.03781881928443909,
+    -0.007939082570374012,
+    0.02609291672706604,
+    -0.07003796100616455,
+    0.04043015465140343,
+    -0.07314501702785492,
+    0.04373358190059662,
+    0.052139174193143845,
+    0.034791868180036545,
+    0.027217967435717583,
+    -0.037061888724565506,
+    0.00910441018640995,
+    -0.007484510075300932,
+    -0.03596372529864311,
+    -0.05616490915417671,
+    0.043801866471767426,
+    0.04756718873977661,
+    0.005599956959486008,
+    0.002814633073285222,
+    -0.03839319571852684,
+    -0.04851808026432991,
+    0.019797053188085556,
+    0.014615608379244804,
+    0.0563218854367733,
+    -0.009153096005320549,
+    -0.03594281151890755,
+    0.005115018226206303,
+    -0.011380753479897976,
+    0.016561582684516907,
+    0.024587463587522507,
+    0.06314217299222946,
+    0.11668925732374191,
+    0.007132984697818756,
+    0.05863134562969208,
+    -0.07270953804254532,
+    -0.016742480918765068,
+    -0.0007934300811029971,
+    -0.022239288315176964,
+    0.0341302827000618,
+    0.04353766888380051,
+    0.00695232767611742,
+    0.011989605613052845,
+    -0.040051400661468506,
+    -0.04419143497943878,
+    -0.01668841950595379,
+    0.03824614733457565,
+    0.03913738951086998,
+    0.043338797986507416,
+    0.03695417940616608,
+    0.03686244413256645,
+    -0.016360020264983177,
+    0.03828693926334381,
+    -0.005726905073970556,
+    0.016626877710223198,
+    -0.019368482753634453,
+    0.013073144480586052,
+    0.024529563263058662,
+    0.07716847956180573,
+    -0.014019351452589035,
+    0.0029347308445721865,
+    -0.014275622554123402,
+    -0.04366757720708847,
+    0.008366728201508522,
+    -0.0015250591095536947,
+    -0.016286494210362434,
+    0.03073245845735073,
+    -0.01076788455247879,
+    -0.06951412558555603,
+    0.016268836334347725,
+    -0.0418134480714798,
+    0.007413729093968868,
+    0.02622108720242977,
+    -0.009669519029557705,
+    -0.023630665615200996,
+    -0.012576760724186897,
+    0.02431621216237545,
+    -0.023189004510641098,
+    0.010954071767628193,
+    -0.056667741388082504,
+    -0.05941510945558548,
+    -0.020431818440556526,
+    -0.036825381219387054,
+    -0.028240766376256943,
+    -0.03617633506655693,
+    0.0017243267502635717,
+    0.027205200865864754,
+    -0.04627680405974388,
+    0.025466984137892723,
+    -0.00040523134521208704,
+    -0.006904100067913532,
+    0.018296612426638603,
+    -0.045837242156267166,
+    -0.09156337380409241,
+    0.022462083026766777,
+    -0.0009361699922010303,
+    0.007562920916825533,
+    0.045122139155864716,
+    -0.00776714226230979,
+    -0.033839695155620575,
+    0.0645589530467987,
+    0.0136853763833642,
+    0.06531212478876114,
+    0.016648869961500168,
+    -0.0698527991771698,
+    -0.03878365084528923,
+    0.02506275288760662,
+    0.022715434432029724,
+    0.07583823055028915,
+    -0.015853125602006912,
+    0.007925755344331264,
+    0.0010971708688884974,
+    -0.001086768344976008,
+    0.03684995323419571,
+    -0.0126829007640481,
+    0.009613461792469025,
+    -0.0032103504054248333,
+    0.016169441863894463,
+    0.02185676246881485,
+    -0.004511137492954731,
+    -0.0019790292717516422,
+    -0.03502124175429344,
+    0.01204619649797678,
+    0.05295144021511078,
+    0.02343464456498623,
+    -0.029586248099803925,
+    0.010131461545825005,
+    -0.04118771106004715,
+    -0.0006024965550750494,
+    0.03536073863506317,
+    0.025418367236852646,
+    0.04401111230254173,
+    0.017367618158459663,
+    -0.0015383865684270859,
+    -0.06030707806348801,
+    -0.026492565870285034,
+    0.007820417173206806,
+    0.04388055577874184,
+    -0.013284661807119846,
+    0.0181783065199852,
+    -0.014917154796421528,
+    0.02250112034380436,
+    -0.0021117860451340675,
+    0.02183956652879715,
+    0.03189832344651222,
+    0.014955499209463596,
+    0.06646773964166641,
+    -0.056986261159181595,
+    -0.01207908894866705,
+    0.05232737213373184,
+    0.0082402303814888,
+    0.029413776472210884,
+    0.06278104335069656,
+    0.024385707452893257,
+    -0.06920784711837769,
+    0.021447883918881416,
+    0.030449427664279938,
+    0.0013148307334631681,
+    0.012810341082513332,
+    -0.019379552453756332,
+    -0.009975029155611992,
+    0.09409613162279129,
+    -0.09615330398082733,
+    0.012728150933980942,
+    0.029495839029550552,
+    -7.312666184589034e-06,
+    0.04262138158082962,
+    -0.02820134162902832,
+    -0.04614979773759842,
+    0.006964350119233131,
+    0.014290732331573963,
+    0.03674331307411194,
+    -0.02386363409459591,
+    -0.020646657794713974,
+    -0.017709529027342796,
+    -0.030764589086174965,
+    -0.029487384483218193,
+    0.0266818106174469,
+    0.01908027194440365,
+    -0.05099725350737572,
+    0.01256255991756916,
+    -0.009605905041098595,
+    0.031649041920900345,
+    0.020231647416949272,
+    0.005375373177230358,
+    -0.022820396348834038,
+    -0.036401115357875824,
+    -0.015836693346500397,
+    -0.04264729097485542,
+    0.00828978605568409,
+    0.017457542940974236,
+    0.003962233662605286,
+    0.02107563614845276,
+    0.04854179546236992,
+    -0.020414749160408974,
+    -0.0015948114451020956,
+    0.05780519172549248,
+    -0.053947992622852325,
+    0.024395564571022987,
+    -0.08655736595392227,
+    -0.05173823982477188,
+    0.03272755444049835,
+    -0.006744203623384237,
+    0.01270132977515459,
+    -0.002757306909188628,
+    0.0024392064660787582,
+    0.07609222084283829,
+    -0.06453453004360199,
+    -0.0033073369413614273,
+    -0.01696348376572132,
+    -0.05832713469862938,
+    -0.003018278395757079,
+    -0.024618182331323624,
+    -0.011501166969537735,
+    -0.011421251110732555,
+    -0.035227663815021515,
+    -0.032465897500514984,
+    -0.007952116429805756,
+    0.026913776993751526,
+    -0.0653754472732544,
+    0.060919877141714096,
+    -0.0045892344787716866,
+    -0.009355087764561176,
+    0.03419520705938339,
+    -0.007343448232859373,
+    -0.014873817563056946,
+    -0.019741272553801537,
+    0.006202183198183775,
+    -0.0703752189874649,
+    0.02340741641819477,
+    0.031146161258220673,
+    0.05826791748404503,
+    -0.0053463890217244625,
+    -0.032726190984249115,
+    -0.0154868857935071,
+    0.02700040675699711,
+    0.009270495735108852,
+    -0.027680132538080215,
+    0.03712696582078934,
+    0.04677726328372955,
+    -0.012288177385926247,
+    -0.057138461619615555,
+    0.042755886912345886,
+    -0.02285318449139595,
+    -0.0035729107912629843,
+    -0.026134438812732697,
+    0.07344834506511688,
+    -0.016225973144173622,
+    -0.007619084790349007,
+    0.010481246747076511,
+    -0.06565092504024506,
+    -0.061861325055360794,
+    -0.0016565079567953944,
+    0.02064066007733345,
+    0.060463644564151764,
+    0.024633198976516724,
+    0.03128158673644066,
+    -0.00806901603937149,
+    -0.03971834108233452,
+    0.006372357252985239,
+    0.025730112567543983,
+    0.03489556908607483,
+    0.01350888330489397,
+    -0.06618548184633255,
+    -0.028105586767196655,
+    -0.035808876156806946,
+    -0.0005764952511526644,
+    -0.03628029301762581,
+    -0.03238549456000328,
+    -0.014081797562539577,
+    -0.016837289556860924,
+    -0.016668053343892097,
+    -0.00659789377823472,
+    0.012553266249597073,
+    0.025113319978117943,
+    0.028836268931627274,
+    -0.046234555542469025,
+    -0.012473637238144875,
+    -0.07976274937391281,
+    -0.01848982647061348,
+    0.05267596244812012,
+    -0.04991240054368973,
+    -0.02334962598979473,
+    -0.005096259526908398,
+    -0.0006091523682698607,
+    -0.01466295588761568,
+    0.01681453548371792,
+    0.0020091317128390074,
+    -0.02618928626179695,
+    0.01595466025173664,
+    -0.02537335641682148,
+    -0.040992364287376404,
+    -0.044782087206840515,
+    0.021264931187033653,
+    0.031512267887592316,
+    -0.039824750274419785,
+    0.018694499507546425,
+    0.04994382709264755,
+    0.0032459499780088663,
+    0.047745481133461,
+    0.002494986169040203,
+    -0.009560219943523407,
+    0.04892442002892494,
+    0.010478300042450428,
+    0.006463589146733284,
+    -0.05043686926364899,
+    -0.021986575797200203,
+    -0.058534808456897736,
+    0.0554366372525692,
+    0.00571175292134285,
+    -0.035469356924295425,
+    -0.05210353061556816,
+    -0.03655528649687767,
+    -0.04570041969418526,
+    0.021484771743416786,
+    -0.03199714422225952,
+    0.01764657534658909,
+    -0.004221267998218536,
+    -0.023891568183898926,
+    -0.04818909242749214,
+    -0.00016259789117611945,
+    0.039182234555482864,
+    -0.04010440781712532,
+    0.003956410102546215,
+    -0.0698816105723381,
+    -0.0558825358748436,
+    -0.04702272638678551,
+    0.03257394954562187,
+    -0.055698592215776443,
+    0.04350036755204201,
+    -0.026479234918951988,
+    0.06293225288391113,
+    0.015917209908366203,
+    -0.026592087000608444,
+    0.012203140184283257,
+    0.04463372007012367,
+    0.011805477552115917,
+    -0.012018442153930664,
+    0.03676367551088333,
+    0.07255632430315018,
+    0.05084151029586792,
+    -0.039445746690034866,
+    0.08421912789344788,
+    0.05225096642971039,
+    0.008008216507732868,
+    -0.021426627412438393,
+    -0.005440086126327515,
+    0.02682030387222767,
+    0.056776974350214005,
+    -0.047843318432569504,
+    -0.057211365550756454,
+    -0.05973799154162407,
+    0.00815750565379858,
+    0.008571303449571133,
+    0.0006522613111883402,
+    0.016635969281196594,
+    -0.02077760547399521,
+    -0.04796277731657028,
+    -0.02315886691212654,
+    -0.024553434923291206,
+    -0.07558371126651764,
+    -0.020417358726263046,
+    0.059636734426021576,
+    -0.003997164312750101,
+    -0.0030423710122704506,
+    -0.03634348884224892,
+    0.04801573604345322,
+    7.642880518687889e-05,
+    0.05498874932527542,
+    0.03457823023200035,
+    0.03672930225729942,
+    -0.016865160316228867,
+    -0.0359862856566906,
+    0.039685118943452835,
+    0.01825636625289917,
+    -0.055592022836208344,
+    -0.014638403430581093,
+    0.02137340046465397,
+    -0.0011304387589916587,
+    0.019321147352457047,
+    -0.04670212045311928,
+    -0.016422506421804428,
+    -0.04181201383471489,
+    0.0037635010667145252,
+    0.002091426867991686,
+    0.02018020674586296,
+    -0.007791599258780479,
+    0.008126976899802685,
+    -0.009127417579293251,
+    -0.021319624036550522,
+    -0.059409502893686295,
+    0.025283420458436012,
+    -0.01688665710389614,
+    0.029783794656395912,
+    -0.016069069504737854,
+    0.014350994490087032,
+    -0.04323798045516014,
+    -0.011272743344306946,
+    0.07900164276361465,
+    0.007351141422986984,
+    -0.020862970501184464,
+    0.013327947817742825,
+    0.032361701130867004,
+    0.014277856796979904,
+    0.003948586992919445,
+    0.032476820051670074,
+    0.005183243192732334,
+    0.0019203390693292022,
+    -0.00868304818868637,
+    -0.0751681700348854,
+    -0.010469866916537285,
+    0.018036169931292534,
+    0.0022754957899451256,
+    -0.04649847373366356,
+    -0.03624134883284569,
+    -0.05370412394404411,
+    0.0026545946020632982,
+    -0.026527058333158493,
+    0.041334368288517,
+    -0.00911291316151619,
+    -0.02609027549624443,
+    -0.019145704805850983,
+    0.001126677030697465,
+    -0.029287708923220634,
+    -0.029077881947159767,
+    0.042848143726587296,
+    -0.02300594002008438,
+    0.026456955820322037,
+    -0.08136909455060959,
+    -0.03944636881351471,
+    -0.05589780956506729,
+    -0.02842319943010807,
+    -0.044308844953775406,
+    0.006167297251522541,
+    -0.010886809788644314,
+    0.008894456550478935,
+    -0.015539322979748249,
+    -0.06286383420228958,
+    -0.03211839869618416,
+    0.03970475122332573,
+    0.0026358989998698235,
+    -0.0077679832465946674,
+    0.006643752567470074,
+    -0.01126701571047306,
+    0.010876943357288837,
+    0.0010946689872071147,
+    -0.03858574107289314,
+    0.022908173501491547,
+    -0.002979498589411378,
+    0.03768036887049675,
+    0.09248325973749161,
+    -0.005573544651269913,
+    0.032077446579933167,
+    -0.03981948643922806,
+    0.014552969485521317,
+    -0.016770001500844955,
+    -0.03203430771827698,
+    -0.06561777740716934,
+    -0.049479346722364426,
+    -0.044854938983917236
+  ],
+  "_embedding_model": "nomic-ai/nomic-embed-text-v1.5"
+}

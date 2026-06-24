@@ -1,0 +1,5 @@
+{"id":"qa-center-definition","query":"中枢的定义是什么？","expected_concepts":["center"],"must_retrieve_pages":[122,123],"must_include_terms":["三个连续次级别走势类型","重叠","ZD","ZG"]}
+{"id":"qa-third-buy","query":"第三类买点的条件是什么？","expected_concepts":["buy_sell_points","center"],"must_retrieve_pages":[123,132],"must_include_terms":["向上离开","回试","不跌破 ZG"]}
+{"id":"qa-no-trend-no-divergence","query":"为什么说没有趋势没有背驰？","expected_concepts":["divergence"],"must_retrieve_pages":[56,231],"must_include_terms":["趋势","背驰","盘整背驰"]}
+{"id":"qa-fractal-stroke","query":"分型和笔怎么确认？","expected_concepts":["fractal","stroke"],"must_retrieve_pages":[569,765],"must_include_terms":["顶分型","底分型","一笔"]}
+{"id":"qa-interval-nesting","query":"区间套怎么用于买点定位？","expected_concepts":["interval_nesting"],"must_retrieve_pages":[555,304],"must_include_terms":["级别","区间套","当下"]}

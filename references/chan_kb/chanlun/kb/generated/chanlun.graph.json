@@ -1,0 +1,5287 @@
+{
+  "schema_version": "1.0",
+  "built_at": "2026-05-24T08:56:55+00:00",
+  "nodes": [
+    {
+      "id": "concept:fractal",
+      "type": "concept",
+      "label": "fractal",
+      "keywords": [
+        "分型",
+        "顶分型",
+        "底分型",
+        "包含关系"
+      ]
+    },
+    {
+      "id": "source_page:569",
+      "type": "source_page",
+      "label": "p569"
+    },
+    {
+      "id": "source_page:640",
+      "type": "source_page",
+      "label": "p640"
+    },
+    {
+      "id": "source_page:765",
+      "type": "source_page",
+      "label": "p765"
+    },
+    {
+      "id": "concept:stroke",
+      "type": "concept",
+      "label": "stroke",
+      "keywords": [
+        "笔",
+        "5根K线",
+        "相邻分型"
+      ]
+    },
+    {
+      "id": "concept:segment",
+      "type": "concept",
+      "label": "segment",
+      "keywords": [
+        "线段",
+        "特征序列",
+        "线段破坏"
+      ]
+    },
+    {
+      "id": "source_page:611",
+      "type": "source_page",
+      "label": "p611"
+    },
+    {
+      "id": "source_page:704",
+      "type": "source_page",
+      "label": "p704"
+    },
+    {
+      "id": "source_page:812",
+      "type": "source_page",
+      "label": "p812"
+    },
+    {
+      "id": "concept:center",
+      "type": "concept",
+      "label": "center",
+      "keywords": [
+        "中枢",
+        "ZG",
+        "ZD",
+        "延伸",
+        "扩展"
+      ]
+    },
+    {
+      "id": "source_page:121",
+      "type": "source_page",
+      "label": "p121"
+    },
+    {
+      "id": "source_page:122",
+      "type": "source_page",
+      "label": "p122"
+    },
+    {
+      "id": "source_page:313",
+      "type": "source_page",
+      "label": "p313"
+    },
+    {
+      "id": "source_page:992",
+      "type": "source_page",
+      "label": "p992"
+    },
+    {
+      "id": "concept:divergence",
+      "type": "concept",
+      "label": "divergence",
+      "keywords": [
+        "背驰",
+        "盘整背驰",
+        "MACD",
+        "力度"
+      ]
+    },
+    {
+      "id": "source_page:56",
+      "type": "source_page",
+      "label": "p56"
+    },
+    {
+      "id": "source_page:177",
+      "type": "source_page",
+      "label": "p177"
+    },
+    {
+      "id": "source_page:194",
+      "type": "source_page",
+      "label": "p194"
+    },
+    {
+      "id": "source_page:231",
+      "type": "source_page",
+      "label": "p231"
+    },
+    {
+      "id": "source_page:352",
+      "type": "source_page",
+      "label": "p352"
+    },
+    {
+      "id": "concept:buy_sell_points",
+      "type": "concept",
+      "label": "buy_sell_points",
+      "keywords": [
+        "一买",
+        "二买",
+        "三买",
+        "一卖",
+        "二卖",
+        "三卖",
+        "第一类买点",
+        "第二类买点",
+        "第三类买点",
+        "第一类卖点",
+        "第二类卖点",
+        "第三类卖点",
+        "买点",
+        "卖点",
+        "买卖点"
+      ]
+    },
+    {
+      "id": "source_page:135",
+      "type": "source_page",
+      "label": "p135"
+    },
+    {
+      "id": "source_page:491",
+      "type": "source_page",
+      "label": "p491"
+    },
+    {
+      "id": "source_page:555",
+      "type": "source_page",
+      "label": "p555"
+    },
+    {
+      "id": "concept:interval_nesting",
+      "type": "concept",
+      "label": "interval_nesting",
+      "keywords": [
+        "区间套",
+        "级别",
+        "当下"
+      ]
+    },
+    {
+      "id": "source_page:304",
+      "type": "source_page",
+      "label": "p304"
+    },
+    {
+      "id": "concept:fusion",
+      "type": "concept",
+      "label": "fusion",
+      "keywords": [
+        "基本面",
+        "消息",
+        "资金",
+        "板块",
+        "轮动",
+        "政策"
+      ]
+    },
+    {
+      "id": "source_page:18",
+      "type": "source_page",
+      "label": "p18"
+    },
+    {
+      "id": "source_page:25",
+      "type": "source_page",
+      "label": "p25"
+    },
+    {
+      "id": "source_page:219",
+      "type": "source_page",
+      "label": "p219"
+    },
+    {
+      "id": "source_page:733",
+      "type": "source_page",
+      "label": "p733"
+    },
+    {
+      "id": "source_page:851",
+      "type": "source_page",
+      "label": "p851"
+    },
+    {
+      "id": "source_page:1199",
+      "type": "source_page",
+      "label": "p1199"
+    },
+    {
+      "id": "chunk:fast.README.01.agent-stock-chanlun-package",
+      "type": "chunk",
+      "label": "Agent Stock Chanlun Package"
+    },
+    {
+      "id": "chunk:fast.README.02.files",
+      "type": "chunk",
+      "label": "Files"
+    },
+    {
+      "id": "chunk:fast.README.03.visual-assets",
+      "type": "chunk",
+      "label": "Visual Assets"
+    },
+    {
+      "id": "chunk:fast.README.04.deep-kb",
+      "type": "chunk",
+      "label": "Deep KB"
+    },
+    {
+      "id": "chunk:fast.README.05.source-anchors",
+      "type": "chunk",
+      "label": "Source Anchors"
+    },
+    {
+      "id": "chunk:fast.README.06.operating-principle",
+      "type": "chunk",
+      "label": "Operating Principle"
+    },
+    {
+      "id": "chunk:fast.workflow.01.chanlun-workflow",
+      "type": "chunk",
+      "label": "Chanlun Workflow"
+    },
+    {
+      "id": "chunk:fast.workflow.02.使用边界",
+      "type": "chunk",
+      "label": "使用边界"
+    },
+    {
+      "id": "chunk:fast.workflow.03.trigger",
+      "type": "chunk",
+      "label": "Trigger"
+    },
+    {
+      "id": "chunk:fast.workflow.04.data-commands",
+      "type": "chunk",
+      "label": "Data Commands"
+    },
+    {
+      "id": "chunk:fast.workflow.05.step-1-define-operating-level",
+      "type": "chunk",
+      "label": "Step 1: Define Operating Level"
+    },
+    {
+      "id": "chunk:fast.workflow.06.step-2-build-structural-map",
+      "type": "chunk",
+      "label": "Step 2: Build Structural Map"
+    },
+    {
+      "id": "chunk:fast.workflow.07.step-3-locate-buy-sell-point",
+      "type": "chunk",
+      "label": "Step 3: Locate Buy/Sell Point"
+    },
+    {
+      "id": "chunk:fast.workflow.08.step-4-fuse-with-agent-stock-data",
+      "type": "chunk",
+      "label": "Step 4: Fuse With Agent Stock Data"
+    },
+    {
+      "id": "chunk:fast.workflow.09.step-5-decision",
+      "type": "chunk",
+      "label": "Step 5: Decision"
+    },
+    {
+      "id": "chunk:fast.workflow.10.缠论结构确认",
+      "type": "chunk",
+      "label": "缠论结构确认"
+    },
+    {
+      "id": "chunk:fast.workflow.11.step-6-save",
+      "type": "chunk",
+      "label": "Step 6: Save"
+    },
+    {
+      "id": "chunk:fast.rules.01.chanlun-rules",
+      "type": "chunk",
+      "label": "Chanlun Rules"
+    },
+    {
+      "id": "chunk:fast.rules.02.1-level-and-completion",
+      "type": "chunk",
+      "label": "1. Level And Completion"
+    },
+    {
+      "id": "chunk:fast.rules.03.2-inclusion-processing",
+      "type": "chunk",
+      "label": "2. Inclusion Processing"
+    },
+    {
+      "id": "chunk:fast.rules.04.3-fractal",
+      "type": "chunk",
+      "label": "3. Fractal"
+    },
+    {
+      "id": "chunk:fast.rules.05.4-stroke",
+      "type": "chunk",
+      "label": "4. Stroke"
+    },
+    {
+      "id": "chunk:fast.rules.06.5-segment",
+      "type": "chunk",
+      "label": "5. Segment"
+    },
+    {
+      "id": "chunk:fast.rules.07.6-center",
+      "type": "chunk",
+      "label": "6. Center"
+    },
+    {
+      "id": "chunk:fast.rules.08.7-trend-and-consolidation",
+      "type": "chunk",
+      "label": "7. Trend And Consolidation"
+    },
+    {
+      "id": "chunk:fast.rules.09.8-divergence",
+      "type": "chunk",
+      "label": "8. Divergence"
+    },
+    {
+      "id": "chunk:fast.rules.10.9-buy-sell-points",
+      "type": "chunk",
+      "label": "9. Buy/Sell Points"
+    },
+    {
+      "id": "chunk:fast.rules.11.10-interval-nesting",
+      "type": "chunk",
+      "label": "10. Interval Nesting"
+    },
+    {
+      "id": "chunk:fast.rules.12.11-risk-and-capital",
+      "type": "chunk",
+      "label": "11. Risk And Capital"
+    },
+    {
+      "id": "chunk:fast.rules.13.12-confidence",
+      "type": "chunk",
+      "label": "12. Confidence"
+    },
+    {
+      "id": "chunk:fast.fusion.01.chanlun-fusion-with-agent-stock",
+      "type": "chunk",
+      "label": "Chanlun Fusion With Agent Stock"
+    },
+    {
+      "id": "chunk:fast.fusion.02.evidence-order",
+      "type": "chunk",
+      "label": "Evidence Order"
+    },
+    {
+      "id": "chunk:fast.fusion.03.fusion-matrix",
+      "type": "chunk",
+      "label": "Fusion Matrix"
+    },
+    {
+      "id": "chunk:fast.fusion.04.structural-score-modifier",
+      "type": "chunk",
+      "label": "Structural Score Modifier"
+    },
+    {
+      "id": "chunk:fast.fusion.05.fundamental-and-news-context",
+      "type": "chunk",
+      "label": "Fundamental And News Context"
+    },
+    {
+      "id": "chunk:fast.fusion.06.sector-rotation",
+      "type": "chunk",
+      "label": "Sector Rotation"
+    },
+    {
+      "id": "chunk:fast.fusion.07.position-sizing",
+      "type": "chunk",
+      "label": "Position Sizing"
+    },
+    {
+      "id": "chunk:fast.README.01.chanlun-figure-cards",
+      "type": "chunk",
+      "label": "Chanlun Figure Cards"
+    },
+    {
+      "id": "chunk:pageindex.front.p0001-p0008",
+      "type": "chunk",
+      "label": "p1-p8"
+    },
+    {
+      "id": "chunk:pageindex.l001.p0009",
+      "type": "chunk",
+      "label": "p9 lesson 1: 不会赢钱的经济人，只是废人！"
+    },
+    {
+      "id": "chunk:pageindex.l002.p0010",
+      "type": "chunk",
+      "label": "p10 lesson 2: 没有庄家，有的只是赢家和输家！"
+    },
+    {
+      "id": "chunk:pageindex.l003.p0010",
+      "type": "chunk",
+      "label": "p10 lesson 3: 你的喜好，你的死亡陷阱！"
+    },
+    {
+      "id": "chunk:pageindex.l004.p0011-p0013",
+      "type": "chunk",
+      "label": "p11-p13 lesson 4: 什么是理性？今早买 N 中工就是理性！"
+    },
+    {
+      "id": "chunk:pageindex.l005.p0013",
+      "type": "chunk",
+      "label": "p13 lesson 5: 市场无须分析，只要看和干！"
+    },
+    {
+      "id": "chunk:pageindex.l006.p0014-p0016",
+      "type": "chunk",
+      "label": "p14-p16 lesson 6: 本 ID 如何在五粮液、包钢权证上提款的！"
+    },
+    {
+      "id": "chunk:pageindex.l007.p0017-p0020",
+      "type": "chunk",
+      "label": "p17-p20 lesson 7: 给赚了指数亏了钱的一些忠告"
+    },
+    {
+      "id": "chunk:pageindex.l008.p0021-p0024",
+      "type": "chunk",
+      "label": "p21-p24 lesson 8: 投资如选面首，G 点为中心，拒绝 ED 男！"
+    },
+    {
+      "id": "chunk:pageindex.l009.p0025-p0026",
+      "type": "chunk",
+      "label": "p25-p26 lesson 9: 甄别“早泄”男的数学原则！"
+    },
+    {
+      "id": "chunk:pageindex.l010.p0027-p0032",
+      "type": "chunk",
+      "label": "p27-p32 lesson 10: 2005 年 6 月，本 ID 为何时隔四年后重看股票"
+    },
+    {
+      "id": "chunk:pageindex.l011.p0033-p0036",
+      "type": "chunk",
+      "label": "p33-p36 lesson 11: 不会吻，无以高潮！"
+    },
+    {
+      "id": "chunk:pageindex.l012.p0037-p0042",
+      "type": "chunk",
+      "label": "p37-p42 lesson 12: 一吻何能消魂？"
+    },
+    {
+      "id": "chunk:pageindex.l013.p0043-p0047",
+      "type": "chunk",
+      "label": "p43-p47 lesson 13: 不带套的操作不是好操作！"
+    },
+    {
+      "id": "chunk:pageindex.l014.p0048-p0056",
+      "type": "chunk",
+      "label": "p48-p56 lesson 14: 喝茅台的高潮程序！"
+    },
+    {
+      "id": "chunk:pageindex.l015.p0057-p0065",
+      "type": "chunk",
+      "label": "p57-p65 lesson 15: 没有趋势，没有背驰"
+    },
+    {
+      "id": "chunk:pageindex.l016.p0066-p0082",
+      "type": "chunk",
+      "label": "p66-p82 lesson 16: 中小资金的高效买卖法"
+    },
+    {
+      "id": "chunk:pageindex.l017.p0083-p0100",
+      "type": "chunk",
+      "label": "p83-p100 lesson 17: 走势终完美"
+    },
+    {
+      "id": "chunk:pageindex.l018.p0101-p0103",
+      "type": "chunk",
+      "label": "p101-p103 lesson 18: 不被面首的雏男是不完美的"
+    },
+    {
+      "id": "chunk:pageindex.l019.p0104-p0121",
+      "type": "chunk",
+      "label": "p104-p121 lesson 19: 学习缠中说禅技术分析理论的关键"
+    },
+    {
+      "id": "chunk:pageindex.l020.p0122-p0135",
+      "type": "chunk",
+      "label": "p122-p135 lesson 20: 缠中说禅走势中枢级别扩张及第三类买卖点"
+    },
+    {
+      "id": "chunk:pageindex.l021.p0136-p0145",
+      "type": "chunk",
+      "label": "p136-p145 lesson 21: 缠中说禅买卖点分析的完备性"
+    },
+    {
+      "id": "chunk:pageindex.l022.p0146-p0158",
+      "type": "chunk",
+      "label": "p146-p158 lesson 22: 将 8 亿的大米装到 5 个庄家的肚里"
+    },
+    {
+      "id": "chunk:pageindex.l023.p0159-p0177",
+      "type": "chunk",
+      "label": "p159-p177 lesson 23: 市场与人生"
+    },
+    {
+      "id": "chunk:pageindex.l024.p0178-p0194",
+      "type": "chunk",
+      "label": "p178-p194 lesson 24: MACD 对背弛的辅助判断"
+    },
+    {
+      "id": "chunk:pageindex.l025.p0195-p0219",
+      "type": "chunk",
+      "label": "p195-p219 lesson 25: 吻，MACD、背弛、中枢"
+    },
+    {
+      "id": "chunk:pageindex.l026.p0220-p0231",
+      "type": "chunk",
+      "label": "p220-p231 lesson 26: 市场风险如何回避"
+    },
+    {
+      "id": "chunk:pageindex.l027.p0232-p0245",
+      "type": "chunk",
+      "label": "p232-p245 lesson 27: 盘整背驰与历史性底部"
+    },
+    {
+      "id": "chunk:pageindex.l028.p0246-p0262",
+      "type": "chunk",
+      "label": "p246-p262 lesson 28: 下一目标：摧毁基金"
+    },
+    {
+      "id": "chunk:pageindex.l029.p0263-p0276",
+      "type": "chunk",
+      "label": "p263-p276 lesson 29: 转折的力度与级别"
+    },
+    {
+      "id": "chunk:pageindex.l030.p0277-p0283",
+      "type": "chunk",
+      "label": "p277-p283 lesson 30: 缠中说禅理论的绝对性"
+    },
+    {
+      "id": "chunk:pageindex.l031.p0284-p0301",
+      "type": "chunk",
+      "label": "p284-p301 lesson 31: 资金管理的最稳固基础"
+    },
+    {
+      "id": "chunk:pageindex.l032.p0302-p0312",
+      "type": "chunk",
+      "label": "p302-p312 lesson 32: 走势的当下与投资者的思维方式"
+    },
+    {
+      "id": "chunk:pageindex.l033.p0313-p0326",
+      "type": "chunk",
+      "label": "p313-p326 lesson 33: 走势的多义性"
+    },
+    {
+      "id": "chunk:pageindex.l034.p0327-p0336",
+      "type": "chunk",
+      "label": "p327-p336 lesson 34: 宁当面首，莫成怨男"
+    },
+    {
+      "id": "chunk:pageindex.l035.p0337-p0344",
+      "type": "chunk",
+      "label": "p337-p344 lesson 35: 给基础差的同学补补课"
+    },
+    {
+      "id": "chunk:pageindex.l036.p0345-p0352",
+      "type": "chunk",
+      "label": "p345-p352 lesson 36: 走势类型连接结合性的简单运用"
+    },
+    {
+      "id": "chunk:pageindex.l037.p0353-p0362",
+      "type": "chunk",
+      "label": "p353-p362 lesson 37: 背驰的再分辨"
+    },
+    {
+      "id": "chunk:pageindex.l038.p0363-p0371",
+      "type": "chunk",
+      "label": "p363-p371 lesson 38: 走势类型连接的同级别分解"
+    },
+    {
+      "id": "chunk:pageindex.l039.p0372-p0379",
+      "type": "chunk",
+      "label": "p372-p379 lesson 39: 同级别分解再研究"
+    },
+    {
+      "id": "chunk:pageindex.l040.p0380-p0388",
+      "type": "chunk",
+      "label": "p380-p388 lesson 40: 同级别分解的多重赋格"
+    },
+    {
+      "id": "chunk:pageindex.l041.p0389-p0394",
+      "type": "chunk",
+      "label": "p389-p394 lesson 41: 没有节奏，只有死"
+    },
+    {
+      "id": "chunk:pageindex.l042.p0395-p0403",
+      "type": "chunk",
+      "label": "p395-p403 lesson 42: 有些人是不适合参与市场的"
+    },
+    {
+      "id": "chunk:pageindex.l043.p0404-p0410",
+      "type": "chunk",
+      "label": "p404-p410 lesson 43: 有关背驰的补习课"
+    },
+    {
+      "id": "chunk:pageindex.l044.p0411-p0417",
+      "type": "chunk",
+      "label": "p411-p417 lesson 44: 小级别背驰引发大级别转折"
+    },
+    {
+      "id": "chunk:pageindex.l045.p0418-p0427",
+      "type": "chunk",
+      "label": "p418-p427 lesson 45: 持股与持币，两种最基本的操作"
+    },
+    {
+      "id": "chunk:pageindex.l046.p0428-p0436",
+      "type": "chunk",
+      "label": "p428-p436 lesson 46: 每日走势的分类"
+    },
+    {
+      "id": "chunk:pageindex.l047.p0437-p0445",
+      "type": "chunk",
+      "label": "p437-p445 lesson 47: 一夜情行情分析"
+    },
+    {
+      "id": "chunk:pageindex.l048.p0446-p0451",
+      "type": "chunk",
+      "label": "p446-p451 lesson 48: 暴跌，牛市行情的一夜情"
+    },
+    {
+      "id": "chunk:pageindex.l049.p0452-p0459",
+      "type": "chunk",
+      "label": "p452-p459 lesson 49: 利润率最大的操作模式"
+    },
+    {
+      "id": "chunk:pageindex.l050.p0460-p0467",
+      "type": "chunk",
+      "label": "p460-p467 lesson 50: 操作中的一些细节问题"
+    },
+    {
+      "id": "chunk:pageindex.l051.p0468-p0482",
+      "type": "chunk",
+      "label": "p468-p482 lesson 51: 短线股评荐股者的传销把戏"
+    },
+    {
+      "id": "chunk:pageindex.l052.p0483-p0491",
+      "type": "chunk",
+      "label": "p483-p491 lesson 52: 炒股票就是真正的学佛"
+    },
+    {
+      "id": "chunk:pageindex.l053.p0492-p0497",
+      "type": "chunk",
+      "label": "p492-p497 lesson 53: 三类买卖点的再分辨"
+    },
+    {
+      "id": "chunk:pageindex.l054.p0498-p0508",
+      "type": "chunk",
+      "label": "p498-p508 lesson 54: 一个具体走势的分析"
+    },
+    {
+      "id": "chunk:pageindex.l055.p0509-p0513",
+      "type": "chunk",
+      "label": "p509-p513 lesson 55: 买之前戏，卖之高潮"
+    },
+    {
+      "id": "chunk:pageindex.l056.p0514-p0522",
+      "type": "chunk",
+      "label": "p514-p522 lesson 56: 530 印花税当日行情图解"
+    },
+    {
+      "id": "chunk:pageindex.l057.p0523-p0529",
+      "type": "chunk",
+      "label": "p523-p529 lesson 57: 当下图解分析再示范"
+    },
+    {
+      "id": "chunk:pageindex.l058.p0530-p0540",
+      "type": "chunk",
+      "label": "p530-p540 lesson 58: 图解分析示范三"
+    },
+    {
+      "id": "chunk:pageindex.l059.p0541-p0548",
+      "type": "chunk",
+      "label": "p541-p548 lesson 59: 图解分析示范四"
+    },
+    {
+      "id": "chunk:pageindex.l060.p0549-p0555",
+      "type": "chunk",
+      "label": "p549-p555 lesson 60: 图解分析示范五"
+    },
+    {
+      "id": "chunk:pageindex.l061.p0556-p0568",
+      "type": "chunk",
+      "label": "p556-p568 lesson 61: 区间套定位标准图解(分析示范六)"
+    },
+    {
+      "id": "chunk:pageindex.l062.p0569-p0579",
+      "type": "chunk",
+      "label": "p569-p579 lesson 62: 分型、笔与线段"
+    },
+    {
+      "id": "chunk:pageindex.l063.p0580-p0587",
+      "type": "chunk",
+      "label": "p580-p587 lesson 63: 替各位理理基本概念"
+    },
+    {
+      "id": "chunk:pageindex.l064.p0588-p0614",
+      "type": "chunk",
+      "label": "p588-p614 lesson 64: 去机场路上给各位补课"
+    },
+    {
+      "id": "chunk:pageindex.l065.p0615-p0634",
+      "type": "chunk",
+      "label": "p615-p634 lesson 65: 再说说分型、笔、线段"
+    },
+    {
+      "id": "chunk:pageindex.l066.p0635-p0643",
+      "type": "chunk",
+      "label": "p635-p643 lesson 66: 主力资金的食物链"
+    },
+    {
+      "id": "chunk:pageindex.l067.p0644-p0661",
+      "type": "chunk",
+      "label": "p644-p661 lesson 67: 线段的划分标准"
+    },
+    {
+      "id": "chunk:pageindex.l068.p0662-p0673",
+      "type": "chunk",
+      "label": "p662-p673 lesson 68: 走势预测的精确意义"
+    },
+    {
+      "id": "chunk:pageindex.l069.p0674-p0693",
+      "type": "chunk",
+      "label": "p674-p693 lesson 69: 月线分段与上海大走势分析、预判"
+    },
+    {
+      "id": "chunk:pageindex.l070.p0694-p0703",
+      "type": "chunk",
+      "label": "p694-p703 lesson 70: 一个教科书式走势的示范分析"
+    },
+    {
+      "id": "chunk:pageindex.l071.p0704-p0715",
+      "type": "chunk",
+      "label": "p704-p715 lesson 71: 线段划分标准的再分辨"
+    },
+    {
+      "id": "chunk:pageindex.l072.p0716-p0727",
+      "type": "chunk",
+      "label": "p716-p727 lesson 72: 本 ID 已有课程的再梳理"
+    },
+    {
+      "id": "chunk:pageindex.l073.p0728-p0736",
+      "type": "chunk",
+      "label": "p728-p736 lesson 73: 市场获利机会的绝对分类"
+    },
+    {
+      "id": "chunk:pageindex.l074.p0737-p0743",
+      "type": "chunk",
+      "label": "p737-p743 lesson 74: 如何躲避政策性风险"
+    },
+    {
+      "id": "chunk:pageindex.l075.p0744-p0755",
+      "type": "chunk",
+      "label": "p744-p755 lesson 75: 逗庄家玩的一些杂史 1"
+    },
+    {
+      "id": "chunk:pageindex.l076.p0756-p0762",
+      "type": "chunk",
+      "label": "p756-p762 lesson 76: 逗庄家玩的一些杂史 2"
+    },
+    {
+      "id": "chunk:pageindex.l077.p0763-p0771",
+      "type": "chunk",
+      "label": "p763-p771 lesson 77: 一些概念的再分辨"
+    },
+    {
+      "id": "chunk:pageindex.l078.p0772-p0780",
+      "type": "chunk",
+      "label": "p772-p780 lesson 78: 继续说线段的划分"
+    },
+    {
+      "id": "chunk:pageindex.l079.p0781-p0794",
+      "type": "chunk",
+      "label": "p781-p794 lesson 79: 分型的辅助操作与一些问题的再解答"
+    },
+    {
+      "id": "chunk:pageindex.l080.p0795-p0815",
+      "type": "chunk",
+      "label": "p795-p815 lesson 80: 市场没有同情、不信眼泪"
+    },
+    {
+      "id": "chunk:pageindex.l081.p0816-p0836",
+      "type": "chunk",
+      "label": "p816-p836 lesson 81: 图例、更正及分型、走势类型的哲学本质"
+    },
+    {
+      "id": "chunk:pageindex.l082.p0837-p0847",
+      "type": "chunk",
+      "label": "p837-p847 lesson 82: 分型结构的心理因素"
+    },
+    {
+      "id": "chunk:pageindex.l083.p0848-p0854",
+      "type": "chunk",
+      "label": "p848-p854 lesson 83: 笔-线段与线段-最小中枢结构的不同心理意义 1"
+    },
+    {
+      "id": "chunk:pageindex.l084.p0855-p0881",
+      "type": "chunk",
+      "label": "p855-p881 lesson 84: 本 ID 理论一些必须注意的问题"
+    },
+    {
+      "id": "chunk:pageindex.l085.p0882-p0887",
+      "type": "chunk",
+      "label": "p882-p887 lesson 85: 逗庄家玩的一些杂史 3"
+    },
+    {
+      "id": "chunk:pageindex.l086.p0888-p0902",
+      "type": "chunk",
+      "label": "p888-p902 lesson 86: 走势分析中必须杜绝一根筋思维"
+    },
+    {
+      "id": "chunk:pageindex.l087.p0903-p0912",
+      "type": "chunk",
+      "label": "p903-p912 lesson 87: 逗庄家玩的一些杂史 4"
+    },
+    {
+      "id": "chunk:pageindex.l088.p0913-p0930",
+      "type": "chunk",
+      "label": "p913-p930 lesson 88: 图形生长的一个具体案例"
+    },
+    {
+      "id": "chunk:pageindex.l089.p0931-p0950",
+      "type": "chunk",
+      "label": "p931-p950 lesson 89: 中阴阶段的具体分析"
+    },
+    {
+      "id": "chunk:pageindex.l090.p0951-p0970",
+      "type": "chunk",
+      "label": "p951-p970 lesson 90: 中阴阶段结束时间的辅助判断"
+    },
+    {
+      "id": "chunk:pageindex.l091.p0971-p0995",
+      "type": "chunk",
+      "label": "p971-p995 lesson 91: 走势结构的两重表里关系 1"
+    },
+    {
+      "id": "chunk:pageindex.l092.p0996-p1026",
+      "type": "chunk",
+      "label": "p996-p1026 lesson 92: 中枢震荡的监视器"
+    },
+    {
+      "id": "chunk:pageindex.l093.p1027-p1033",
+      "type": "chunk",
+      "label": "p1027-p1033 lesson 93: 走势结构的两重表里关系 2"
+    },
+    {
+      "id": "chunk:pageindex.l094.p1034-p1037",
+      "type": "chunk",
+      "label": "p1034-p1037 lesson 94: 当机立断"
+    },
+    {
+      "id": "chunk:pageindex.l095.p1038-p1041",
+      "type": "chunk",
+      "label": "p1038-p1041 lesson 95: 修炼自己"
+    },
+    {
+      "id": "chunk:pageindex.l096.p1042-p1052",
+      "type": "chunk",
+      "label": "p1042-p1052 lesson 96: 无处不在的赌徒心理"
+    },
+    {
+      "id": "chunk:pageindex.l097.p1053-p1066",
+      "type": "chunk",
+      "label": "p1053-p1066 lesson 97: 中医、兵法、诗歌、操作 1"
+    },
+    {
+      "id": "chunk:pageindex.l098.p1067-p1074",
+      "type": "chunk",
+      "label": "p1067-p1074 lesson 98: 中医、兵法、诗歌、操作 2"
+    },
+    {
+      "id": "chunk:pageindex.l099.p1075-p1092",
+      "type": "chunk",
+      "label": "p1075-p1092 lesson 99: 走势结构的两重表里关系 3"
+    },
+    {
+      "id": "chunk:pageindex.l100.p1093-p1107",
+      "type": "chunk",
+      "label": "p1093-p1107 lesson 100: 中医、兵法、诗歌、操作 3"
+    },
+    {
+      "id": "chunk:pageindex.l101.p1108-p1113",
+      "type": "chunk",
+      "label": "p1108-p1113 lesson 101: 答疑 1"
+    },
+    {
+      "id": "chunk:pageindex.l102.p1114-p1133",
+      "type": "chunk",
+      "label": "p1114-p1133 lesson 102: 再说走势必完美"
+    },
+    {
+      "id": "chunk:pageindex.l103.p1134-p1142",
+      "type": "chunk",
+      "label": "p1134-p1142 lesson 103: 学屠龙术前先学好防狼术"
+    },
+    {
+      "id": "chunk:pageindex.l104.p1143-p1168",
+      "type": "chunk",
+      "label": "p1143-p1168 lesson 104: 几何结构与能量动力结构 1"
+    },
+    {
+      "id": "chunk:pageindex.l105.p1169-p1198",
+      "type": "chunk",
+      "label": "p1169-p1198 lesson 105: 远离聪明、机械操作"
+    },
+    {
+      "id": "chunk:pageindex.l106.p1199-p1217",
+      "type": "chunk",
+      "label": "p1199-p1217 lesson 106: 均线、轮动与缠中说禅板块强弱指标"
+    },
+    {
+      "id": "chunk:pageindex.l107.p1218-p1221",
+      "type": "chunk",
+      "label": "p1218-p1221 lesson 107: 如何操作短线反弹"
+    },
+    {
+      "id": "chunk:pageindex.l108.p1222-p1262",
+      "type": "chunk",
+      "label": "p1222-p1262 lesson 108: 何谓底部？从月线看中期走势演化"
+    },
+    {
+      "id": "visual:buy_sell_points",
+      "type": "visual_card",
+      "label": "Chanlun Buy Sell Points Reference"
+    },
+    {
+      "id": "visual:center_zg_zd",
+      "type": "visual_card",
+      "label": "Chanlun Center ZG ZD Reference"
+    },
+    {
+      "id": "visual:divergence_macd",
+      "type": "visual_card",
+      "label": "Chanlun Divergence MACD Reference"
+    },
+    {
+      "id": "visual:fractal_stroke",
+      "type": "visual_card",
+      "label": "Chanlun Fractal And Stroke Reference"
+    },
+    {
+      "id": "visual:interval_nesting",
+      "type": "visual_card",
+      "label": "Chanlun Interval Nesting Reference"
+    },
+    {
+      "id": "visual:overview",
+      "type": "visual_card",
+      "label": "Chanlun Visual Card Overview"
+    },
+    {
+      "id": "visual:segment_break",
+      "type": "visual_card",
+      "label": "Chanlun Segment Break Reference"
+    }
+  ],
+  "edges": [
+    {
+      "from": "concept:fractal",
+      "to": "source_page:569",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fractal",
+      "to": "source_page:640",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fractal",
+      "to": "source_page:765",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fractal",
+      "to": "visual:fractal_stroke",
+      "type": "uses_figure"
+    },
+    {
+      "from": "concept:stroke",
+      "to": "source_page:569",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:stroke",
+      "to": "source_page:765",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:stroke",
+      "to": "visual:fractal_stroke",
+      "type": "uses_figure"
+    },
+    {
+      "from": "concept:segment",
+      "to": "source_page:611",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:segment",
+      "to": "source_page:640",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:segment",
+      "to": "source_page:704",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:segment",
+      "to": "source_page:812",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:segment",
+      "to": "visual:segment_break",
+      "type": "uses_figure"
+    },
+    {
+      "from": "concept:center",
+      "to": "source_page:121",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:center",
+      "to": "source_page:122",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:center",
+      "to": "source_page:313",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:center",
+      "to": "source_page:992",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:center",
+      "to": "visual:center_zg_zd",
+      "type": "uses_figure"
+    },
+    {
+      "from": "concept:divergence",
+      "to": "source_page:56",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:divergence",
+      "to": "source_page:177",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:divergence",
+      "to": "source_page:194",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:divergence",
+      "to": "source_page:231",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:divergence",
+      "to": "source_page:352",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:divergence",
+      "to": "visual:divergence_macd",
+      "type": "uses_figure"
+    },
+    {
+      "from": "concept:buy_sell_points",
+      "to": "source_page:135",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:buy_sell_points",
+      "to": "source_page:231",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:buy_sell_points",
+      "to": "source_page:491",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:buy_sell_points",
+      "to": "source_page:555",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:buy_sell_points",
+      "to": "source_page:992",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:buy_sell_points",
+      "to": "visual:buy_sell_points",
+      "type": "uses_figure"
+    },
+    {
+      "from": "concept:interval_nesting",
+      "to": "source_page:304",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:interval_nesting",
+      "to": "source_page:555",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:interval_nesting",
+      "to": "visual:interval_nesting",
+      "type": "uses_figure"
+    },
+    {
+      "from": "concept:fusion",
+      "to": "source_page:18",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fusion",
+      "to": "source_page:25",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fusion",
+      "to": "source_page:219",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fusion",
+      "to": "source_page:304",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fusion",
+      "to": "source_page:733",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fusion",
+      "to": "source_page:851",
+      "type": "anchored_to"
+    },
+    {
+      "from": "concept:fusion",
+      "to": "source_page:1199",
+      "type": "anchored_to"
+    },
+    {
+      "from": "chunk:fast.README.03.visual-assets",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.README.03.visual-assets",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.README.04.deep-kb",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.README.04.deep-kb",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.README.05.source-anchors",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.02.使用边界",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.02.使用边界",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.02.使用边界",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.02.使用边界",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.02.使用边界",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.02.使用边界",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.02.使用边界",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.03.trigger",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.03.trigger",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.03.trigger",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.03.trigger",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.03.trigger",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.03.trigger",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.03.trigger",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.06.step-2-build-structural-map",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.06.step-2-build-structural-map",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.06.step-2-build-structural-map",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.06.step-2-build-structural-map",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.10.缠论结构确认",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.10.缠论结构确认",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.10.缠论结构确认",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.10.缠论结构确认",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.10.缠论结构确认",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.10.缠论结构确认",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.workflow.10.缠论结构确认",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.rules.07.6-center",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.rules.09.8-divergence",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.README.01.chanlun-figure-cards",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:fast.README.01.chanlun-figure-cards",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.front.p0001-p0008",
+      "to": "source_page:1",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l001.p0009",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l001.p0009",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l001.p0009",
+      "to": "source_page:9",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l002.p0010",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l002.p0010",
+      "to": "source_page:10",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l003.p0010",
+      "to": "source_page:10",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l004.p0011-p0013",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l004.p0011-p0013",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l004.p0011-p0013",
+      "to": "source_page:11",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l005.p0013",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l005.p0013",
+      "to": "source_page:13",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l006.p0014-p0016",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l006.p0014-p0016",
+      "to": "source_page:14",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l007.p0017-p0020",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l007.p0017-p0020",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l007.p0017-p0020",
+      "to": "source_page:17",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l008.p0021-p0024",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l008.p0021-p0024",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l008.p0021-p0024",
+      "to": "source_page:21",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l009.p0025-p0026",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l009.p0025-p0026",
+      "to": "source_page:25",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l010.p0027-p0032",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l010.p0027-p0032",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l010.p0027-p0032",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l010.p0027-p0032",
+      "to": "source_page:27",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l011.p0033-p0036",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l011.p0033-p0036",
+      "to": "source_page:33",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l012.p0037-p0042",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l012.p0037-p0042",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l012.p0037-p0042",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l012.p0037-p0042",
+      "to": "source_page:37",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l013.p0043-p0047",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l013.p0043-p0047",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l013.p0043-p0047",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l013.p0043-p0047",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l013.p0043-p0047",
+      "to": "source_page:43",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l014.p0048-p0056",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l014.p0048-p0056",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l014.p0048-p0056",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l014.p0048-p0056",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l014.p0048-p0056",
+      "to": "source_page:48",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l015.p0057-p0065",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l015.p0057-p0065",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l015.p0057-p0065",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l015.p0057-p0065",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l015.p0057-p0065",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l015.p0057-p0065",
+      "to": "source_page:57",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l016.p0066-p0082",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l016.p0066-p0082",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l016.p0066-p0082",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l016.p0066-p0082",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l016.p0066-p0082",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l016.p0066-p0082",
+      "to": "source_page:66",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l017.p0083-p0100",
+      "to": "source_page:83",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l018.p0101-p0103",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l018.p0101-p0103",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l018.p0101-p0103",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l018.p0101-p0103",
+      "to": "source_page:101",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l019.p0104-p0121",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l019.p0104-p0121",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l019.p0104-p0121",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l019.p0104-p0121",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l019.p0104-p0121",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l019.p0104-p0121",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l019.p0104-p0121",
+      "to": "source_page:104",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l020.p0122-p0135",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l020.p0122-p0135",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l020.p0122-p0135",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l020.p0122-p0135",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l020.p0122-p0135",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l020.p0122-p0135",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l020.p0122-p0135",
+      "to": "source_page:122",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l021.p0136-p0145",
+      "to": "source_page:136",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l022.p0146-p0158",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l022.p0146-p0158",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l022.p0146-p0158",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l022.p0146-p0158",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l022.p0146-p0158",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l022.p0146-p0158",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l022.p0146-p0158",
+      "to": "source_page:146",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l023.p0159-p0177",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l023.p0159-p0177",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l023.p0159-p0177",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l023.p0159-p0177",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l023.p0159-p0177",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l023.p0159-p0177",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l023.p0159-p0177",
+      "to": "source_page:159",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l024.p0178-p0194",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l024.p0178-p0194",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l024.p0178-p0194",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l024.p0178-p0194",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l024.p0178-p0194",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l024.p0178-p0194",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l024.p0178-p0194",
+      "to": "source_page:178",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l025.p0195-p0219",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l025.p0195-p0219",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l025.p0195-p0219",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l025.p0195-p0219",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l025.p0195-p0219",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l025.p0195-p0219",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l025.p0195-p0219",
+      "to": "source_page:195",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l026.p0220-p0231",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l026.p0220-p0231",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l026.p0220-p0231",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l026.p0220-p0231",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l026.p0220-p0231",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l026.p0220-p0231",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l026.p0220-p0231",
+      "to": "source_page:220",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l027.p0232-p0245",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l027.p0232-p0245",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l027.p0232-p0245",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l027.p0232-p0245",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l027.p0232-p0245",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l027.p0232-p0245",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l027.p0232-p0245",
+      "to": "source_page:232",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l028.p0246-p0262",
+      "to": "source_page:246",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l029.p0263-p0276",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l029.p0263-p0276",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l029.p0263-p0276",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l029.p0263-p0276",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l029.p0263-p0276",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l029.p0263-p0276",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l029.p0263-p0276",
+      "to": "source_page:263",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l030.p0277-p0283",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l030.p0277-p0283",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l030.p0277-p0283",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l030.p0277-p0283",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l030.p0277-p0283",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l030.p0277-p0283",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l030.p0277-p0283",
+      "to": "source_page:277",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l031.p0284-p0301",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l031.p0284-p0301",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l031.p0284-p0301",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l031.p0284-p0301",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l031.p0284-p0301",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l031.p0284-p0301",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l031.p0284-p0301",
+      "to": "source_page:284",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l032.p0302-p0312",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l032.p0302-p0312",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l032.p0302-p0312",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l032.p0302-p0312",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l032.p0302-p0312",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l032.p0302-p0312",
+      "to": "source_page:302",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l033.p0313-p0326",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l033.p0313-p0326",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l033.p0313-p0326",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l033.p0313-p0326",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l033.p0313-p0326",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l033.p0313-p0326",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l033.p0313-p0326",
+      "to": "source_page:313",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l034.p0327-p0336",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l034.p0327-p0336",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l034.p0327-p0336",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l034.p0327-p0336",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l034.p0327-p0336",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l034.p0327-p0336",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l034.p0327-p0336",
+      "to": "source_page:327",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l035.p0337-p0344",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l035.p0337-p0344",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l035.p0337-p0344",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l035.p0337-p0344",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l035.p0337-p0344",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l035.p0337-p0344",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l035.p0337-p0344",
+      "to": "source_page:337",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l036.p0345-p0352",
+      "to": "source_page:345",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l037.p0353-p0362",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l037.p0353-p0362",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l037.p0353-p0362",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l037.p0353-p0362",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l037.p0353-p0362",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l037.p0353-p0362",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l037.p0353-p0362",
+      "to": "source_page:353",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l038.p0363-p0371",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l038.p0363-p0371",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l038.p0363-p0371",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l038.p0363-p0371",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l038.p0363-p0371",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l038.p0363-p0371",
+      "to": "source_page:363",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l039.p0372-p0379",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l039.p0372-p0379",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l039.p0372-p0379",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l039.p0372-p0379",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l039.p0372-p0379",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l039.p0372-p0379",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l039.p0372-p0379",
+      "to": "source_page:372",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l040.p0380-p0388",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l040.p0380-p0388",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l040.p0380-p0388",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l040.p0380-p0388",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l040.p0380-p0388",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l040.p0380-p0388",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l040.p0380-p0388",
+      "to": "source_page:380",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l041.p0389-p0394",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l041.p0389-p0394",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l041.p0389-p0394",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l041.p0389-p0394",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l041.p0389-p0394",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l041.p0389-p0394",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l041.p0389-p0394",
+      "to": "source_page:389",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l042.p0395-p0403",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l042.p0395-p0403",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l042.p0395-p0403",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l042.p0395-p0403",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l042.p0395-p0403",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l042.p0395-p0403",
+      "to": "source_page:395",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l043.p0404-p0410",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l043.p0404-p0410",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l043.p0404-p0410",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l043.p0404-p0410",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l043.p0404-p0410",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l043.p0404-p0410",
+      "to": "source_page:404",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l044.p0411-p0417",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l044.p0411-p0417",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l044.p0411-p0417",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l044.p0411-p0417",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l044.p0411-p0417",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l044.p0411-p0417",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l044.p0411-p0417",
+      "to": "source_page:411",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l045.p0418-p0427",
+      "to": "source_page:418",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l046.p0428-p0436",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l046.p0428-p0436",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l046.p0428-p0436",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l046.p0428-p0436",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l046.p0428-p0436",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l046.p0428-p0436",
+      "to": "source_page:428",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l047.p0437-p0445",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l047.p0437-p0445",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l047.p0437-p0445",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l047.p0437-p0445",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l047.p0437-p0445",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l047.p0437-p0445",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l047.p0437-p0445",
+      "to": "source_page:437",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l048.p0446-p0451",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l048.p0446-p0451",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l048.p0446-p0451",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l048.p0446-p0451",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l048.p0446-p0451",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l048.p0446-p0451",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l048.p0446-p0451",
+      "to": "source_page:446",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l049.p0452-p0459",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l049.p0452-p0459",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l049.p0452-p0459",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l049.p0452-p0459",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l049.p0452-p0459",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l049.p0452-p0459",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l049.p0452-p0459",
+      "to": "source_page:452",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l050.p0460-p0467",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l050.p0460-p0467",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l050.p0460-p0467",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l050.p0460-p0467",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l050.p0460-p0467",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l050.p0460-p0467",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l050.p0460-p0467",
+      "to": "source_page:460",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l051.p0468-p0482",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l051.p0468-p0482",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l051.p0468-p0482",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l051.p0468-p0482",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l051.p0468-p0482",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l051.p0468-p0482",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l051.p0468-p0482",
+      "to": "source_page:468",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l052.p0483-p0491",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l052.p0483-p0491",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l052.p0483-p0491",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l052.p0483-p0491",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l052.p0483-p0491",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l052.p0483-p0491",
+      "to": "source_page:483",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l053.p0492-p0497",
+      "to": "source_page:492",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l054.p0498-p0508",
+      "to": "source_page:498",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l055.p0509-p0513",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l055.p0509-p0513",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l055.p0509-p0513",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l055.p0509-p0513",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l055.p0509-p0513",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l055.p0509-p0513",
+      "to": "source_page:509",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l056.p0514-p0522",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l056.p0514-p0522",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l056.p0514-p0522",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l056.p0514-p0522",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l056.p0514-p0522",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l056.p0514-p0522",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l056.p0514-p0522",
+      "to": "source_page:514",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l057.p0523-p0529",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l057.p0523-p0529",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l057.p0523-p0529",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l057.p0523-p0529",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l057.p0523-p0529",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l057.p0523-p0529",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l057.p0523-p0529",
+      "to": "source_page:523",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l058.p0530-p0540",
+      "to": "source_page:530",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l059.p0541-p0548",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l059.p0541-p0548",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l059.p0541-p0548",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l059.p0541-p0548",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l059.p0541-p0548",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l059.p0541-p0548",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l059.p0541-p0548",
+      "to": "source_page:541",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l060.p0549-p0555",
+      "to": "source_page:549",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l061.p0556-p0568",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l061.p0556-p0568",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l061.p0556-p0568",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l061.p0556-p0568",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l061.p0556-p0568",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l061.p0556-p0568",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l061.p0556-p0568",
+      "to": "source_page:556",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l062.p0569-p0579",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l062.p0569-p0579",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l062.p0569-p0579",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l062.p0569-p0579",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l062.p0569-p0579",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l062.p0569-p0579",
+      "to": "source_page:569",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l063.p0580-p0587",
+      "to": "source_page:580",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l064.p0588-p0614",
+      "to": "source_page:588",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l065.p0615-p0634",
+      "to": "source_page:615",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l066.p0635-p0643",
+      "to": "source_page:635",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l067.p0644-p0661",
+      "to": "source_page:644",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l068.p0662-p0673",
+      "to": "source_page:662",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l069.p0674-p0693",
+      "to": "source_page:674",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l070.p0694-p0703",
+      "to": "source_page:694",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l071.p0704-p0715",
+      "to": "source_page:704",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l072.p0716-p0727",
+      "to": "source_page:716",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l073.p0728-p0736",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l073.p0728-p0736",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l073.p0728-p0736",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l073.p0728-p0736",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l073.p0728-p0736",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l073.p0728-p0736",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l073.p0728-p0736",
+      "to": "source_page:728",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l074.p0737-p0743",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l074.p0737-p0743",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l074.p0737-p0743",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l074.p0737-p0743",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l074.p0737-p0743",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l074.p0737-p0743",
+      "to": "source_page:737",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l075.p0744-p0755",
+      "to": "source_page:744",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l076.p0756-p0762",
+      "to": "source_page:756",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l077.p0763-p0771",
+      "to": "source_page:763",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l078.p0772-p0780",
+      "to": "source_page:772",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l079.p0781-p0794",
+      "to": "source_page:781",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l080.p0795-p0815",
+      "to": "source_page:795",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l081.p0816-p0836",
+      "to": "source_page:816",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l082.p0837-p0847",
+      "to": "source_page:837",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l083.p0848-p0854",
+      "to": "source_page:848",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l084.p0855-p0881",
+      "to": "source_page:855",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l085.p0882-p0887",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l085.p0882-p0887",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l085.p0882-p0887",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l085.p0882-p0887",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l085.p0882-p0887",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l085.p0882-p0887",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l085.p0882-p0887",
+      "to": "source_page:882",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l086.p0888-p0902",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l086.p0888-p0902",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l086.p0888-p0902",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l086.p0888-p0902",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l086.p0888-p0902",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l086.p0888-p0902",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l086.p0888-p0902",
+      "to": "source_page:888",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l087.p0903-p0912",
+      "to": "source_page:903",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l088.p0913-p0930",
+      "to": "source_page:913",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l089.p0931-p0950",
+      "to": "source_page:931",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l090.p0951-p0970",
+      "to": "source_page:951",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l091.p0971-p0995",
+      "to": "source_page:971",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l092.p0996-p1026",
+      "to": "source_page:996",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l093.p1027-p1033",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l093.p1027-p1033",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l093.p1027-p1033",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l093.p1027-p1033",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l093.p1027-p1033",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l093.p1027-p1033",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l093.p1027-p1033",
+      "to": "source_page:1027",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l094.p1034-p1037",
+      "to": "source_page:1034",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l095.p1038-p1041",
+      "to": "source_page:1038",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l096.p1042-p1052",
+      "to": "source_page:1042",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l097.p1053-p1066",
+      "to": "source_page:1053",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l098.p1067-p1074",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l098.p1067-p1074",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l098.p1067-p1074",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l098.p1067-p1074",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l098.p1067-p1074",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l098.p1067-p1074",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l098.p1067-p1074",
+      "to": "source_page:1067",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l099.p1075-p1092",
+      "to": "source_page:1075",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l100.p1093-p1107",
+      "to": "source_page:1093",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l101.p1108-p1113",
+      "to": "source_page:1108",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l102.p1114-p1133",
+      "to": "source_page:1114",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l103.p1134-p1142",
+      "to": "source_page:1134",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l104.p1143-p1168",
+      "to": "source_page:1143",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l105.p1169-p1198",
+      "to": "source_page:1169",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l106.p1199-p1217",
+      "to": "source_page:1199",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l107.p1218-p1221",
+      "to": "source_page:1218",
+      "type": "from_page"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:fractal",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:stroke",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:segment",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:center",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:divergence",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:buy_sell_points",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:interval_nesting",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "concept:fusion",
+      "type": "mentions"
+    },
+    {
+      "from": "chunk:pageindex.l108.p1222-p1262",
+      "to": "source_page:1222",
+      "type": "from_page"
+    },
+    {
+      "from": "visual:buy_sell_points",
+      "to": "concept:buy_sell_points",
+      "type": "illustrates"
+    },
+    {
+      "from": "visual:center_zg_zd",
+      "to": "concept:center",
+      "type": "illustrates"
+    },
+    {
+      "from": "visual:divergence_macd",
+      "to": "concept:divergence",
+      "type": "illustrates"
+    },
+    {
+      "from": "visual:fractal_stroke",
+      "to": "concept:fractal",
+      "type": "illustrates"
+    },
+    {
+      "from": "visual:fractal_stroke",
+      "to": "concept:stroke",
+      "type": "illustrates"
+    },
+    {
+      "from": "visual:interval_nesting",
+      "to": "concept:interval_nesting",
+      "type": "illustrates"
+    },
+    {
+      "from": "visual:segment_break",
+      "to": "concept:segment",
+      "type": "illustrates"
+    }
+  ]
+}

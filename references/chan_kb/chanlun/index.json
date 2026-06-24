@@ -1,0 +1,113 @@
+{
+  "name": "agent-stock-chanlun",
+  "version": "0.1",
+  "relative_path_base": "references/chanlun/",
+  "runtime_dependencies": ["stock CLI"],
+  "not_required_at_runtime": ["external RAG runtime", "Qdrant", "source PDF"],
+  "primary_files": {
+    "readme": "README.md",
+    "workflow": "workflow.md",
+    "rules": "rules.md",
+    "fusion": "fusion.md",
+    "figure_overview": "figures/overview.svg"
+  },
+  "call_sequence": ["workflow.md", "rules.md", "fusion.md"],
+  "required_output_fields": [
+    "操作级别",
+    "走势定位",
+    "买卖点",
+    "结构依据",
+    "图形参照",
+    "置信度",
+    "失效条件"
+  ],
+  "optional_output_fields": ["来源锚点"],
+  "visual_use_boundary": "Use SVG cards as qualitative shape references only. Do not use them for automatic K-line recognition, exact measurement, or buy/sell point declaration without level and invalidation.",
+  "visual_cards": {
+    "overview": {
+      "file": "figures/overview.svg",
+      "use_for": "one-page routing map for all Chanlun visual cards",
+      "do_not_use_for": "replacing detailed rules.md reasoning"
+    },
+    "fractal_stroke": {
+      "file": "figures/fractal_stroke.svg",
+      "use_for": "fractal, inclusion processing, and stroke confirmation",
+      "do_not_use_for": "automatic K-line recognition or stroke confirmation without enough processed bars"
+    },
+    "segment_break": {
+      "file": "figures/segment_break.svg",
+      "use_for": "segment composition and break reasoning",
+      "do_not_use_for": "simple price breakout judgment without characteristic-sequence reasoning"
+    },
+    "center_zg_zd": {
+      "file": "figures/center_zg_zd.svg",
+      "use_for": "center overlap, ZG/ZD, extension, and upgrade",
+      "do_not_use_for": "exact measurement without OHLC data"
+    },
+    "buy_sell_points": {
+      "file": "figures/buy_sell_points.svg",
+      "use_for": "relative positions of first, second, and third buy/sell points",
+      "do_not_use_for": "declaring a buy/sell point without level, structure basis, and invalidation"
+    },
+    "divergence_macd": {
+      "file": "figures/divergence_macd.svg",
+      "use_for": "divergence shape plus MACD auxiliary force comparison",
+      "do_not_use_for": "treating MACD as the primary Chanlun rule"
+    },
+    "interval_nesting": {
+      "file": "figures/interval_nesting.svg",
+      "use_for": "large-level direction and small-level timing",
+      "do_not_use_for": "mixing unrelated levels or overriding a larger-level sell point"
+    }
+  },
+  "concepts": {
+    "fractal": {
+      "rule_file": "rules.md",
+      "figure": "figures/fractal_stroke.svg",
+      "source_pages": [569, 640, 765],
+      "keywords": ["分型", "顶分型", "底分型", "包含关系"]
+    },
+    "stroke": {
+      "rule_file": "rules.md",
+      "figure": "figures/fractal_stroke.svg",
+      "source_pages": [569, 765],
+      "keywords": ["笔", "5根K线", "相邻分型"]
+    },
+    "segment": {
+      "rule_file": "rules.md",
+      "figure": "figures/segment_break.svg",
+      "source_pages": [611, 640, 704, 812],
+      "keywords": ["线段", "特征序列", "线段破坏"]
+    },
+    "center": {
+      "rule_file": "rules.md",
+      "figure": "figures/center_zg_zd.svg",
+      "source_pages": [121, 122, 313, 992],
+      "keywords": ["中枢", "ZG", "ZD", "延伸", "扩展"]
+    },
+    "divergence": {
+      "rule_file": "rules.md",
+      "figure": "figures/divergence_macd.svg",
+      "source_pages": [56, 177, 194, 231, 352],
+      "keywords": ["背驰", "盘整背驰", "MACD", "力度"]
+    },
+    "buy_sell_points": {
+      "rule_file": "rules.md",
+      "figure": "figures/buy_sell_points.svg",
+      "source_pages": [135, 231, 491, 555, 992],
+      "keywords": ["一买", "二买", "三买", "一卖", "二卖", "三卖", "第一类买点", "第二类买点", "第三类买点", "第一类卖点", "第二类卖点", "第三类卖点", "买点", "卖点", "买卖点"]
+    },
+    "interval_nesting": {
+      "rule_file": "rules.md",
+      "figure": "figures/interval_nesting.svg",
+      "source_pages": [304, 555],
+      "keywords": ["区间套", "级别", "当下"]
+    },
+    "fusion": {
+      "rule_file": "fusion.md",
+      "figure": null,
+      "source_pages": [18, 25, 219, 304, 733, 851, 1199],
+      "keywords": ["基本面", "消息", "资金", "板块", "轮动", "政策"]
+    }
+  }
+}

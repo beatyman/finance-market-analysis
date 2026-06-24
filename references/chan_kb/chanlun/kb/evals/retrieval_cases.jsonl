@@ -1,0 +1,4 @@
+{"id":"ret-center","query":"走势中枢 ZG ZD 重叠区间","expected_top_pages":[122,123],"expected_visual":"center_zg_zd"}
+{"id":"ret-third-buy","query":"第三类买点 次级别走势类型向上离开 中枢 回试 低点不跌破 ZG","expected_top_pages":[123,132],"expected_visual":"buy_sell_points"}
+{"id":"ret-segment-break","query":"线段破坏 特征序列 至少三笔","expected_top_pages":[611,640,704],"expected_visual":"segment_break"}
+{"id":"ret-divergence-macd","query":"MACD 面积 背驰 辅助判断","expected_top_pages":[177,194,352],"expected_visual":"divergence_macd"}

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560">
+  <title>Chanlun Segment Break Reference</title>
+  <desc>Abstract comparison card for segment composition and break reasoning. Do not use as a simple price breakout rule.</desc>
+  <rect width="960" height="560" fill="#ffffff"/>
+  <style>
+    .title{font:700 24px Arial,sans-serif;fill:#111827}
+    .label{font:16px Arial,sans-serif;fill:#111827}
+    .small{font:13px Arial,sans-serif;fill:#374151}
+    .line{stroke:#111827;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .seg{stroke:#2563eb;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .break{stroke:#dc2626;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .hint{stroke:#9ca3af;stroke-width:2;stroke-dasharray:7 7}
+    .box{fill:#f9fafb;stroke:#d1d5db;stroke-width:2;rx:10}
+  </style>
+  <text x="32" y="44" class="title">Segment And Segment Break</text>
+  <text x="32" y="74" class="small">A segment needs at least three strokes. A break needs valid opposite sequence evidence.</text>
+
+  <rect x="50" y="115" width="395" height="335" class="box"/>
+  <text x="78" y="148" class="label">Segment formed by at least 3 strokes</text>
+  <polyline points="90,365 165,260 240,330 315,210 390,275" class="line"/>
+  <polyline points="90,365 165,260 240,330 315,210" class="seg"/>
+  <circle cx="90" cy="365" r="7" fill="#2563eb"/>
+  <circle cx="165" cy="260" r="7" fill="#111827"/>
+  <circle cx="240" cy="330" r="7" fill="#111827"/>
+  <circle cx="315" cy="210" r="7" fill="#dc2626"/>
+  <text x="100" y="405" class="small">stroke 1</text>
+  <text x="200" y="405" class="small">stroke 2</text>
+  <text x="300" y="405" class="small">stroke 3</text>
+
+  <rect x="515" y="115" width="395" height="335" class="box"/>
+  <text x="543" y="148" class="label">Break: new opposite sequence confirms old segment ended</text>
+  <polyline points="560,340 620,250 680,310 740,210 805,285 865,245" class="line"/>
+  <polyline points="560,340 620,250 680,310 740,210" class="seg"/>
+  <polyline points="740,210 805,285 865,245" class="break"/>
+  <line x1="680" y1="310" x2="885" y2="310" class="hint"/>
+  <text x="548" y="390" class="small">Do not treat a simple price poke as a segment break.</text>
+  <text x="548" y="415" class="small">Check whether the characteristic sequence belongs to the same opposite structure.</text>
+</svg>

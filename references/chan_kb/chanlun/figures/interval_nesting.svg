@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560">
+  <title>Chanlun Interval Nesting Reference</title>
+  <desc>Abstract comparison card for large-level direction and small-level timing. Do not mix unrelated levels.</desc>
+  <rect width="960" height="560" fill="#ffffff"/>
+  <style>
+    .title{font:700 24px Arial,sans-serif;fill:#111827}
+    .label{font:16px Arial,sans-serif;fill:#111827}
+    .small{font:13px Arial,sans-serif;fill:#374151}
+    .line{stroke:#111827;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .sub{stroke:#2563eb;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .box{fill:#f9fafb;stroke:#d1d5db;stroke-width:2;rx:10}
+    .arrow{stroke:#059669;stroke-width:4;fill:none;marker-end:url(#arrow)}
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#059669"/>
+    </marker>
+  </defs>
+  <text x="32" y="44" class="title">Interval Nesting</text>
+  <text x="32" y="74" class="small">Large level sets direction; small level times entry.</text>
+
+  <rect x="55" y="120" width="250" height="310" class="box"/>
+  <text x="85" y="152" class="label">Daily</text>
+  <polyline points="85,350 145,260 205,310 265,220" class="line"/>
+  <text x="85" y="390" class="small">possible larger-level buy area</text>
+
+  <path d="M320 275 H420" class="arrow"/>
+
+  <rect x="430" y="120" width="250" height="310" class="box"/>
+  <text x="460" y="152" class="label">30m</text>
+  <polyline points="460,335 505,280 550,315 595,255 640,300" class="sub"/>
+  <text x="460" y="390" class="small">center no longer breaks down</text>
+
+  <path d="M695 275 H795" class="arrow"/>
+
+  <rect x="805" y="120" width="115" height="310" class="box"/>
+  <text x="825" y="152" class="label">5m</text>
+  <polyline points="822,335 845,300 867,318 890,285 910,305" class="sub"/>
+  <circle cx="890" cy="285" r="7" fill="#16a34a"/>
+  <text x="820" y="390" class="small">entry</text>
+</svg>

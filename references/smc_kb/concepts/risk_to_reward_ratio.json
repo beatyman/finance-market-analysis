@@ -1,0 +1,1935 @@
+{
+  "card_id": "risk_to_reward_ratio",
+  "type": "merged_concept",
+  "canonical_term": "Risk-to-Reward Ratio",
+  "aliases": [
+    "2:1 risk-to-reward",
+    "2:1 risk-to-reward ratio",
+    "2:1 Risk-to-Reward Ratio",
+    "2R",
+    "2r",
+    "R",
+    "R Multiple",
+    "R:R",
+    "R:R Ratio",
+    "R:R比例",
+    "Risk Multiple",
+    "Risk to Reward",
+    "Risk-Reward",
+    "risk-reward",
+    "Risk-Reward Ratio",
+    "Risk/Reward",
+    "Risk/Reward Ratio",
+    "RR",
+    "RRR",
+    "RR比",
+    "rr比",
+    "R倍数",
+    "R值",
+    "Solid RR",
+    "two R",
+    "two r",
+    "Wrist Reward",
+    "风险回报比",
+    "风险收益比"
+  ],
+  "school": "Risk Management",
+  "definition": "The ratio of potential profit to potential loss on a trade, measured in R multiples where 1R equals the stop-loss distance. A minimum 2R target is typically required, meaning the profit objective is at least twice the risk. The ratio improves by entering closer to invalidation, tightening stops relative to targets. It serves as the primary filter for trade viability, ensuring profitability with a sufficient win rate.",
+  "identification_rules": [
+    "Define 1R as the distance from the entry price to the stop-loss level, with the stop placed beyond the invalidation point (protected swing, swept high/low, order block body, mean threshold, breaker block, etc.).",
+    "Define the reward as the distance from entry to a logical liquidity target (previous day high/low, swing highs/lows, standard deviation projection, fair value gap, opposite range extreme).",
+    "Calculate the risk-to-reward ratio as reward distance ÷ stop distance; the setup is valid only if the ratio is at least 2:1 (2R or greater).",
+    "When the initial stop placement yields less than 2R, tighten the stop to the mean threshold (0.5 Fib of the invalidation body) or relocate the entry to a tighter PD array (OTE zone, fair value gap, breaker block) to improve the ratio.",
+    "If the protected swing stop is too wide to reach 2R to the target, wait for a new protected swing or continuation order block to form closer to price before entering.",
+    "Ensure the 2R target is achievable before price encounters opposing higher-time-frame structure; if the next liquidity objective is too close, skip or defer the trade.",
+    "For scaling beyond 2R, project standard deviation levels (e.g., -2, -2.5) or hold runners toward larger structural objectives.",
+    "Maintain consistent dollar or percentage risk per trade to preserve the R multiple framework across trades.",
+    "Place a partial take-profit order to close half the position when the price moves to a 1:2 risk-to-reward level, letting the remainder run to the next key structural level.",
+    "When the zone (order block, supply/demand) is large, adjust entry to the middle or use a smaller sub-zone for the stop to improve the risk-to-reward ratio.",
+    "If extending a zone by including additional candles/wicks reduces the risk-to-reward ratio, switch to a lower timeframe for precise entry when price reaches the zone.",
+    "In an uptrend, confirm entry in the discount zone (below 50% Fibonacci retracement); in a downtrend, confirm entry in the premium zone (above 50% Fibonacci retracement) to maximize reward relative to risk.",
+    "Ensure the take-profit target is at a significant structural level (e.g., recent swing high/low) to maintain a realistic reward distance.",
+    "Never risk more than 2% of total trading capital on any single trade.",
+    "Limit active trades to a maximum of three at any one time to control overall exposure."
+  ],
+  "trading_implication": "Risk-to-reward is the primary gate for trade entries. Each setup must offer at least 2R from a protected-swing stop to a defined liquidity target. When 2R is unavailable, traders refine entries to tighter PD arrays or wait for continuation structures to improve the ratio. Partial profits at 2R and runners toward extended liquidity targets scale returns while locking in the risk framework. Consistent application paired with fixed-dollar risk allows profitability even with a sub-50% win rate (e.g., >34%).",
+  "common_mistakes": [
+    "Taking entries with stops on far swings instead of waiting for a closer protected swing or continuation entry.",
+    "Catching reversals rather than waiting for a continuation with tighter invalidation.",
+    "Using fixed contract size instead of fixed dollar/percentage risk, causing inconsistent R values.",
+    "Pushing entry too close to the stop to inflate R:R, resulting in missed fills or premature stop-outs.",
+    "Taking setups yielding less than 2R when a deeper PD array could improve the ratio.",
+    "Placing stops too tight on the body/mean threshold to boost R:R, leading to stop-outs on normal retests.",
+    "Placing stops at swing extremes instead of beyond structural levels like breaker blocks, reducing efficiency.",
+    "Entering without confirming a logical 2R target (e.g., liquidity pool) exists.",
+    "Chasing entries after large moves when insufficient room remains for 2R.",
+    "Assuming a favorable R:R guarantees a winning trade.",
+    "Closing the entire position at 2R without leaving runners for larger objectives.",
+    "Using a generic stop without adjusting for instrument-specific behavior (e.g., equal-high sweeps).",
+    "Entering at equilibrium (1:1) or on the wrong side of premium/discount.",
+    "Failing to update the trading range as price expands, leading to stale R:R calculations.",
+    "Adjusting the stop rather than the entry to improve R:R.",
+    "Not verifying higher-time-frame bias alignment with the 2R target.",
+    "Entering trades without a favorable risk-to-reward ratio (worse than 1:2), reducing long-term profitability.",
+    "Entering in the wrong zone (buying in premium or selling in discount), leading to a poor risk-to-reward ratio.",
+    "Not adjusting the stop-loss or entry point when the order block or zone is large, resulting in an unfavorable risk-to-reward ratio.",
+    "Failing to take partial profits at the 1:2 target, leaving gains exposed to reversal.",
+    "Failing to adjust the reward target to a meaningful structural level, resulting in an overestimated reward and unrealistic expectations.",
+    "Risking more than 2% of capital on a single trade, exposing the account to excessive drawdown.",
+    "Marking zones too narrowly without considering risk-to-reward, leading to missed trades in trending markets.",
+    "Expanding zones without checking if the risk-to-reward ratio remains viable, resulting in poor trade outcomes."
+  ],
+  "related_concepts": [
+    {
+      "term": "2R"
+    },
+    {
+      "term": "AMD"
+    },
+    {
+      "term": "Box Setup"
+    },
+    {
+      "term": "Breaker Block"
+    },
+    {
+      "term": "Buyside Liquidity"
+    },
+    {
+      "term": "Change in State of Delivery"
+    },
+    {
+      "term": "Continuation Entry"
+    },
+    {
+      "term": "Continuation OB"
+    },
+    {
+      "term": "Daily Bias"
+    },
+    {
+      "term": "Daily Open"
+    },
+    {
+      "term": "Deviation"
+    },
+    {
+      "term": "Discount"
+    },
+    {
+      "term": "Discount Zone"
+    },
+    {
+      "term": "Draw on Liquidity"
+    },
+    {
+      "term": "Drawdown"
+    },
+    {
+      "term": "Equilibrium"
+    },
+    {
+      "term": "Failure Swing"
+    },
+    {
+      "term": "Fair Value Gap"
+    },
+    {
+      "term": "Fibonacci Retracement"
+    },
+    {
+      "term": "Fractal Model"
+    },
+    {
+      "term": "High Resistance Liquidity"
+    },
+    {
+      "term": "Intermediate-Term Low"
+    },
+    {
+      "term": "Inverted Fair Value Gap"
+    },
+    {
+      "term": "Key Levels"
+    },
+    {
+      "term": "Liquidity"
+    },
+    {
+      "term": "Lower Time Frame"
+    },
+    {
+      "term": "Manipulation Leg"
+    },
+    {
+      "term": "Market Structure Shift"
+    },
+    {
+      "term": "Mean Threshold"
+    },
+    {
+      "term": "Micro"
+    },
+    {
+      "term": "Optimal Trade Entry"
+    },
+    {
+      "term": "Optimal Trading Entry"
+    },
+    {
+      "term": "Order Block"
+    },
+    {
+      "term": "PD Array"
+    },
+    {
+      "term": "Partial Profit"
+    },
+    {
+      "term": "Point of Interest"
+    },
+    {
+      "term": "Position Sizing"
+    },
+    {
+      "term": "Premium"
+    },
+    {
+      "term": "Premium Zone"
+    },
+    {
+      "term": "Previous Day High"
+    },
+    {
+      "term": "Previous Day Low"
+    },
+    {
+      "term": "Propulsion Block"
+    },
+    {
+      "term": "Protected Swing"
+    },
+    {
+      "term": "R"
+    },
+    {
+      "term": "Range Trading"
+    },
+    {
+      "term": "Retracement"
+    },
+    {
+      "term": "Risk Management"
+    },
+    {
+      "term": "Risk Multiple (R)"
+    },
+    {
+      "term": "Runners"
+    },
+    {
+      "term": "Sell Side Liquidity"
+    },
+    {
+      "term": "Short-Term High"
+    },
+    {
+      "term": "Standard Deviation Projection"
+    },
+    {
+      "term": "Stop Loss"
+    },
+    {
+      "term": "Stop Loss Placement"
+    },
+    {
+      "term": "Stop Raid"
+    },
+    {
+      "term": "Supply Zone"
+    },
+    {
+      "term": "Demand Zone"
+    },
+    {
+      "term": "Swing Low"
+    },
+    {
+      "term": "T-Spot"
+    },
+    {
+      "term": "Take Profit"
+    },
+    {
+      "term": "Time Frame Alignment"
+    },
+    {
+      "term": "Top Down Analysis"
+    },
+    {
+      "term": "Unicorn Model"
+    },
+    {
+      "term": "V-Shape Reversal"
+    },
+    {
+      "term": "Win Rate"
+    }
+  ],
+  "merge_strategy": "llm_synthesis",
+  "merge_model": "deepseek/deepseek-chat",
+  "merge_notes": "All three input cards agree on school (Risk Management). No school conflict. The SMC card uses 1:2 minimum while ICT cards use 2R; both are equivalent. The SMC card adds partial profit at 1:2 and 2% risk rule, which are preserved. No major disagreements.",
+  "warnings": [],
+  "illustrated_by_cases": [
+    {
+      "card_id": "-wr4xATE37g_case_003_白银1小时图表的受保护摆动与风险管理",
+      "video_id": "-wr4xATE37g",
+      "title": "白银1小时图表的受保护摆动与风险管理"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_004_apoz_usd的买方受保护摆动形成与延续",
+      "video_id": "-wr4xATE37g",
+      "title": "APOZ/USD买方受保护摆动形成与低风险买入延续"
+    },
+    {
+      "card_id": "1YRs4Z1lMws_case_005_es日线周度目标到5分钟ote执行",
+      "video_id": "1YRs4Z1lMws",
+      "title": "ES日线周度目标到5分钟OTE最优入场执行"
+    },
+    {
+      "card_id": "8BWkRGhuj1k_case_002_apoz_usd_日线与多时间框架联动的空头交易",
+      "video_id": "8BWkRGhuj1k",
+      "title": "APOZ/USD 日线反转信号与多时间框架空头交易"
+    },
+    {
+      "card_id": "FgP2lc9nneM_case_003_原油_ol_周线到日线的高级对齐案例",
+      "video_id": "FgP2lc9nneM",
+      "title": "原油(OL)周线到日线的高级多时间框架对齐案例"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_001_btc小时图到5分钟图的多头交易",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "BTC小时图V形反转到5分钟图多头延续交易"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_002_es_标普500期货_小时图到5分钟图的多头交易",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "ES 1H到5M多头延续入场，通过FVG和受保护低点获得3.17R"
+    },
+    {
+      "card_id": "TNybDCtwBnc_case_003_nq第三个交易案例_日线反转后多日延续",
+      "video_id": "TNybDCtwBnc",
+      "title": "NQ日线反转后多日延续，小时线CSD确认，5分钟扫盘后入场获5.63R"
+    },
+    {
+      "card_id": "q40pRwjuPYQ_case_003_nq第三个例子_向下扫盘至折价区",
+      "video_id": "q40pRwjuPYQ",
+      "title": "NQ向下扫盘至折价区FVG的短线交易"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_004_日线反转与小时图延续的多层级交易",
+      "video_id": "qdQYhePcvGE",
+      "title": "日线反转与小时图V形反转的多层级延续交易"
+    },
+    {
+      "card_id": "-KKuZb5Z5aU_case_007_usd_index_hourly_continuation_wi",
+      "video_id": "-KKuZb5Z5aU",
+      "title": "NQ Hourly Bearish Continuation Entry from Fair Value Gap After Candle 2 Closure"
+    },
+    {
+      "card_id": "-wr4xATE37g_case_004_silver_1_hour_protected_swing_en",
+      "video_id": "-wr4xATE37g",
+      "title": "Silver 1H Bearish Protected Swing Entry at Fair Value Gap Targeting 2R"
+    },
+    {
+      "card_id": "0xygpCMwxbQ_case_002_nasdaq_5_minute_breaker_block_wi",
+      "video_id": "0xygpCMwxbQ",
+      "title": "NASDAQ 5-minute: Breaker Block with Nested Fair Value Gap Entry after Sellside Sweep"
+    },
+    {
+      "card_id": "1YRs4Z1lMws_case_004_gold_xauusd_hourly_to_5_minute_t",
+      "video_id": "1YRs4Z1lMws",
+      "title": "Gold (XAUUSD) Hourly to 5-Minute to 1-Minute OTE Entry with 3R Trade"
+    },
+    {
+      "card_id": "27S9gjgcSlI_case_006_nq_15_minute_to_1_minute_confirm",
+      "video_id": "27S9gjgcSlI",
+      "title": "NQ post-CPI short: 15-minute breaker block entry with 1-minute confirmation fallback"
+    },
+    {
+      "card_id": "4jU547ocod4_case_001_eth_reversal_off_previous_day_hi",
+      "video_id": "4jU547ocod4",
+      "title": "ETH Reversal Off Previous Day High with Hourly–5-Minute Alignment and 1-Minute Inversion Entry"
+    },
+    {
+      "card_id": "4jU547ocod4_case_002_nq_consolidation_range_breakout_",
+      "video_id": "4jU547ocod4",
+      "title": "NQ Consolidation Range: 10AM 4-Hour Closure with 1-Minute Inversion Entry"
+    },
+    {
+      "card_id": "4jU547ocod4_case_006_daily_hourly_model_with_15_minut",
+      "video_id": "4jU547ocod4",
+      "title": "Daily-Hourly Bias with 15-Minute Inversion Entry Targeting Equal Highs on ETH"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_001_eth_daily_swing_low_with_london_",
+      "video_id": "5fnFOh5YuM0",
+      "title": "ETH Daily Swing Low Holds via SMT with ES, London Reversal and NY Continuation for 2R"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_002_usd_daily_consolidation_with_swi",
+      "video_id": "5fnFOh5YuM0",
+      "title": "ETH Daily Consolidation Sweep with Confirmed Swing Low and Hourly/5-Minute Continuation Entry"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_003_eur_usd_failure_swings_with_draw",
+      "video_id": "5fnFOh5YuM0",
+      "title": "EUR/USD daily failure swings used as draw on liquidity with hourly and 5-minute swing point entries"
+    },
+    {
+      "card_id": "5fnFOh5YuM0_case_004_btc_daily_expansion_candle_with_",
+      "video_id": "5fnFOh5YuM0",
+      "title": "BTC/ETH Daily Expansion Candle Continuation Short via 5-Minute Protected High Entry"
+    },
+    {
+      "card_id": "6zTz7WMdMWg_case_006_eth_4_hour_to_15_minute_failure_",
+      "video_id": "6zTz7WMdMWg",
+      "title": "ETH 4-Hour Failure to Displace Sets Bias, 15-Minute FVG Entry Targets Prior 4H Low"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_002_bearish_breaker_block_on_eurusd_",
+      "video_id": "75S4vwD4P1U",
+      "title": "Bearish Breaker Block with Unicorn Model Confluence on EURUSD 5-Minute"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_003_unicorn_model_entry_with_stop_lo",
+      "video_id": "75S4vwD4P1U",
+      "title": "Unicorn Model Short on EURUSD: Comparing Stop Loss Placement at Breaker vs Swing High"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_004_bullish_breaker_block_with_proje",
+      "video_id": "75S4vwD4P1U",
+      "title": "Bullish Breaker Block Entry with Standard Deviation Projection Targets on 5-Minute Chart"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_005_top_down_breaker_block_setup_gbp",
+      "video_id": "75S4vwD4P1U",
+      "title": "GBPUSD Top-Down Unicorn Model: Hourly Breaker + FVG Refined on 5-Minute During London Killzone"
+    },
+    {
+      "card_id": "75S4vwD4P1U_case_007_es_60_minute_to_5_minute_breaker",
+      "video_id": "75S4vwD4P1U",
+      "title": "ES 60-Minute to 5-Minute Breaker Block Long After Sell Side Liquidity Sweep (Stopped Out)"
+    },
+    {
+      "card_id": "8BWkRGhuj1k_case_002_apoz_daily_and_intraday_multi_ti",
+      "video_id": "8BWkRGhuj1k",
+      "title": "APOZ Multi-Timeframe Short Setup: Blending Daily Phases with Hourly and 15-Minute Entry"
+    },
+    {
+      "card_id": "8BWkRGhuj1k_case_003_es1_daily_and_intraday_consolida",
+      "video_id": "8BWkRGhuj1k",
+      "title": "ES1! Daily Bias Top-Down: Daily Closure to 4H Retracement to 15M Short Entry with NQ SMT"
+    },
+    {
+      "card_id": "9AL41xON3hA_case_002_usd_jpy_monthly_to_daily_to_hour",
+      "video_id": "9AL41xON3hA",
+      "title": "USD/JPY Monthly-to-Daily-to-Hourly Bullish Alignment with Continuation Order Block Entry"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_001_nq_weekly_to_hourly_bearish_swin",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "NQ Weekly Bearish Bias Cascaded to Daily Candle 2 Closure and Hourly Entries Targeting Failure Swings"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_002_ng_natural_gas_weekly_to_hourly_",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "NG Natural Gas Weekly Swing Point Bullish Bias with Daily V-Shaped Reversal and Hourly SMT Entry"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_003_btc_weekly_to_4h_bearish_swing_w",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "BTC Weekly-to-4H Bearish Swing Trade with Timeframe Adjustment for Clarity"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_004_btc_4h_to_15m_fractal_entry_with",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "BTC Multi-Timeframe Drill-Down: 4H Fair Value Gap Target with 15M Fractal Entry"
+    },
+    {
+      "card_id": "9BY-MQRNy-Y_case_005_btc_weekly_to_4h_direct_fractal_",
+      "video_id": "9BY-MQRNy-Y",
+      "title": "BTC Weekly-to-4H Direct Fractal Swing Trade with Protected Swing Entry"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_001_crude_oil_futures_daily_propulsi",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "Crude Oil Futures Daily Propulsion Block Short Entry off Bearish Order Block Retest"
+    },
+    {
+      "card_id": "9PKJ0U1gl4g_case_005_crude_oil_futures_60_minute_new_",
+      "video_id": "9PKJ0U1gl4g",
+      "title": "Crude Oil Futures 60-Minute New York Session Propulsion Block Long Setup"
+    },
+    {
+      "card_id": "AdmnWLjf8rY_case_001_nq_1_minute_entry_with_hourly_dr",
+      "video_id": "AdmnWLjf8rY",
+      "title": "NQ 1-Minute Entry Using Hourly Equal Highs as Draw on Liquidity"
+    },
+    {
+      "card_id": "CHIK5oBRKiw_case_001_nq_5_minute_reversal_with_cisd_a",
+      "video_id": "CHIK5oBRKiw",
+      "title": "NQ 5-minute CISD reversal after buy-side sweep targeting London lows (8/11/2023)"
+    },
+    {
+      "card_id": "CqMIh-Vvhbg_case_001_eur_aud_daily_to_hourly_reversal",
+      "video_id": "CqMIh-Vvhbg",
+      "title": "EUR/AUD Daily-to-Hourly Reversal Setup with New York Entry"
+    },
+    {
+      "card_id": "CqMIh-Vvhbg_case_003_gc_gold_hourly_to_5_minute_confl",
+      "video_id": "CqMIh-Vvhbg",
+      "title": "GC Gold Hourly-to-5-Minute T-Spot Confluence Long Setup"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_002_eth_hourly_fair_value_gap_with_5",
+      "video_id": "DMUiDBnTYc8",
+      "title": "ETH hourly fair value gap paired with 5-minute order block entry reaches 2R target"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_003_oil_5_minute_order_block_with_me",
+      "video_id": "DMUiDBnTYc8",
+      "title": "Oil 5-minute order block entry using mean threshold to improve risk-to-reward"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_004_eth_15_minute_smart_money_revers",
+      "video_id": "DMUiDBnTYc8",
+      "title": "ETH 15-minute smart money reversal entry with continuation order block on retest"
+    },
+    {
+      "card_id": "DMUiDBnTYc8_case_006_nq_5_minute_secondary_order_bloc",
+      "video_id": "DMUiDBnTYc8",
+      "title": "NQ 5-minute secondary bullish order block entry after missing initial setup"
+    },
+    {
+      "card_id": "FAKWJ-1NlLE_case_002_usd_jpy_forex_reversal_with_cont",
+      "video_id": "FAKWJ-1NlLE",
+      "title": "USD/JPY Forex Reversal with 15-Minute Continuation Entry from Weekly Bullish Bias"
+    },
+    {
+      "card_id": "FAKWJ-1NlLE_case_005_es_multi_timeframe_setup_6_am_re",
+      "video_id": "FAKWJ-1NlLE",
+      "title": "NQ Multi-Timeframe Setup: 6 AM Reversal to 10 AM Continuation with Multiple Entries"
+    },
+    {
+      "card_id": "FKTBkTzsmUA_case_005_eth_daily_to_15_minute_top_down_",
+      "video_id": "FKTBkTzsmUA",
+      "title": "ETH top-down reversal: daily bias to 15-minute IFVG entry after three expansion days"
+    },
+    {
+      "card_id": "FXJBFbZQbck_case_005_eth_monday_amd_setup_with_pdh_di",
+      "video_id": "FXJBFbZQbck",
+      "title": "ETH Monday AMD setup: NY manipulation low into 5-minute FVG entry targeting previous day high"
+    },
+    {
+      "card_id": "HFfChGFHD44_case_004_es_1_hour_box_setup_with_multipl",
+      "video_id": "HFfChGFHD44",
+      "title": "ES 1-Hour Box Setup: Multiple Highs with Aggressive Displacement Out and Back Into Range"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_004_nq_nasdaq_consolidation_range_br",
+      "video_id": "IJcfC6wAPZU",
+      "title": "NQ Consolidation Range Breakout with Multiple 5-Minute Continuation Entries"
+    },
+    {
+      "card_id": "IJcfC6wAPZU_case_005_es_s_p_500_premium_zone_continua",
+      "video_id": "IJcfC6wAPZU",
+      "title": "ES Premium Zone Bearish Continuation: Candle 2 Closure with Multiple 5-Minute Continuation Entries"
+    },
+    {
+      "card_id": "IPZjNI1B5a0_case_004_eur_usd_short_setup_with_opposin",
+      "video_id": "IPZjNI1B5a0",
+      "title": "EUR/USD Hourly Short at Previous Daily EQ with Opposing Candle and CISD Confirmation"
+    },
+    {
+      "card_id": "IeXtmeKqjnQ_case_003_oil_failure_swing_to_range_rever",
+      "video_id": "IeXtmeKqjnQ",
+      "title": "Oil Failure Swing to Range Reversal Setup via 5-min CISD After 8:30 Sweep"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_001_ym_5_minute_trend_continuation_w",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "YM 5-minute bullish continuation entries via protected swings and fair value gaps"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_002_es_hourly_reversal_with_continua",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "ES hourly reversal confirmed, then 5-minute continuation entries using T-spot and FVG"
+    },
+    {
+      "card_id": "JHVaSKtE1Ys_case_004_oil_hourly_reversal_off_previous",
+      "video_id": "JHVaSKtE1Ys",
+      "title": "Oil hourly reversal off previous day high with 5-minute protected swing entry"
+    },
+    {
+      "card_id": "Kf4c41_qO1s_case_001_usdcad_15_minute_bearish_continu",
+      "video_id": "Kf4c41_qO1s",
+      "title": "USDCAD 15-minute Bearish Continuation Trade with Daily-4H-15M Timeframe Alignment"
+    },
+    {
+      "card_id": "LKNQDAdId4s_case_007_cl_fair_value_gap_reversal_with_",
+      "video_id": "LKNQDAdId4s",
+      "title": "CL Fair Value Gap Reversal with Wick Respect and 5-Minute Expansion to 2R"
+    },
+    {
+      "card_id": "MlMsG7li9zY_case_001_nasdaq_daily_range_analysis_with",
+      "video_id": "MlMsG7li9zY",
+      "title": "NASDAQ Daily Premium/Discount Range with Fair Value Gap Long Entry in Discount"
+    },
+    {
+      "card_id": "MlMsG7li9zY_case_003_gbp_usd_daily_to_15_minute_fract",
+      "video_id": "MlMsG7li9zY",
+      "title": "GBP/USD Daily Fair Value Gap Fill with 15-Minute OTE Long Entry in Discount"
+    },
+    {
+      "card_id": "MsuEQQl7L6s_case_005_nq_15_minute_chart_candle_three_",
+      "video_id": "MsuEQQl7L6s",
+      "title": "NQ 15-Minute Candle Three Closure with Protected Swing Entry Achieving 2R"
+    },
+    {
+      "card_id": "PQiRV0JMhIQ_case_015_advanced_continuation_entry_on_e",
+      "video_id": "PQiRV0JMhIQ",
+      "title": "Advanced ETH 5-minute continuation entry into fair value gap targeting 2R"
+    },
+    {
+      "card_id": "caaS6_Q7O78_case_003_hourly_ty_trade_using_next_day_m",
+      "video_id": "caaS6_Q7O78",
+      "title": "Hourly TY bearish trade using Next Day Model: expansion into retracement, close back inside range, then 5-minute CISD entry with V-shape reversal"
+    },
+    {
+      "card_id": "qdQYhePcvGE_case_003_ym1_3_minute_less_than_ideal_can",
+      "video_id": "qdQYhePcvGE",
+      "title": "YM1! 3-minute continuation trade after less-than-ideal candle 2 that leaves short-term liquidity intact"
+    },
+    {
+      "card_id": "y6SnEdASVLY_case_003_another_bearish_oil_new_york_con",
+      "video_id": "y6SnEdASVLY",
+      "title": "Bearish Oil Continuation After London Reversal and NY 8:30 Manipulation"
+    },
+    {
+      "card_id": "JEoEYDmfDrk_case_001_eurusd_bullish_reversal_with_ord",
+      "video_id": "JEoEYDmfDrk",
+      "title": "EURUSD Bullish Reversal with Order Block Entry: HTF OB respected, LTF OB missed, FVG used for refined entry"
+    },
+    {
+      "card_id": "V6Whc51nI6Q_case_003_wick_zone_identification_on_eur_",
+      "video_id": "V6Whc51nI6Q",
+      "title": "Wick Zone Identification on EUR/USD 4H: Adding Liquidity-Sweep Wick to Demand Area for Better Trade Placement"
+    }
+  ],
+  "source_cards": [
+    {
+      "video_id": "-wr4xATE37g",
+      "original_card_id": "-wr4xATE37g_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_011"
+      ],
+      "time_range": [
+        746.959,
+        925.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "FgP2lc9nneM",
+      "original_card_id": "FgP2lc9nneM_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_009",
+        "seg_020",
+        "seg_021"
+      ],
+      "time_range": [
+        333.84000000000003,
+        921.68
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "JHVaSKtE1Ys",
+      "original_card_id": "JHVaSKtE1Ys_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_007",
+        "seg_008",
+        "seg_015",
+        "seg_017"
+      ],
+      "time_range": [
+        43.52,
+        937.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "TNybDCtwBnc",
+      "original_card_id": "TNybDCtwBnc_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_013",
+        "seg_018",
+        "seg_026"
+      ],
+      "time_range": [
+        570.48,
+        1185.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "eywpZT3z6GQ",
+      "original_card_id": "eywpZT3z6GQ_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_005"
+      ],
+      "time_range": [
+        276.8,
+        307.039
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "q40pRwjuPYQ",
+      "original_card_id": "q40pRwjuPYQ_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_005"
+      ],
+      "time_range": [
+        418.599,
+        601.04
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "qdQYhePcvGE",
+      "original_card_id": "qdQYhePcvGE_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_003",
+        "seg_008",
+        "seg_011",
+        "seg_015",
+        "seg_019",
+        "seg_029",
+        "seg_039",
+        "seg_041"
+      ],
+      "time_range": [
+        263.04,
+        2130.92
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "-wr4xATE37g",
+      "original_card_id": "-wr4xATE37g_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_011",
+        "seg_012"
+      ],
+      "time_range": [
+        746.959,
+        984.399
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "0OjlQ91TZiU",
+      "original_card_id": "0OjlQ91TZiU_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        10.44,
+        190.799
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "0xygpCMwxbQ",
+      "original_card_id": "0xygpCMwxbQ_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        2.82,
+        650.0
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "1YRs4Z1lMws",
+      "original_card_id": "1YRs4Z1lMws_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_018"
+      ],
+      "time_range": [
+        673.2,
+        711.88
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "27S9gjgcSlI",
+      "original_card_id": "27S9gjgcSlI_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_005"
+      ],
+      "time_range": [
+        559.44,
+        741.48
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "4jU547ocod4",
+      "original_card_id": "4jU547ocod4_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        191.48,
+        1077.799
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "5fnFOh5YuM0",
+      "original_card_id": "5fnFOh5YuM0_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_007"
+      ],
+      "time_range": [
+        191.4,
+        1022.68
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "6zTz7WMdMWg",
+      "original_card_id": "6zTz7WMdMWg_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_007",
+        "seg_009"
+      ],
+      "time_range": [
+        1080.299,
+        1500.24
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "75S4vwD4P1U",
+      "original_card_id": "75S4vwD4P1U_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        193.319,
+        634.6
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "8BWkRGhuj1k",
+      "original_card_id": "8BWkRGhuj1k_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_022",
+        "seg_028",
+        "seg_029",
+        "seg_030"
+      ],
+      "time_range": [
+        1105.76,
+        1604.96
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "9AL41xON3hA",
+      "original_card_id": "9AL41xON3hA_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_003",
+        "seg_008",
+        "seg_010",
+        "seg_011"
+      ],
+      "time_range": [
+        103.439,
+        726.16
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "9BY-MQRNy-Y",
+      "original_card_id": "9BY-MQRNy-Y_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_005",
+        "seg_009",
+        "seg_010"
+      ],
+      "time_range": [
+        268.479,
+        502.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "9PKJ0U1gl4g",
+      "original_card_id": "9PKJ0U1gl4g_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_001",
+        "seg_002",
+        "seg_003"
+      ],
+      "time_range": [
+        12.44,
+        542.519
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "CqMIh-Vvhbg",
+      "original_card_id": "CqMIh-Vvhbg_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        10.92,
+        191.2
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "DMUiDBnTYc8",
+      "original_card_id": "DMUiDBnTYc8_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        192.159,
+        877.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "FAKWJ-1NlLE",
+      "original_card_id": "FAKWJ-1NlLE_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_011",
+        "seg_015",
+        "seg_019",
+        "seg_021"
+      ],
+      "time_range": [
+        548.8,
+        1111.039
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "FKTBkTzsmUA",
+      "original_card_id": "FKTBkTzsmUA_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_010",
+        "seg_015"
+      ],
+      "time_range": [
+        419.72,
+        662.44
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "FXJBFbZQbck",
+      "original_card_id": "FXJBFbZQbck_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        506.36,
+        738.959
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "HFfChGFHD44",
+      "original_card_id": "HFfChGFHD44_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_003",
+        "seg_004"
+      ],
+      "time_range": [
+        366.36,
+        508.139
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "IJcfC6wAPZU",
+      "original_card_id": "IJcfC6wAPZU_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_002",
+        "seg_005"
+      ],
+      "time_range": [
+        193.08,
+        910.04
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "JHVaSKtE1Ys",
+      "original_card_id": "JHVaSKtE1Ys_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_002",
+        "seg_003",
+        "seg_004",
+        "seg_007",
+        "seg_008",
+        "seg_009",
+        "seg_015",
+        "seg_017",
+        "seg_018"
+      ],
+      "time_range": [
+        43.52,
+        988.04
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "MlMsG7li9zY",
+      "original_card_id": "MlMsG7li9zY_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_001",
+        "seg_003"
+      ],
+      "time_range": [
+        2.82,
+        509.36
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "PQiRV0JMhIQ",
+      "original_card_id": "PQiRV0JMhIQ_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_016",
+        "seg_031"
+      ],
+      "time_range": [
+        858.079,
+        1703.84
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "TfHlNgAZ_II",
+      "original_card_id": "TfHlNgAZ_II_concept_2r",
+      "segment_ids": [
+        "seg_002",
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        192.4,
+        877.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "caaS6_Q7O78",
+      "original_card_id": "caaS6_Q7O78_concept_2r",
+      "segment_ids": [
+        "seg_003",
+        "seg_004",
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        371.0,
+        1033.959
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "1ErfpOJTGUg",
+      "original_card_id": "1ErfpOJTGUg_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_001"
+      ],
+      "time_range": [
+        0.68,
+        361.08
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "2u9oYfx5xdY",
+      "original_card_id": "2u9oYfx5xdY_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_004",
+        "seg_005"
+      ],
+      "time_range": [
+        325.12,
+        648.56
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "7u16VE_oj6o",
+      "original_card_id": "7u16VE_oj6o_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_003",
+        "seg_005"
+      ],
+      "time_range": [
+        422.28,
+        846.959
+      ],
+      "extraction_confidence": "high"
+    },
+    {
+      "video_id": "ECMYxWuir0A",
+      "original_card_id": "ECMYxWuir0A_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_005"
+      ],
+      "time_range": [
+        491.599,
+        631.519
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "IQPDvCcMfQQ",
+      "original_card_id": "IQPDvCcMfQQ_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_004"
+      ],
+      "time_range": [
+        582.92,
+        942.04
+      ],
+      "extraction_confidence": "medium"
+    },
+    {
+      "video_id": "V6Whc51nI6Q",
+      "original_card_id": "V6Whc51nI6Q_concept_risk_to_reward_ratio",
+      "segment_ids": [
+        "seg_005",
+        "seg_006"
+      ],
+      "time_range": [
+        710.72,
+        878.8
+      ],
+      "extraction_confidence": "medium"
+    }
+  ],
+  "stats": {
+    "source_count": 38,
+    "source_videos": 36,
+    "n_projects": 3
+  },
+  "merged_at": "2026-05-23T13:00:50.798959+00:00",
+  "_embedding": [
+    0.061655443161726,
+    0.07699447125196457,
+    -0.19646890461444855,
+    -0.006525899283587933,
+    0.059560440480709076,
+    -0.03094416856765747,
+    0.07175973057746887,
+    -0.014831536449491978,
+    0.02126738429069519,
+    0.004448419436812401,
+    0.003871652763336897,
+    0.049653589725494385,
+    0.06442034244537354,
+    -0.029662545770406723,
+    0.04303789883852005,
+    -0.021098067983984947,
+    0.015440426766872406,
+    -0.022229773923754692,
+    0.009838403202593327,
+    0.02008979581296444,
+    -0.04276353493332863,
+    -0.05815618485212326,
+    -0.00812640693038702,
+    -0.019901718944311142,
+    0.030008744448423386,
+    0.009443406946957111,
+    -0.03975650295615196,
+    -0.0637967437505722,
+    -0.06521400064229965,
+    0.014133133925497532,
+    0.0024566466454416513,
+    -0.028247850015759468,
+    -0.012264605611562729,
+    -0.05522000417113304,
+    -0.06808262318372726,
+    -0.035513170063495636,
+    0.05385595187544823,
+    0.04198959097266197,
+    -0.017134161666035652,
+    -0.029690643772482872,
+    -0.01591147854924202,
+    0.04280216991901398,
+    0.05464691296219826,
+    -0.02595285326242447,
+    0.024575211107730865,
+    0.0007836652803234756,
+    0.09394414722919464,
+    0.03960511460900307,
+    0.06632650643587112,
+    0.010339698754251003,
+    0.0638367310166359,
+    0.012797906994819641,
+    0.006460191681981087,
+    0.021082883700728416,
+    0.0379660464823246,
+    0.02636593207716942,
+    -0.03370504453778267,
+    0.01672150008380413,
+    0.03980055823922157,
+    -0.04356426000595093,
+    0.06662512570619583,
+    0.018845142796635628,
+    -0.046957194805145264,
+    0.009258681908249855,
+    0.05958127602934837,
+    -0.004157642833888531,
+    -0.024576649069786072,
+    0.06659028679132462,
+    0.019570497795939445,
+    -0.005434961058199406,
+    0.054645340889692307,
+    0.019352784380316734,
+    -0.002862672321498394,
+    0.00018672611622605473,
+    -0.03201732411980629,
+    -0.01650918461382389,
+    -0.05086380988359451,
+    0.02546534314751625,
+    -0.0025873580016195774,
+    0.029172372072935104,
+    0.03731565177440643,
+    0.006686719600111246,
+    0.087618887424469,
+    0.026965389028191566,
+    0.0594664067029953,
+    0.02833561971783638,
+    0.014712824486196041,
+    -0.0037890507373958826,
+    -0.00946112722158432,
+    0.05196439102292061,
+    0.001828002161346376,
+    -0.010258986614644527,
+    0.03798753395676613,
+    0.03755582869052887,
+    -0.07050849497318268,
+    0.04429585114121437,
+    -0.04322878643870354,
+    0.0015409790212288499,
+    -0.06131865084171295,
+    0.009186292067170143,
+    -0.026965130120515823,
+    -0.007820390164852142,
+    0.05798651650547981,
+    -0.032336264848709106,
+    -0.002147664548829198,
+    0.048448264598846436,
+    0.05580667406320572,
+    0.007199337240308523,
+    0.009244924411177635,
+    0.01924021542072296,
+    -0.02978161908686161,
+    0.024099811911582947,
+    -0.04371821507811546,
+    -0.04329732805490494,
+    0.03942627087235451,
+    0.02425580844283104,
+    0.09287787228822708,
+    -0.026127135381102562,
+    0.013653703965246677,
+    0.0615914911031723,
+    0.02344125136733055,
+    0.008577904663980007,
+    0.0144684799015522,
+    0.05185243859887123,
+    -0.02052145265042782,
+    0.04498688131570816,
+    -0.04422152787446976,
+    0.015538129024207592,
+    0.00811401754617691,
+    -0.01811992935836315,
+    0.010739894583821297,
+    -0.01925099827349186,
+    -0.02275824546813965,
+    -0.013648908585309982,
+    -0.01947256363928318,
+    0.08898690342903137,
+    0.02311514876782894,
+    0.016227126121520996,
+    0.0446307510137558,
+    0.031565017998218536,
+    0.0275593101978302,
+    0.006203987170010805,
+    0.011984300799667835,
+    -0.026683282107114792,
+    -0.027194689959287643,
+    -0.04481376335024834,
+    0.02030118741095066,
+    -0.029997162520885468,
+    -0.0351213738322258,
+    -0.029164202511310577,
+    0.034537237137556076,
+    0.03005778230726719,
+    -0.061253488063812256,
+    0.04657015576958656,
+    -0.005185852758586407,
+    -0.010407847352325916,
+    0.019449608400464058,
+    -0.004753138870000839,
+    -0.0015918017597869039,
+    0.055826377123594284,
+    0.0440174862742424,
+    0.02349299006164074,
+    -0.06998047232627869,
+    0.02131723240017891,
+    -0.06773913651704788,
+    -0.0343882218003273,
+    0.014171339571475983,
+    0.01678839512169361,
+    -0.010615258477628231,
+    0.028707066550850868,
+    -0.0338982529938221,
+    -0.03218479081988335,
+    0.0221331138163805,
+    3.263488906668499e-05,
+    0.06518326699733734,
+    -0.0010060606291517615,
+    0.044869564473629,
+    -0.00804885197430849,
+    -0.03309372439980507,
+    -0.033959925174713135,
+    0.02698865719139576,
+    -0.02076222002506256,
+    0.07015462219715118,
+    0.026763329282402992,
+    -0.0070354389026761055,
+    -0.06095902994275093,
+    0.06744841486215591,
+    0.008068360388278961,
+    -0.0255751833319664,
+    -0.01831153780221939,
+    0.05565059185028076,
+    0.010746979154646397,
+    -0.06728668510913849,
+    -0.0475950613617897,
+    -0.03559506684541702,
+    -0.04570843651890755,
+    0.05117906257510185,
+    -0.03893199935555458,
+    0.01825653575360775,
+    -0.017624441534280777,
+    -0.00538903521373868,
+    -0.01427216175943613,
+    -0.03746490180492401,
+    -0.004727248102426529,
+    -0.02374844066798687,
+    0.08772336691617966,
+    -0.015655260533094406,
+    0.0445566400885582,
+    0.0017311663832515478,
+    0.006475649308413267,
+    0.0431748665869236,
+    -0.053091831505298615,
+    -0.00617614109069109,
+    -0.005085465032607317,
+    0.019947996363043785,
+    -0.06209942325949669,
+    0.005877886898815632,
+    -0.009390321560204029,
+    -0.006232120096683502,
+    -0.01048493105918169,
+    0.020475640892982483,
+    -0.006545097567141056,
+    0.0019190168241038918,
+    -0.006836946588009596,
+    0.022729383781552315,
+    0.00373337441124022,
+    -0.024490971118211746,
+    -0.016764534637331963,
+    0.002289731986820698,
+    0.008102891966700554,
+    -0.002338282996788621,
+    -0.042162470519542694,
+    0.013492846861481667,
+    0.014956914819777012,
+    0.004937383346259594,
+    0.029061753302812576,
+    0.034778740257024765,
+    0.0406077541410923,
+    -0.0069668968208134174,
+    -0.007137420121580362,
+    0.03374921903014183,
+    0.028625909239053726,
+    -0.027873847633600235,
+    0.021369773894548416,
+    -0.04873949661850929,
+    0.029930295422673225,
+    0.010095810517668724,
+    -0.010679337196052074,
+    0.007557353004813194,
+    0.05550501123070717,
+    0.007289821747690439,
+    0.052568670362234116,
+    0.025996699929237366,
+    0.01664363220334053,
+    0.02008611150085926,
+    -0.01499928254634142,
+    -0.07704868912696838,
+    0.04450613260269165,
+    -0.025585539638996124,
+    -0.0021374898497015238,
+    0.027037594467401505,
+    0.02494579367339611,
+    0.06887993216514587,
+    -0.07175994664430618,
+    -0.039898257702589035,
+    -0.018353303894400597,
+    -0.06325379759073257,
+    -0.019982021301984787,
+    0.0009376289090141654,
+    -0.004232120234519243,
+    -0.004107445012778044,
+    0.008835986256599426,
+    0.026870714500546455,
+    0.08501715213060379,
+    0.027610434219241142,
+    -0.02921908162534237,
+    0.0034609618596732616,
+    -0.0468566007912159,
+    -0.014757413417100906,
+    0.011161609552800655,
+    0.025300972163677216,
+    -0.019549842923879623,
+    -0.02453056164085865,
+    0.02810477837920189,
+    -0.04720474034547806,
+    0.02681242674589157,
+    0.044419799000024796,
+    0.06638287007808685,
+    -0.001203663065098226,
+    0.02453562058508396,
+    -0.024028778076171875,
+    -0.027557125315070152,
+    0.024923278018832207,
+    0.0066170827485620975,
+    0.033413659781217575,
+    -0.0031019633170217276,
+    0.0692891925573349,
+    0.0017237997381016612,
+    0.03692472353577614,
+    -0.009846804663538933,
+    0.016855232417583466,
+    0.04852498322725296,
+    0.023217175155878067,
+    0.04179699346423149,
+    0.003772226395085454,
+    0.005419454537332058,
+    0.005077014677226543,
+    -0.006891507655382156,
+    0.0006942609325051308,
+    -0.014166048727929592,
+    -0.05349982902407646,
+    0.021428408101201057,
+    -0.05650024116039276,
+    0.023142829537391663,
+    -0.07718534022569656,
+    0.02880215086042881,
+    0.05758533626794815,
+    0.03737514838576317,
+    0.05572735145688057,
+    -0.03540031239390373,
+    0.013738466426730156,
+    -0.018780356273055077,
+    -0.03520875424146652,
+    -0.06486164778470993,
+    0.014775725081562996,
+    0.056088440120220184,
+    -0.08659402281045914,
+    0.02367503009736538,
+    -0.0305178239941597,
+    -0.04938209056854248,
+    0.04562768340110779,
+    0.06073147803544998,
+    0.011845107190310955,
+    -0.02356080897152424,
+    -0.06244992837309837,
+    -0.01132497750222683,
+    0.022373845800757408,
+    0.027315236628055573,
+    0.0007214796496555209,
+    0.02732664905488491,
+    0.06502700597047806,
+    -0.04115255922079086,
+    0.016781441867351532,
+    -0.040975943207740784,
+    -0.01085200347006321,
+    -0.013039822690188885,
+    -0.0318852961063385,
+    0.005851542577147484,
+    0.06480016559362411,
+    -0.05880700424313545,
+    -0.051807887852191925,
+    -0.039047252386808395,
+    -0.021362286061048508,
+    -0.0001506975677330047,
+    0.03190792351961136,
+    0.027440160512924194,
+    -0.009157047607004642,
+    0.01800720766186714,
+    0.002953169634565711,
+    -0.00590135995298624,
+    -0.0037843380123376846,
+    -0.02843797393143177,
+    -0.034307513386011124,
+    -0.008703206665813923,
+    0.021173033863306046,
+    -0.02936604991555214,
+    0.07975152879953384,
+    -0.03315538167953491,
+    0.011387177743017673,
+    -0.05502273514866829,
+    -0.01771356537938118,
+    0.007916470989584923,
+    -0.03333379328250885,
+    0.03904629126191139,
+    0.03595685213804245,
+    -0.008312114514410496,
+    -0.11372367292642593,
+    0.03694165498018265,
+    -0.02955958992242813,
+    0.030538305640220642,
+    0.01565997302532196,
+    -0.016161220148205757,
+    -0.034911882132291794,
+    -0.004798147361725569,
+    0.020547887310385704,
+    -0.03932199999690056,
+    -0.008035195991396904,
+    -0.09434233605861664,
+    -0.02390207350254059,
+    -0.0043140291236341,
+    -0.03741841018199921,
+    0.005873703397810459,
+    -0.022573452442884445,
+    0.015752771869301796,
+    0.05220397934317589,
+    -0.03751687332987785,
+    0.01740734651684761,
+    0.028793692588806152,
+    -0.009571253322064877,
+    0.0542001836001873,
+    -0.05070161819458008,
+    -0.03040771745145321,
+    -0.033917397260665894,
+    -0.01489415392279625,
+    0.020781507715582848,
+    -0.00955077912658453,
+    -0.01843816041946411,
+    -0.007325034122914076,
+    0.01896670274436474,
+    0.033204350620508194,
+    0.01968880370259285,
+    0.026378002017736435,
+    -0.03497399017214775,
+    -0.027962232008576393,
+    0.0014002971583977342,
+    -0.000445156212663278,
+    0.0926905944943428,
+    -0.03032088279724121,
+    0.02930380590260029,
+    0.0026435544714331627,
+    0.014607449993491173,
+    0.04041127488017082,
+    -0.0105794258415699,
+    -0.011909330263733864,
+    0.007137665059417486,
+    -0.015097013674676418,
+    0.06473575532436371,
+    0.037045955657958984,
+    0.02723635546863079,
+    -0.05208071693778038,
+    0.03215908631682396,
+    0.03100895695388317,
+    0.006194557528942823,
+    -0.08354898542165756,
+    0.0009317882941104472,
+    -0.027541885152459145,
+    -0.010552250780165195,
+    -0.013813682831823826,
+    -0.024591919034719467,
+    0.03627330809831619,
+    0.02320360392332077,
+    -0.025933505967259407,
+    -0.023895733058452606,
+    0.0040281303226947784,
+    0.01030296552926302,
+    0.06161774322390556,
+    0.04801851883530617,
+    -0.01833351142704487,
+    -0.007490828167647123,
+    0.016432279720902443,
+    -0.037364330142736435,
+    0.006914690136909485,
+    0.06007055193185806,
+    0.012289154343307018,
+    0.08344759047031403,
+    -0.04688267037272453,
+    0.013016369193792343,
+    0.003592287888750434,
+    0.02508685179054737,
+    0.015500892885029316,
+    0.060502804815769196,
+    -0.0029614807572215796,
+    -0.06209549307823181,
+    0.0060114325024187565,
+    0.012516552582383156,
+    0.0007822977495379746,
+    -0.012371600605547428,
+    -0.022768013179302216,
+    0.02409207634627819,
+    0.06881683319807053,
+    -0.09449135512113571,
+    -0.017188983038067818,
+    -0.005672923289239407,
+    -0.008163657039403915,
+    0.0025081010535359383,
+    -0.044045496731996536,
+    0.005969758611172438,
+    -0.037411823868751526,
+    0.053665999323129654,
+    0.036872267723083496,
+    -0.026888033375144005,
+    -0.0016004673670977354,
+    -0.05872977152466774,
+    -0.03523882478475571,
+    0.0020309353712946177,
+    0.01370246522128582,
+    0.027602631598711014,
+    -0.033030908554792404,
+    0.0626465305685997,
+    -0.005265347193926573,
+    0.024579858407378197,
+    0.052533525973558426,
+    -0.002220613183453679,
+    -0.007860574871301651,
+    -0.015762178227305412,
+    -0.0027808065060526133,
+    0.0013724305899813771,
+    0.06356107443571091,
+    0.0029333645943552256,
+    0.005482980515807867,
+    0.021741796284914017,
+    0.04118070751428604,
+    -0.002747594378888607,
+    0.0054003088735044,
+    0.030900320038199425,
+    -0.04044434428215027,
+    0.016915693879127502,
+    -0.09963396191596985,
+    -0.058868926018476486,
+    0.007111428305506706,
+    -0.008376121520996094,
+    0.009122546762228012,
+    0.040543779730796814,
+    0.01951686106622219,
+    0.03597396984696388,
+    -0.06754689663648605,
+    0.012641871348023415,
+    0.015686074271798134,
+    0.0009349649772047997,
+    0.035035502165555954,
+    -0.025728289037942886,
+    -0.006713963113725185,
+    -0.05930415540933609,
+    -0.030732128769159317,
+    -0.06494248658418655,
+    0.007867513224482536,
+    -0.02905183658003807,
+    -0.05129256844520569,
+    0.026146166026592255,
+    -0.0479821115732193,
+    0.032828450202941895,
+    0.025274105370044708,
+    -0.011796653270721436,
+    0.024230601266026497,
+    -0.0147847356274724,
+    0.002792712301015854,
+    -0.018954046070575714,
+    0.00906603317707777,
+    0.032606884837150574,
+    -6.0754271544283256e-05,
+    0.02769796922802925,
+    0.013442045077681541,
+    -0.005020560696721077,
+    0.00541388476267457,
+    0.00461459718644619,
+    -0.028719564899802208,
+    -0.016539832577109337,
+    -0.024597207084298134,
+    -0.0233521219342947,
+    -0.05172629654407501,
+    0.031519871205091476,
+    -0.03360351547598839,
+    -0.02127779833972454,
+    -0.020565589889883995,
+    0.05819500610232353,
+    -0.054550036787986755,
+    0.014424284920096397,
+    -0.016787109896540642,
+    -0.05530139058828354,
+    0.01098924782127142,
+    -0.0477280393242836,
+    -0.00980349164456129,
+    0.031859107315540314,
+    0.04889826849102974,
+    0.004118817392736673,
+    -0.05112141743302345,
+    -0.016405252739787102,
+    -0.010008370503783226,
+    0.016787150874733925,
+    0.03722056746482849,
+    0.020671673119068146,
+    -0.051877982914447784,
+    0.0033186187501996756,
+    0.03466164320707321,
+    -0.025679508224129677,
+    -0.024651845917105675,
+    -0.032801736146211624,
+    -0.048211243003606796,
+    -0.03585414960980415,
+    -0.045132432132959366,
+    0.013546444475650787,
+    -0.02724565751850605,
+    -0.01955236867070198,
+    0.028529930859804153,
+    -0.04180368408560753,
+    0.00021909084171056747,
+    -0.03177604824304581,
+    -0.07106449455022812,
+    0.0032152975909411907,
+    -0.044283922761678696,
+    -0.028812861070036888,
+    0.01368715986609459,
+    0.000541510758921504,
+    -0.05870269611477852,
+    0.015830811113119125,
+    0.02844821661710739,
+    -0.013121865689754486,
+    -0.05540119484066963,
+    -0.06912101060152054,
+    -0.033665187656879425,
+    -0.035889748483896255,
+    0.032969918102025986,
+    0.0694686621427536,
+    -0.06315253674983978,
+    0.011975686065852642,
+    0.03705085813999176,
+    0.025922423228621483,
+    0.04402816295623779,
+    0.010437263175845146,
+    0.03271239250898361,
+    0.007241884246468544,
+    0.004942785482853651,
+    0.005694640334695578,
+    -0.03656674176454544,
+    0.006594003178179264,
+    0.009018990211188793,
+    0.09919486194849014,
+    -0.018829721957445145,
+    0.0044470918364822865,
+    -0.037560492753982544,
+    -0.018324632197618484,
+    -0.064987413585186,
+    0.03918161615729332,
+    -0.012571793980896473,
+    0.04743928462266922,
+    0.043917857110500336,
+    -0.02527841366827488,
+    -0.045334573835134506,
+    0.023524977266788483,
+    0.01873447187244892,
+    -0.019514404237270355,
+    -0.002496509114280343,
+    -0.07113929837942123,
+    -0.003108485136181116,
+    -0.031856101006269455,
+    0.04092389717698097,
+    -0.046954892575740814,
+    0.02107817865908146,
+    -0.022951640188694,
+    0.04505084455013275,
+    0.02663387358188629,
+    -0.013093709945678711,
+    -0.03389456868171692,
+    0.014998513273894787,
+    0.02838381938636303,
+    -0.060070402920246124,
+    0.03495379909873009,
+    0.07122322171926498,
+    0.020664941519498825,
+    -0.006015023682266474,
+    0.06519932299852371,
+    0.040634579956531525,
+    0.023749422281980515,
+    -0.014973091892898083,
+    -0.014779232442378998,
+    -0.012751178815960884,
+    0.042719852179288864,
+    -0.006704253144562244,
+    -0.005769777111709118,
+    -0.045231956988573074,
+    0.014171122573316097,
+    0.026056617498397827,
+    -0.0003960425383411348,
+    0.005271179601550102,
+    0.0009862869046628475,
+    -0.032585978507995605,
+    -0.017553310841321945,
+    -0.026654602959752083,
+    -0.060286831110715866,
+    -0.045068636536598206,
+    0.06330308318138123,
+    0.04348386824131012,
+    -0.028801094740629196,
+    -0.007413812913000584,
+    -0.002764915581792593,
+    0.008766571059823036,
+    0.06475383043289185,
+    0.01226466242223978,
+    -0.008030548691749573,
+    -0.03891666978597641,
+    -0.02346208691596985,
+    0.03171651065349579,
+    0.02637469582259655,
+    -0.023304501548409462,
+    -0.015469525009393692,
+    0.004859334323555231,
+    -0.006776724476367235,
+    -0.030842961743474007,
+    -0.04281654953956604,
+    -0.017353776842355728,
+    -0.07621394097805023,
+    -0.023112300783395767,
+    0.0017656594282016158,
+    0.012402255088090897,
+    -0.040163516998291016,
+    0.009770369157195091,
+    4.9271176976617426e-05,
+    0.019124047830700874,
+    -0.014907038770616055,
+    0.015387849882245064,
+    -0.0176905058324337,
+    -0.007818924263119698,
+    -0.010255230590701103,
+    0.005110515281558037,
+    -0.020739085972309113,
+    -0.00838539469987154,
+    0.07746852189302444,
+    -0.0017369819106534123,
+    -0.026838665828108788,
+    -0.008406187407672405,
+    0.03294820711016655,
+    0.03136583790183067,
+    -0.0016306962352246046,
+    0.0007953938911668956,
+    -0.04048532620072365,
+    0.007345827296376228,
+    0.0014998052502050996,
+    -0.04514114186167717,
+    0.002936813049018383,
+    -0.02279561385512352,
+    0.04558068513870239,
+    -0.011940482072532177,
+    -0.04121188819408417,
+    -0.008395633660256863,
+    -0.0020985982846468687,
+    -0.03246106207370758,
+    0.027670148760080338,
+    -0.09491331875324249,
+    -0.0029932272154837847,
+    -0.012659852392971516,
+    -0.007173464633524418,
+    -0.028358250856399536,
+    -0.027509311214089394,
+    0.06103828549385071,
+    -0.021761856973171234,
+    0.009734772145748138,
+    -0.032033514231443405,
+    0.023598352447152138,
+    -0.062416188418865204,
+    0.0019258641405031085,
+    -0.02950681373476982,
+    0.042201556265354156,
+    0.02236141450703144,
+    0.00019069368136115372,
+    -0.015160635113716125,
+    -0.03174280747771263,
+    -0.012342451140284538,
+    0.05562174692749977,
+    0.0494086779654026,
+    -0.010028847493231297,
+    0.0031819292344152927,
+    -0.003983901347965002,
+    -0.019352847710251808,
+    0.0028043799102306366,
+    0.06143363565206528,
+    0.020730111747980118,
+    -0.051920849829912186,
+    0.04258206486701965,
+    0.05761743709445,
+    0.008633922785520554,
+    0.023815061897039413,
+    -0.04567619040608406,
+    -0.008025428280234337,
+    -0.024798104539513588,
+    -0.012576344422996044,
+    -0.0524214506149292,
+    -0.06134629249572754,
+    -0.006885260809212923
+  ],
+  "_embedding_model": "nomic-ai/nomic-embed-text-v1.5"
+}

@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-05-20T22:41:41",
+  "status": "PASS",
+  "exit_code": 0,
+  "summary": {
+    "passed": true,
+    "error_count": 0,
+    "stale_count": 0,
+    "warning_count": 0
+  },
+  "coverage": {
+    "fulltext_chunks": 2033,
+    "visual_concepts": 7,
+    "graph_nodes": 2073,
+    "graph_edges": 7080,
+    "concept_count": 8,
+    "document_count": 2,
+    "asset_count": 27,
+    "total_pages": 1262
+  },
+  "contract": {
+    "concepts": [
+      {
+        "id": "fractal",
+        "missing_fields": [],
+        "complete": true
+      },
+      {
+        "id": "stroke",
+        "missing_fields": [],
+        "complete": true
+      },
+      {
+        "id": "segment",
+        "missing_fields": [],
+        "complete": true
+      },
+      {
+        "id": "center",
+        "missing_fields": [],
+        "complete": true
+      },
+      {
+        "id": "divergence",
+        "missing_fields": [],
+        "complete": true
+      },
+      {
+        "id": "buy_sell_points",
+        "missing_fields": [],
+        "complete": true
+      },
+      {
+        "id": "interval_nesting",
+        "missing_fields": [],
+        "complete": true
+      },
+      {
+        "id": "fusion",
+        "missing_fields": [],
+        "complete": true
+      }
+    ],
+    "all_complete": true,
+    "missing_fields": {}
+  },
+  "boundary": {
+    "concepts": [
+      {
+        "id": "fractal",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      },
+      {
+        "id": "stroke",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      },
+      {
+        "id": "segment",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      },
+      {
+        "id": "center",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      },
+      {
+        "id": "divergence",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      },
+      {
+        "id": "buy_sell_points",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      },
+      {
+        "id": "interval_nesting",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      },
+      {
+        "id": "fusion",
+        "has_visual_boundary": true,
+        "has_qualitative_phrase": true
+      }
+    ],
+    "all_have_boundary": true
+  },
+  "validation_detail": {
+    "errors": [],
+    "stale_errors": [],
+    "warnings": []
+  },
+  "risks": [
+    "No significant risks detected."
+  ],
+  "next_actions": [
+    "KB is healthy — no immediate actions required.",
+    "Consider scheduling periodic re-validation (e.g. after source updates)."
+  ]
+}

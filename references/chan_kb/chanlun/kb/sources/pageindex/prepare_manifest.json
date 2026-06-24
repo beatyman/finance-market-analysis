@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "built_at": "2026-05-24T08:17:18+00:00",
+  "pdf_path": "/mnt/c/Users/83233/Downloads/阿娇版+缠论.pdf",
+  "pdf_sha256": "223ed4b3302d2c2fa50f116a520dfddb31f2ccd7ac1a311b841fb5665e6a3cf5",
+  "source_text_path": "ajiao_chanlun_extracted.txt",
+  "source_text_sha256": "69cf5289e7aad5328235ffd03f6a2a3e7b75616590f383bb51f77aad592b935b",
+  "pageindex_markdown_path": "ajiao_chanlun_pageindex.md",
+  "pageindex_markdown_sha256": "d494cacfc5b6e8fb4d051f7197f502b409961fda14b1f26de9b8572caabcf035",
+  "toc_path": "toc_lessons.json",
+  "page_count": 1262,
+  "lesson_count": 108,
+  "runtime_note": "Build-time PageIndex preparation only; AgentStock runtime does not require the PDF or PageIndex."
+}
