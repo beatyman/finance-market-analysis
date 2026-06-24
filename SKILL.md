@@ -58,15 +58,25 @@ python3 train.py --stocks 50 --years 3
 
 ## 注意事项
 
-- A股K线: qfqday字段(腾讯ifzq)
-- 港股K线: day字段，需要-L重定向
-- yfinance单股下载返回MultiIndex，需`.ravel()`
-- chan.py Bi对象API: bi.begin_klc.low (不是.bi.begin_klc.klc.low)
-- **baostock日期**: 返回datetime.date对象，需`str()`转换再`.split('-')`
-- **250根K线限制**: 数据获取层自动截取最后250根，过多K线导致缠论结构失真(153笔/15中枢压倒近期信号)
-- 全量扫描: 不分涨跌，全部分析，买/卖/观望三信号
-- 宏观环境优先展示，再进入个股细节
-- **多源回退**: Tencent → yfinance → AKShare → baostock，任意源可用即止
+### 数据获取
+
+- **yfinance MultiIndex**: 单股下载返回MultiIndex列，访问用`np.array(df['Close']).ravel()`而非`.values`
+- **baostock日期**: 返回`datetime.date`对象，需`str(r[0])`转换再`.split('-')`
+- **腾讯HK K线**: 需`curl -L`跟随302重定向；HK用`day`字段，A股用`qfqday`
+- **250根K线限制**: 数据层自动截取最后250根——baostock会返回2000+根，全量分析导致153笔/15中枢压倒近期结构
+- **多源回退顺序**: Tencent → yfinance → AKShare → baostock，任意源可用即止
+
+### chan.py API
+
+- **Bi对象**: `bi.begin_klc.low` / `bi.begin_klc.high`（不是`.klc.low`）
+- **CSeg对象**: 无`.end_klc`属性——用`.bi_list`访问段内的笔
+- **评分特征**: 58维对齐chan-model-xgb V2，包含MACD/布林带/ADX/背驰/多级别
+
+### 训练
+
+- **train.py**: 直接使用A股核心代码列表（非港股CSV），`--stocks`参数控制数量
+- **标签**: 未来5根K线涨幅>3%为正样本
+- **模型文件**: 58维AUC 0.662优于30维0.626；`chan_xgb_56d.pkl`是主模型
 
 ## 模块架构
 

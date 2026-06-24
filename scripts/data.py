@@ -111,7 +111,7 @@ def fetch_kline(code,market='a',period='1y',sources=None):
     
     # Build symbol
     if market=='a':
-        sym=('sh'+code if code.startswith('6') else 'sz'+code)
+        sym=(code+'.SS' if code.startswith('6') else code+'.SZ')
     else:
         sym='%04d.HK'%int(code.replace('hk',''))
     
