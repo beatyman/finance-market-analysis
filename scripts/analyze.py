@@ -36,10 +36,16 @@ def load_model():
 def predict_score(feats):
     """混合评分: 优先XGBoost模型，回退规则"""
     model=load_model()
-    if model and len(feats)==30:
+    feat_len=len(feats)
+    if model:
         vec=np.array([[feats[k] for k in sorted(feats.keys())]])
-        proba=model.predict_proba(vec)[0,1]
-        return int(proba*100)  # 0-100
+        # 尝试模型推理，维度不匹配则回退
+        try:
+            if model.n_features_in_==feat_len:
+                proba=model.predict_proba(vec)[0,1]
+                return int(proba*100)
+        except:
+            pass
     return score_from_features(feats)
 
 def analyze_single(code_or_name,market='a'):
@@ -105,6 +111,22 @@ def analyze_single(code_or_name,market='a'):
     print('  标的: %s (¥%s)'%(result['name'],str(int(result['price']))))
     print('  方向: %s | 信号: %s | 评分: %d/100'%(result['direction'],result['signal'],result['score']))
     print('  风险: %s | 盈利预期: %s'%(result['risk'],result['profit'] or 'N/A'))
+    
+    # 阿娇标准: 年涨>100%的二买存疑
+    if len(closes)>=120:
+        ytd_chg=(closes[-1]/closes[-120]-1)*100
+        if ytd_chg>100 and bsp_buy and '3' not in str(bsp_types):
+            print('  ⚠️ 阿娇警告: 年涨%.0f%% + 二买 — 趋势中二买存疑，等三买确认'%ytd_chg)
+    
+    # 止损止盈
+    if cur and cur.zs_list:
+        z_last=cur.zs_list[-1];zl=float(z_last.low);zh=float(z_last.high)
+        if bsp_buy:
+            entry=int(zl);stop=int(zl*0.97);tp1=int(zh);tp2=int(zh*1.1)
+            rr=abs(tp1-entry)/max(abs(entry-stop),1)
+            print('  🎯 买入区: ¥%d~¥%d | 止损: ¥%d | TP1: ¥%d(+%d%%) | TP2: ¥%d(+%d%%) | R:R=%.1f:1'%(
+                entry,int(zl*1.03),stop,tp1,int((tp1-px)/px*100),tp2,int((tp2-px)/px*100),rr))
+    
     smc=smc_analysis(code_or_name,result['name'],px,bsp_buy,zs,pos)
     print('  🧠 SMC视角: %s'%smc['verdict'])
     vol=volume_analysis([float(x) for x in closes],[float(x) for x in vols])

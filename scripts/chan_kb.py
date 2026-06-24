@@ -73,4 +73,6 @@ def evaluate_bsp(code,name,px,bsp_buy,bsp_types,position,zs_range,score):
         'risk':risk,'target':target,'profit':profit,
         'confirmations':confirm,'semantic':semantic
     }
-evaluate = evaluate_bsp
+
+# 兼容别名
+evaluate=evaluate_bsp

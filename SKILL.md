@@ -106,35 +106,56 @@ for i in range(3):
 
 58维特征 (BSP×12 + 价格×6 + MACD×5 + 布林×2 + 波动×3 + RSI×2 + ADX×2 + 量价×2 + 缠论结构×17 + 均线×5 + 量比×2)。训练用核心27只×3年滑动窗口。
 
+## 阿娇版筛选标准（重要工作流）
+
+chan.py 的 BSP 检测是机械化的，会产生经典缠论中不成立的信号。分析板块/个股时**必须**用阿娇标准二次筛选：
+
+1. **必须有中枢** — 无中枢的买点不可靠（chan.py 可能在强趋势中标"二买"，但 lesson 21 明确指出"上涨趋势确定后不可能再有一买/二买，只有三买"）
+2. **中枢内 + 买点 = 盘整背驰买**（最安全，止损放中枢下沿）
+3. **中枢上 + 买点 = 三买**（趋势延续，止损放中枢上沿）
+4. **中枢下 + 买点 = 风险偏高**，需次级别确认
+5. 年涨幅 > 100% 的标的，chan.py 标的"二买"一律标注"⚠️ 趋势中二买存疑"
+
+筛选代码模板见 `references/ajiao_screening.py`。
+
+## 操作计划输出要求
+
+用户要求每只买入标的必须给出具体操作计划：
+- 买入区间（中枢下沿 ~ 下沿+3%）
+- 止损价（中枢下沿-3%）
+- TP1（中枢上沿）
+- TP2（中枢上沿+10%）
+- 盈亏比 R:R
+- 现价是否偏高（偏高则等回调）
+
 ## Pitfalls
 
 ### 数据源
 
-- AKShare东财API有频率限制，请求超时需加重试（5/10/15s递增），不是IP被封
+- **AKShare东财API有频率限制，不是IP被封** — 第一次请求常超时，5s重试后即通。`_ak_with_retry(fn, max_retries=3)` 封装在 `sector_heat.py` 中
+- `sector_heat.py` 的 `get_sector_from_akshare()` 应限制 `max_retries=2`（行业）/ `max_retries=1`（概念），避免阻塞 `analyze.py` 主流程
 - 板块资金流腾讯接口 `zllr/zllc` 单位为元，需/10000转万元
-- 港股K线用yfinance `%04d.HK` 格式，腾讯K线用 curl -sL（需跟踪重定向）
-- baostock返回datetime.date对象，需 `str()` 转字符串
+- 港股K线用yfinance `%04d.HK` 格式（如 `0700.HK`），不是 `00700.HK`
+- 腾讯K线用 `curl -sL`（需跟踪302重定向），A股返回 `qfqday`，港股返回 `day`
+- baostock返回datetime.date对象，需 `str()` 转字符串供 chan_engine 解析
+- yfinance A股符号用 `.SS`/`.SZ` 后缀（如 `603019.SS`），不是 `sh603019`
 - 全量扫描时K线限制250根，避免chan.py分析过慢
 
 ### chan.py API兼容
 
-- Bi对象使用 `bi.begin_klc.low` 和 `bi.end_klc.high` (不是 `.klc.low`)
-- Seg对象使用 `seg.bi_list[-1].is_up` (不是 `seg.is_up` 或 `seg.end_klc.close`)
+- Bi对象使用 `bi.begin_klc.low` 和 `bi.end_klc.high`（不是 `.klc.low`）
+- Bi对象没有 `klc` 属性——直接 `bi.begin_klc` 就是 CKLine 对象
+- Seg对象使用 `seg.bi_list[-1].is_up`（不是 `seg.is_up` 或 `seg.end_klc.close`）
+- CSeg对象没有 `end_klc` 属性——用 `seg.bi_list` 替代
 - yfinance单股下载返回MultiIndex列，需 `np.array(df['Close']).ravel()` 展平
-
-### 缠论理论陷阱 ⚠️
-
-**"上涨趋势确定后，不可能再有第一类与第二类买点，只可能有第三类买点"** — 缠中说禅 lesson 21
-
-chan.py 的 BSP 检测是机械化的——它可能把强趋势中的回调标注为"二买"，但这在经典缠论中是不成立的：
-- 年涨幅 > 100% 的股票 → 上升趋势已确立 → 不应出现一买/二买
-- 这类"假二买"实际可能是：追高风险 or 三买的变体
-- 处理：年涨幅 > 100% 的 Buy 信号需标注"⚠️ 趋势中二买存疑"，建议等三买确认
+- train.py 中 yfinance 数据用 `np.array(df['Close']).ravel()` 而非 `df['Close'].values`
 
 ### 评分模型
 
 - 无训练模型时 `predict_score` 自动回退到规则评分 `score_from_features`
 - 训练使用 `models/chan_xgb_56d.pkl`，需与 `extract_features` 特征顺序一致
+- `extract_features` 返回 dict，训练时需 `[fd[k] for k in sorted(fd.keys())]` 转向量
+- 58维特征中 chan.py 结构特征（bi/zs/seg）部分为0（chan.py对象属性不完全兼容），不影响整体AUC
 
 ## 外部知识库
 
