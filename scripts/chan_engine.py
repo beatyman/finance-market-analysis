@@ -17,7 +17,14 @@ def analyze(dates, opens, closes, highs, lows, code='unknown'):
     
     klines=[]
     for i in range(n):
-        p=dates[i].split('-');t=CTime(int(p[0]),int(p[1]),int(p[2]),0,0,auto=True)
+        p=dates[i].split('-')
+        # Handle both "2026-06-24" and "2026-06-24 09:30" formats
+        if ' ' in p[2]:
+            day_part,time_part=p[2].split(' ')
+            hh,mm=time_part.split(':')[:2]
+        else:
+            day_part=p[2];hh=0;mm=0
+        t=CTime(int(p[0]),int(p[1]),int(day_part),int(hh),int(mm),auto=True)
         klines.append(CKLine_Unit({DATA_FIELD.FIELD_TIME:t,DATA_FIELD.FIELD_OPEN:opens[i],
             DATA_FIELD.FIELD_HIGH:highs[i],DATA_FIELD.FIELD_LOW:lows[i],DATA_FIELD.FIELD_CLOSE:closes[i]},autofix=True))
     
