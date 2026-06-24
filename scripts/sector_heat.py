@@ -20,6 +20,41 @@ SECTOR_MEMBERS={
     '消费':['000858','601888'],
 }
 
+
+def _ak_with_retry(fn, max_retries=3):
+    """AKShare 带重试的调用"""
+    import time
+    for i in range(max_retries):
+        try:return fn()
+        except:
+            if i<max_retries-1:time.sleep(5*(i+1))
+    return None
+
+def get_sector_from_akshare():
+    """直接从 AKShare 获取板块数据（需东财网络）"""
+    try:
+        import akshare as ak
+        industry=_ak_with_retry(ak.stock_board_industry_name_em)
+        concept=_ak_with_retry(ak.stock_board_concept_name_em)
+        if industry is None and concept is None:return {}
+        import pandas as pd
+        dfs=[]
+        if industry is not None:dfs.append(industry)
+        if concept is not None:dfs.append(concept)
+        df=pd.concat(dfs,ignore_index=True) if dfs else None
+        if df is None:return {}
+        data={}
+        for _,r in df.iterrows():
+            try:
+                data[r['板块名称']]={
+                    'chg':float(r.get('涨跌幅',0) or 0),
+                    'up':int(r.get('上涨家数',0) or 0),
+                    'dn':int(r.get('下跌家数',0) or 0),
+                    'volume':float(r.get('总市值',0) or 0)
+                }
+            except:pass
+        return data
+    except:return {}
 def load_local_sector_csv():
     """加载Windows同步的AKShare板块CSV"""
     csv_path=os.path.join(REF,'sector_data.csv')
@@ -55,11 +90,11 @@ def get_sector_fund_flow_tencent():
     except:return {}
 
 def get_sector_heat():
-    """综合板块热度 — AKShare CSV 优先，腾讯回退"""
-    # 1. Try local AKShare CSV
-    local=load_local_sector_csv()
-    if len(local)>10:
-        return local
+    """综合板块热度 — AKShare直接 > CSV > 腾讯回退"""
+    # 1. Try AKShare directly (server-side, with retry)
+    local=get_sector_from_akshare()
+    if not local:local=load_local_sector_csv()
+    if len(local)>10:return local
     
     # 2. Fallback: Tencent member stock heat
     quotes=_fetch_quotes()
