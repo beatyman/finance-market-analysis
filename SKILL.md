@@ -348,7 +348,9 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 
 1. **`analyze.py` 第1行 `import numpy as np` 在 shebang 之前** — shebang 必须在文件第一行。修复：将 `#!/usr/bin/env python3` 移到第一行，`import numpy as np` 移到第二行。
 2. **`macro.py` 缺少 `macro_signal` 函数** — `analyze.py` 第19行 `from macro import load_macro,macro_signal`，但 `macro.py` 只有 `load_macro` 和 `macro_report`。修复：在 `macro.py` 中添加 `macro_signal(macro)` 存根，返回 `{'bias': str, 'signals': list}`。
-3. **`futures_sentiment.py` 缺少 `get_futures_position` 和 `analyze_sentiment`** — `analyze.py` 第20行和 `scan_market()` 第183行引用这两个函数，但 `futures_sentiment.py` 只有 `get_detailed_positions` 和 `format_futures_report`。修复：在 `futures_sentiment.py` 中添加存根（`get_futures_position` 返回 `{}`，`analyze_sentiment` 返回 `{'bias': '中性'}`）。
+3. **`futures_sentiment.py` 缺少 `get_futures_position` 和 `analyze_sentiment`** — `analyze.py` 原第20行（模块级导入）和 `scan_market()` 第183行引用这两个函数。两步修复：
+   - 在 `futures_sentiment.py` 中添加存根（`get_futures_position` 返回 `{}`，`analyze_sentiment` 返回 `{'bias': '中性'}`）。
+   - **从 `analyze.py` 模块级移除 `from futures_sentiment import ...`** — 模块级导入崩溃会阻止整个脚本加载，函数体内的 `try/except` 局部导入可优雅降级。保留第67行 try 块内的导入即可。
 
 这些是脚本模块间的接口断裂（历史重构残留），不是环境问题 — 每个干净部署都会重现。
 
