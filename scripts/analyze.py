@@ -20,6 +20,7 @@ from macro import load_macro,macro_signal
 from futures_sentiment import get_futures_position,analyze_sentiment
 from volume_sector import volume_analysis,get_stock_sector,sector_analysis
 from sector_heat import sector_signal,get_sector_heat
+from event_calendar import format_calendar
 import pickle
 
 MODEL_PATH=os.path.join(HERE,'..','models','chan_xgb_hk.pkl')
@@ -54,6 +55,11 @@ def analyze_single(code_or_name,market='a'):
     print('='*60)
     print('缠论多维度分析: %s'%code_or_name)
     print('='*60)
+    
+    # ── Event Calendar ──
+    print()
+    print(format_calendar())
+    print()
     
     # ── Macro overview ──
     try:
