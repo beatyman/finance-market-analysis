@@ -94,7 +94,7 @@ python3 train.py --stocks 27 --years 3
 | `sync_sector_windows.py` | Windows端AKShare板块数据同步脚本 |
 | `chanlun_kb_build.py` | chanstock知识库索引构建 |
 | `chanlun_kb_search.py` | chanstock语义搜索CLI |
-| `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各15+,主力资金) |
+| `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各Top10,主力资金,~9秒) |
 | `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
 | `t0_trade.py` | **日内做T策略** — 日线方向+30m价格区间+量价异常 |
 | `event_calendar.py` | 宏观事件日历 — Fed官网核实 + 中国/地缘日程 |
@@ -152,7 +152,7 @@ https://www.federalreserve.gov/newsevents.htm
 | yfinance | — | ✅ | — | — |
 | baostock | — | ✅ | — | — |
 
-| **通达信 (easy-tdx)** | — | — | ✅ 概念+行业15+ | ✅ 主力资金/成交额(亿) |
+| **通达信 (easy-tdx)** | — | — | ✅ 概念+行业Top10 | ✅ 主力资金/成交额(亿) ~9秒 |
 
 ### easy-tdx 通达信板块数据
 
