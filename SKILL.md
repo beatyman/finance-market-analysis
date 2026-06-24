@@ -1,7 +1,7 @@
 ---
 name: a-share-market-analysis
 description: A股4454+港股780缠论全量分析：chan.py买卖点 → XGBoost 58维打分 → 量价/板块/宏观/SMC/知识库多维度共振。支持单股分析/全市场扫描。
-version: 4.0.0
+version: 4.1.0
 author: Hermes
 license: MIT
 platforms: [linux, windows]
@@ -95,13 +95,13 @@ python3 train.py --stocks 27 --years 3
 | `chanlun_kb_build.py` | chanstock知识库索引构建 |
 | `chanlun_kb_search.py` | chanstock语义搜索CLI |
 | `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各15+,主力资金) |
-| `hs300_scan.py` | 日报生成器 — 沪深300全量扫描+完整markdown报告 |
+| `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
 
 ## 日报生成
 
-**命令:** `cd scripts && python3 daily_report.py`
+**命令:** `cd scripts && python3 daily_report.py`  → `/root/chan_daily_report.md`
 
-生成完整 markdown 分析日报（`/root/chan_daily_report.md` + `references/chan_daily_report.md`）。日报结构：
+日报可推送到 GitHub (`references/chan_daily_report.md`)。格式固定不可随意改变：
 
 ```
 # 🔬 缠论多维分析日报
@@ -121,9 +121,7 @@ python3 train.py --stocks 27 --years 3
 - 宏观部分包含中美利差方向指引
 - 操作建议含具体仓位百分比
 
-## 旧版日报 (已废弃)
-
-老旧文章生成器示例（`references/chan_daily_report.md`），保留为模板参考。
+## 旧版日报 (参考模板)
 
 ## 数据源
 
@@ -292,6 +290,13 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 - `hk_buys = [r for r in hk_results if r[7]]` — `bsp_buy` 在索引 7
 - `hk_sells = [r for r in hk_results if not r[7] and 'Sell' in str(r[2])]` — `label` 在索引 **2**（不是 3）
 - 价格在索引 4，评分在索引 5，年涨在索引 6
+
+### daily_report.py 元组索引 (Critical Pitfall)
+
+A股扫描结果元组 `(code, name, label, px, score, ytd, zs_str, pos, iz, en, st, t1, t2, rr)`:
+- 0:code 1:name 2:label 3:**price** 4:**score** 5:**ytd** 6:**zs_str** 7:pos 8:iz 9:entry 10:stop 11:tp1 12:tp2 13:rr
+- 输出行必须显式类型转换: `int(r[3]), int(r[4]), float(r[5]), str(r[6]), int(r[9]), int(r[10]), int(r[11]), int(r[12]), float(r[13])`
+- r[6] 是中枢字符串如 "67~78"，r[7] 是位置字符串如 "内" — 绝不能把它们当数字格式化
 
 ### AKShare超时保护
 
