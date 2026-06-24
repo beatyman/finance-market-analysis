@@ -3,6 +3,15 @@
 import akshare as ak,time
 from datetime import datetime,timedelta
 
+# ── Compatibility stubs for analyze.py ──
+def get_futures_position():
+    """Stub: return empty dict.""" 
+    return {}
+
+def analyze_sentiment(fp):
+    """Stub: return neutral bias.""" 
+    return {'bias': '中性', 'net_long': 0, 'net_short': 0}
+
 def get_detailed_positions(days=3):
     """获取最近N天详细持仓"""
     today=datetime.now()

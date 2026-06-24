@@ -1,5 +1,5 @@
-import numpy as np
 #!/usr/bin/env python3
+import numpy as np
 """
 缠论多维度分析 v3.0 — chan.py + XGB评分 + 知识库确认
   用法: python3 analyze.py 002475           # A股
@@ -17,7 +17,6 @@ from scorer import extract_features,score_from_features
 from chan_kb import evaluate
 from smc_insight import smc_analysis
 from macro import load_macro,macro_signal
-from futures_sentiment import get_futures_position,analyze_sentiment
 from volume_sector import volume_analysis,get_stock_sector,sector_analysis
 from sector_heat import sector_signal,get_sector_heat
 from event_calendar import format_calendar

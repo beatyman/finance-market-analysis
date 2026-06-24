@@ -46,6 +46,23 @@ def load_macro(period='1mo',use_cache=True):
     CACHE=macro;CACHE_TIME=now
     return macro
 
+def macro_signal(macro):
+    """Return a simple macro signal dict from load_macro data."""
+    us10 = macro.get('US10Y', {}).get('value', 0)
+    dxy = macro.get('DXY', {}).get('value', 100)
+    vix = macro.get('VIX', {}).get('value', 18)
+    signals = []
+    if dxy > 101: signals.append('USD强→商品承压')
+    elif dxy < 98: signals.append('USD弱→商品利好')
+    if vix > 25: signals.append('恐慌→降仓')
+    elif vix < 18: signals.append('低波→正常仓位')
+    if us10 > 4.5: signals.append('高利率→成长股承压')
+    return {
+        'bias': '中性' if not signals else '偏空' if '强' in str(signals) else '偏多',
+        'signals': signals
+    }
+
+
 def macro_report():
     """详细宏观报告"""
     m=load_macro()

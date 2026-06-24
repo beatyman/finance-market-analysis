@@ -101,7 +101,19 @@ python3 train.py --stocks 27 --years 3
 
 **命令:** `cd scripts && python3 daily_report.py`  → `/root/chan_daily_report.md`
 
-日报可推送到 GitHub (`references/chan_daily_report.md`)。格式固定不可随意改变：
+日报的格式是**固化标准**，不可随意改变。所有模块（宏观/板块/A股/港股/操作建议）的表结构和字段顺序必须保持一致。
+
+### 事件日历验证 ⚠️
+
+`event_calendar.py` 目前使用**静态硬编码**数据。FOMC会议纪要实际发布时间、美联储讲话日程等需通过官方来源验证：
+
+```bash
+# 官方日历
+https://www.federalreserve.gov/calendar.htm
+https://www.federalreserve.gov/newsevents.htm
+```
+
+**本轮会话教训:** 静态日历写"6/25 FOMC纪要公布"，但美联储官网显示本周只有两场低影响讲话，纪要约在7/8发布。生成报告前应先检查官网，或在报告中标注"基于历史规律预估，以官网为准"。
 
 ```
 # 🔬 缠论多维分析日报
@@ -291,16 +303,54 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 - `hk_sells = [r for r in hk_results if not r[7] and 'Sell' in str(r[2])]` — `label` 在索引 **2**（不是 3）
 - 价格在索引 4，评分在索引 5，年涨在索引 6
 
-### daily_report.py 元组索引 (Critical Pitfall)
+### daily_report.py 元组索引 (Critical Pitfall — 5次反复出错)
 
-A股扫描结果元组 `(code, name, label, px, score, ytd, zs_str, pos, iz, en, st, t1, t2, rr)`:
-- 0:code 1:name 2:label 3:**price** 4:**score** 5:**ytd** 6:**zs_str** 7:pos 8:iz 9:entry 10:stop 11:tp1 12:tp2 13:rr
-- 输出行必须显式类型转换: `int(r[3]), int(r[4]), float(r[5]), str(r[6]), int(r[9]), int(r[10]), int(r[11]), int(r[12]), float(r[13])`
-- r[6] 是中枢字符串如 "67~78"，r[7] 是位置字符串如 "内" — 绝不能把它们当数字格式化
+**A股元组结构:** `(code, name, label, px, score, ytd, zs_str, pos, iz, entry, stop, tp1, tp2, rr)`
+
+| 索引 | 字段 | 类型 | 格式 |
+|------|------|------|------|
+| 3 | price | int | `int(r[3])` |
+| 4 | score | int | `int(r[4])` |
+| 5 | ytd | float | `float(r[5])` |
+| 6 | zs_str | str | `str(r[6])` — "67~78" 不是数字! |
+| 7 | pos | str | — |
+| 9 | entry | int | `int(r[9])` |
+| 10 | stop | int | `int(r[10])` |
+| 11 | tp1 | int | `int(r[11])` |
+| 12 | tp2 | int | `int(r[12])` |
+| 13 | rr | float | `float(r[13])` |
+
+**港股元组结构:** `(code, name, label, px, score, ytd, zs_str, bsp_buy, in_zs)`
+
+| 索引 | 字段 | 筛选/输出 |
+|------|------|-----------|
+| 2 | label | `'Sell' in str(r[2])` — 注意是索引2不是3 |
+| 3 | price | `int(r[3])` |
+| 4 | score | `int(r[4])` |
+| 5 | ytd | `float(r[5])` |
+| 6 | zs_str | `str(r[6])` — "HK$493~520" |
+| 7 | bsp_buy | `r[7]` — 布尔值筛选买入 |
+
+**常见错误（本轮会话出现5次才修复）:**
+1. `ValueError: could not convert string to float: '67~78'` — r[6]是中枢字符串，错当ytd浮点数
+2. `TypeError: argument of type 'int' is not iterable` — r[3]是股价int，错当label字符串做 `'Sell' in r[3]`
+3. 香港卖出筛选 `'Sell' in r[3]` → 应是 `'Sell' in str(r[2])`（label在索引2）
+4. 输出行 `r[4]` 当价格 → 应是 `r[3]`（价格是第4个元素，索引3）
+5. `r[6]` 当zs_str但在错误位置 → 确认元组打包顺序 `cu.zs_list[-1]` 在score之后
 
 ### AKShare超时保护
 
 `get_sector_from_akshare()` 在 `analyze_single()` 中必须限制重试次数（行业`max_retries=2`，概念`max_retries=1`），否则会阻塞单股分析60秒以上。全市场扫描时可放宽到3次。
+
+### 模块导入修补 (首次部署必检)
+
+在干净的 Python venv 中首次运行 `analyze.py` 时可能遇到以下导入错误，需逐项修补：
+
+1. **`analyze.py` 第1行 `import numpy as np` 在 shebang 之前** — shebang 必须在文件第一行。修复：将 `#!/usr/bin/env python3` 移到第一行，`import numpy as np` 移到第二行。
+2. **`macro.py` 缺少 `macro_signal` 函数** — `analyze.py` 第19行 `from macro import load_macro,macro_signal`，但 `macro.py` 只有 `load_macro` 和 `macro_report`。修复：在 `macro.py` 中添加 `macro_signal(macro)` 存根，返回 `{'bias': str, 'signals': list}`。
+3. **`futures_sentiment.py` 缺少 `get_futures_position` 和 `analyze_sentiment`** — `analyze.py` 第20行和 `scan_market()` 第183行引用这两个函数，但 `futures_sentiment.py` 只有 `get_detailed_positions` 和 `format_futures_report`。修复：在 `futures_sentiment.py` 中添加存根（`get_futures_position` 返回 `{}`，`analyze_sentiment` 返回 `{'bias': '中性'}`）。
+
+这些是脚本模块间的接口断裂（历史重构残留），不是环境问题 — 每个干净部署都会重现。
 
 ## 板块扫描工作流
 
