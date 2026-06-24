@@ -25,6 +25,7 @@ metadata:
       - scikit-learn
       - akshare
       - baostock
+      - easy-tdx
   system_requirements:
     - Python 3.10+
     - Network access to qt.gtimg.cn (Tencent), push2.eastmoney.com (Eastmoney), yahoo finance
@@ -93,6 +94,21 @@ python3 train.py --stocks 27 --years 3
 | `sync_sector_windows.py` | Windows端AKShare板块数据同步脚本 |
 | `chanlun_kb_build.py` | chanstock知识库索引构建 |
 | `chanlun_kb_search.py` | chanstock语义搜索CLI |
+| `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各15+,主力资金) |
+| `hs300_scan.py` | 日报生成器 — 沪深300全量扫描+完整markdown报告 |
+
+## 日报生成
+
+生成完整的 markdown 分析日报（`references/chan_daily_report.md`）：
+
+```bash
+cd scripts && python3 /dev/stdin << 'PYEOF'
+# 读取 hs300_stocks.csv → 全量chan扫描 → 聚合宏观/板块/期货 → markdown报告
+# 报告含: 事件日历/宏观全维度/板块热点(通达信)/买入标的/操作建议
+PYEOF
+```
+
+日报要求：概念板块≥15行 + 行业板块≥15行。标的表必须含股票名称（从 `hs300_stocks.csv` 成分券名称列获取）。
 
 ## 数据源
 
@@ -103,9 +119,19 @@ python3 train.py --stocks 27 --years 3
 | yfinance | — | ✅ | — | — |
 | baostock | — | ✅ | — | — |
 
-### AKShare 重试机制
+| **通达信 (easy-tdx)** | — | — | ✅ 概念+行业15+ | ✅ 主力资金/成交额(亿) |
 
-东财API有频率限制，请求超时需重试：
+### easy-tdx 通达信板块数据
+
+```python
+from easy_tdx import MacClient, BoardType
+with MacClient.from_best_host() as client:
+    concept = client.get_board_ranking(BoardType.GN, top_n=15, sort_by="change_pct")
+    industry = client.get_board_ranking(BoardType.HY, top_n=15, sort_by="change_pct")
+# 字段: name, change_pct, amount(元→/1e8转亿), main_net_amount(主力净流入), up_count, down_count
+```
+
+### AKShare 重试机制
 
 ```python
 for i in range(3):
