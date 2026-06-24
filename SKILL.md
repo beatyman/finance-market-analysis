@@ -1,105 +1,74 @@
 ---
 name: a-share-market-analysis
-description: A股4454+港股780缠论全量分析：chan.py买卖点 → XGBoost 58维打分 → 量价/板块/宏观/期货多维共振。支持单股/全市场扫描。零外部依赖(chanpy内嵌)。
+description: A股4454+港股780缠论全量分析 — chan.py买卖点→XGBoost 58维打分→SMC聪明钱→量价/板块/宏观共振
 version: 3.1.0
 author: Hermes
 license: MIT
-platforms: [linux]
-metadata:
-  hermes:
-    tags: [a-share, hk-stock, chan, trading, bsp, scoring, xgboost, macro]
 ---
 
-# 缠论·多维度分析 v3.1
+# 缠论多维量化分析系统
 
-chan.py 买卖点 + XGBoost 58维评分 + 十维共振
-
-## 快速使用
-
-```bash
-cd ~/.hermes/skills/a-share-market-analysis/scripts
-python3 analyze.py 002475          # 立讯精密
-python3 analyze.py hk00700         # 腾讯控股
-python3 analyze.py --scan --min-score 70  # A股全量≥70分
-```
+## 触发条件
+- A股/港股分析、买卖点检测
+- 全市场缠论扫描
+- XGBoost模型训练
+- 用户提到"缠论""chan""BSP""买点""评分"
 
 ## 十维分析流水线
 
-```
-🌍 宏观环境 (股指期货/美元/美债/商品)
-  └─ 个股分析
-      ├── 数据获取 (Tencent行情 + yfinance K线)
-      ├── 缠论结构 (chan.py BSP/中枢)
-      ├── 58维评分 (XGBoost训练模型)
-      ├── 知识库确认 (chanstock rules/workflow)
-      ├── SMC聪明钱 (OpenMobius 665概念)
-      ├── 量价分析 (放量/缩量背离)
-      ├── 板块定位 + 实时热度 🆕
-      └── 最终信号 (Buy/Sell/Hold + 目标 + 风险)
-```
+按以下顺序输出：
+1. **🌍 宏观环境前置** — 股指期货+DXY+美债+商品
+2. 多源K线获取 (Tencent→yfinance→AKShare→baostock)
+3. chan.py BSP/中枢提取
+4. 58维特征+XGBoost评分 (AUC 0.662)
+5. 缠论知识库确认 (chanstock语义搜索)
+6. SMC聪明钱视角 (Order Block/Liquidity)
+7. 量价分析 (放量/缩量背离)
+8. 板块定位+实时热度
 
-## XGBoost训练
+## 入口
 
 ```bash
-python3 train.py --stocks 50 --years 3
-# → models/chan_xgb_56d.pkl (AUC 0.662, 58维特征)
+cd scripts
+python3 analyze.py 002475         # A股
+python3 analyze.py hk00700        # 港股
+python3 analyze.py --scan         # A股全市场
+python3 analyze.py --scan --market hk --min-score 70
+python3 train.py --stocks 27      # 训练XGBoost
 ```
 
-## 数据源 (多源自动回退)
+## 输出格式
 
-| 数据 | 优先级 | 说明 |
-|---|---|---|
-| A股行情 | 腾讯 qt.gtimg.cn | 批量实时行情(唯一选择) |
-| 港股行情 | 腾讯 qt.gtimg.cn | hk前缀 |
-| K线 | Tencent → yfinance → AKShare → baostock | 自动回退，取最后250根 |
-| 股指期货 | AKShare | CFFEX持仓排名 |
-| 宏观因子 | yfinance | 美债/美元/汇率 |
-| 商品期货 | yfinance | COMEX黄金/白银/铜 |
-
-## 注意事项
-
-### 数据获取
-
-- **yfinance MultiIndex**: 单股下载返回MultiIndex列，访问用`np.array(df['Close']).ravel()`而非`.values`
-- **baostock日期**: 返回`datetime.date`对象，需`str(r[0])`转换再`.split('-')`
-- **腾讯HK K线**: 需`curl -L`跟随302重定向；HK用`day`字段，A股用`qfqday`
-- **250根K线限制**: 数据层自动截取最后250根——baostock会返回2000+根，全量分析导致153笔/15中枢压倒近期结构
-- **多源回退顺序**: Tencent → yfinance → AKShare → baostock，任意源可用即止
-
-### chan.py API
-
-- **Bi对象**: `bi.begin_klc.low` / `bi.begin_klc.high`（不是`.klc.low`）
-- **CSeg对象**: 无`.end_klc`属性——用`.bi_list`访问段内的笔
-- **评分特征**: 58维对齐chan-model-xgb V2，包含MACD/布林带/ADX/背驰/多级别
-
-### 训练
-
-- **train.py**: 直接使用A股核心代码列表（非港股CSV），`--stocks`参数控制数量
-- **标签**: 未来5根K线涨幅>3%为正样本
-- **模型文件**: 58维AUC 0.662优于30维0.626；`chan_xgb_56d.pkl`是主模型
-
-## 模块架构
-
+宏观前置 → 个股分析:
 ```
-scripts/
-├── analyze.py           主入口(单股/扫描/10维整合)
-├── data.py              数据源(Tencent+yfinance)
-├── chan_engine.py        chan.py BSP/ZS提取
-├── scorer.py             58维特征提取+打分
-├── chan_kb.py            缠论知识库确认
-├── smc_insight.py        SMC聪明钱视角
-├── volume_sector.py      量价分析+板块定位
-├── sector_heat.py        板块实时热度 🆕
-├── futures_analysis.py   商品期货联动
-├── futures_sentiment.py  股指期货持仓情绪
-├── macro.py              宏观因子(美债/美元/汇率)
-└── train.py              XGBoost 58维训练器
+🌍 宏观: [期货/美元/美债/商品]
+─ 个股分析 ─ [BSP] [XGBoost] [知识库] [SMC] [量价] [板块]
 ```
 
-## 评分模型
+## 数据源限制
 
-v3.1 升级到58维（对齐chan-model-xgb V2）:
-- 12 BSP one-hot + 6 动量 + 5 MA偏离 + 5 MACD
-- 2 布林带 + 3 波动率 + 2 RSI + 2 ADX  
-- 2 量价 + 5 笔特征 + 6 中枢特征 + 5 段/背驰/多级别
-- AUC: 30维 0.626 → 58维 0.662 (+5.8%)
+**可用(服务器)**: 腾讯qt/ifzq, yfinance, baostock, AKShare(CFFEX期货)
+**不可用(IP被东财封)**: AKShare东财板块, tushare, 同花顺/通达信
+**Windows辅助**: 用户Windows机可跑AKShare东财数据, scp同步
+
+## 核心模块
+
+- `analyze.py` — 主入口
+- `data.py` — 4源回退, 自动截取250根K线
+- `scorer.py` — 58维特征(BSP+MACD+布林+ADX+量+笔段背驰)
+- `chan_kb.py` — 知识库+语义搜索确认
+- `smc_insight.py` — SMC聪明钱
+- `sector_heat.py` — 板块热度(腾讯行情推断)
+- `volume_sector.py` — 量价+板块映射
+- `macro.py` — 美债/DXY/汇率
+- `futures_analysis.py` — COMEX期货chan分析
+- `futures_sentiment.py` — CFFEX持仓情绪
+- `train.py` — XGBoost训练(直接使用A股核心代码)
+
+## Gotchas
+
+1. 多源K线可能跨多年 → data.py自动截取最近250根
+2. yfinance单股返回MultiIndex列 → `.ravel()`展开
+3. BSP仅保留最近信号 → 历史大结构不干扰
+4. 腾讯K线需 -L 跟随重定向
+5. 港股代码在sector_heat中需hk前缀识别
