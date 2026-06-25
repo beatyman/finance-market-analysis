@@ -1,7 +1,7 @@
 ---
 name: a-share-market-analysis
 description: A股4454+港股780缠论全量分析：chan.py买卖点 → XGBoost 58维打分 → 量价/板块/宏观/SMC/知识库多维度共振。支持单股分析/全市场扫描。
-version: 4.2.0
+version: 4.3.0
 author: Hermes
 license: MIT
 platforms: [linux, windows]
@@ -94,6 +94,7 @@ python3 train.py --stocks 27 --years 3
 | `sync_sector_windows.py` | Windows端AKShare板块数据同步脚本 |
 | `chanlun_kb_build.py` | chanstock知识库索引构建 |
 | `chanlun_kb_search.py` | chanstock语义搜索CLI |
+| `etf_momentum.py` | **Quanti5 ETF动量轮动** — 全ETF动量评分+趋势门+仓位调节, 月度调仓组合 |
 | `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各Top10,主力资金,~9秒) |
 | `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
 | `t0_trade.py` | **日内做T策略** — 日线方向+30m价格区间+量价异常 |
