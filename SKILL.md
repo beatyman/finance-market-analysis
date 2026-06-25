@@ -143,16 +143,53 @@ https://www.federalreserve.gov/newsevents.htm
 
 ## 旧版日报 (参考模板)
 
-## 数据源
+## 数据源（优先级从高到低）
 
-| 源 | 行情 | K线 | 板块 | 重试 |
-|---|---|---|---|---|
-| 腾讯 qt.gtimg.cn | ✅ | ✅ | ✅(个股推断) | — |
-| **AKShare (东财)** | — | ✅ | ✅ **990个板块** | ⚡ **5s重试** |
-| yfinance | — | ✅ | — | — |
-| baostock | — | ✅ | — | — |
+| 源 | 行情 | K线 | 板块 | 延迟 | 用途 |
+|---|---|---|---|---|---|
+| **腾讯 qt.gtimg.cn** | ✅ **实时** | ✅ | ✅(个股推断) | 0延迟 | **首选实时价** |
+| **baostock** | — | ✅ **最可靠** | — | 日终 | **首选K线** |
+| yfinance | — | ⚠️ 延迟2天 | — | 2天 | 备选(港股/美股) |
+| **AKShare (东财)** | — | ✅ | ✅ **990个板块** | 5s重试 | 板块成分股 |
+| **通达信 (easy-tdx)** | — | — | ✅ 概念+行业Top10 | ~9秒 | 实时资金流 |
 
-| **通达信 (easy-tdx)** | — | — | ✅ 概念+行业Top10 | ✅ 主力资金/成交额(亿) ~9秒 |
+### 实时买入清单工作流 (Tencent + baostock)
+
+**yfinance 数据滞后2个交易日** — 绝不能用于最终报价。正确流程：
+
+```python
+# 1. 腾讯实时行情 (现价)
+import subprocess as sp
+url = 'http://qt.gtimg.cn/q=sz002475,sh603920,sz300033'
+r = sp.run(['curl','-sL','--max-time','5',url], stdout=sp.PIPE)
+raw = r.stdout.decode('gbk','ignore')
+for line in raw.split('\n'):
+    p = line.split('~')
+    if len(p) >= 10:
+        code = p[2]    # 3rd field = actual stock code
+        px = float(p[3])  # 4th field = real-time price
+        chg = float(p[32]) # 33rd field = change %
+
+# 2. baostock K线 (日线)
+import baostock as bs
+bs.login()
+sym = 'sh.'+code if code.startswith('6') else 'sz.'+code
+rs = bs.query_history_k_data_plus(sym, 'date,open,high,low,close,volume',
+    start_date='2025-06-01', end_date=time.strftime('%Y-%m-%d'),
+    frequency='d', adjustflag='2')
+rows = []
+while rs.next(): rows.append(rs.get_row_data())
+# Replace last close with live px before chan analysis
+C[-1] = live_px
+cur, bb, bt, _, zs, pos = chan_analyze(D, O, C, H, L, code)
+
+# 3. 输出 Excel
+# 使用模板: /root/buy_list_live.xlsx
+```
+
+### easy-tdx 板块资金流 (9秒, 限制说明)
+
+`board_hot.py` 取概念+行业各Top10。**注意**: 我们12个特定板块（如BK0877 PCB）**不在Top50概念榜中** — 只能获取通用热度榜，不能按板块代码精确查询资金流。
 
 ### easy-tdx 通达信板块数据
 
@@ -295,7 +332,69 @@ R:R = 5.5:1 | 30分钟: 🟡 日线买但30m未确认
 - 港股K线用yfinance `%04d.HK` 格式（如 `0700.HK`），不是 `00700.HK`
 - 腾讯K线用 `curl -sL`（需跟踪302重定向），A股返回 `qfqday`，港股返回 `day`
 - baostock返回datetime.date对象，需 `str()` 转字符串供 chan_engine 解析
-- yfinance A股符号用 `.SS`/`.SZ` 后缀（如 `603019.SS`），不是 `sh603019`
+### yfinance A股符号用 `.SS`/`.SZ` 后缀（如 `603019.SS`），不是 `sh603019`
+
+### 腾讯实时行情代码提取 (Tencent code parsing)
+
+腾讯 `qt.gtimg.cn` 返回格式: `v_sz002475="1~立讯精密~002475~75.05~..."`。正确提取 `code` 用 `p[2]`（第三字段），不是 `p[0]`（带前缀）：
+
+```python
+for line in raw.split('\n'):
+    p = line.split('~')
+    if len(p) >= 10:
+        code = p[2]    # ✓ "002475" (第3字段)
+        name = p[1]    # ✓ "立讯精密" (第2字段)  
+        px = float(p[3])  # ✓ 75.05 (第4字段)
+        chg = float(p[32]) # ✓ 涨跌幅
+```
+
+`p[0]` 是 `v_sz002475`（带前缀），需额外 `replace('sz','').replace('sh','')` 才能得到代码。
+
+### 主力吸筹判断标准 (Volume Accumulation)
+
+用户常问"有没有主力吸筹"。量价维度评分逻辑（非缠论，作为辅助参考）：
+
+| 信号 | 条件 | 权重 |
+|------|------|------|
+| 成交量放大 | 20日均量 > 60日均量 × 1.3 | +2 |
+| 阳线放量 | 阳线均量 > 阴线均量 × 1.3 | +2 |
+| 放量阳线天数 | 20日内≥3天单日量>20日均量×1.5 | +2 |
+| 接近底部 | 距60日低 < 10% | +2 |
+| **评分 ≥ 6** | 🔥 强吸筹 — 主力明显建仓 | |
+| **评分 ≥ 4** | 🟢 中等吸筹 | |
+| **评分 ≥ 2** | 🟡 弱吸筹 | |
+| **评分 < 2** | ❌ 无吸筹迹象 | |
+
+注意：板块热点驱动型行情（如AI/半导体）通常吸筹评分低——资金是追涨式进入而非底部建仓型。
+
+### yfinance 数据延迟2天 (Critical — 本轮会话反复触雷)
+
+**yfinance 日线数据滞后约2个交易日**。`period='1y'` 返回的最新收盘价可能是2天前的数据（如今天6/25，最新数据是6/23）。这导致：
+- 存量分析（chan.py结构）仍可用 — K线结构变化缓慢
+- **实时价/距现价计算/买入区判断必须用腾讯实时行情** — 否则距现价误差可达8%+
+
+**正确流程 (Tencent + baostock):**
+```python
+# 1. 腾讯实时行情 (现价) — 0延迟
+url = 'http://qt.gtimg.cn/q=sz002475,sh603920,sz300033'
+r = sp.run(['curl','-sL','--max-time','5',url], stdout=sp.PIPE)
+raw = r.stdout.decode('gbk','ignore')
+for line in raw.split('\n'):
+    p = line.split('~')
+    if len(p) >= 10:
+        code = p[2]    # 3rd field = actual stock code
+        px = float(p[3])  # 4th field = real-time price
+
+# 2. baostock K线 (日线) — 可靠
+bs.login()
+sym = 'sh.'+code if code.startswith('6') else 'sz.'+code
+rs = bs.query_history_k_data_plus(sym, 'date,open,high,low,close,volume',
+    start_date='2025-06-01', end_date=time.strftime('%Y-%m-%d'), frequency='d', adjustflag='2')
+# Replace last close with live px before chan analysis
+C[-1] = live_px
+```
+
+**检测方法:** 如果 yfinance 最新日期距今天>1天，自动切换腾讯+baostock。输出模板 `/root/buy_list_live.xlsx`。
 - 全量扫描时K线限制250根，避免chan.py分析过慢
 
 ### chan.py API兼容
@@ -380,6 +479,19 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 4. 输出行 `r[4]` 当价格 → 应是 `r[3]`（价格是第4个元素，索引3）
 5. `r[6]` 当zs_str但在错误位置 → 确认元组打包顺序 `cu.zs_list[-1]` 在score之后
 
+### 存储芯片业绩预增 ≠ 股票可买 (Critical Pitfall)
+
+存储芯片4只业绩暴增股（兆易11x/佰维30x/江波龙52x/德明利110x），chan.py 分析结果：
+
+| 标的 | 预增 | chan.py | 原因 |
+|------|------|---------|------|
+| 兆易创新 | 11x | 🔴 Sell-二卖 73分 | 年涨205%已充分price in |
+| 佰维存储 | 30x | 🟡 Hold 63分 | 年涨256%追高 |
+| 江波龙 | 52x | 🔴 Sell-一卖 63分 | 年涨145%卖点 |
+| 德明利 | 110x | 🟢 Buy-二买 60分 | 年仅涨6%,低位有买点 |
+
+**只有德明利有操作价值** — 业绩暴增但股价未透支。其余三只已充分定价，追高=接盘。**遇到"业绩暴增股"必须先跑 chan.py — 市场可能早已定价。**
+
 ### 涨停≠买入信号 (Critical Pitfall)
 
 涨停当天 K 线计入后，chan.py 结构可能**仍显示 Sell/Hold**。原因：1根10%阳线改变不了由200+根K线构建的多笔整体结构。涨停形成的新向上笔在无中枢的强趋势中往往被判定为二卖反弹——打到前高附近再次受阻。
@@ -387,6 +499,19 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 - 用户看到涨停就问"能不能买"时，必须诚实说明：数据已包含涨停，但结构仍是 Sell
 - 涨停次日走势决定一切：继续放量突破前高 → 结构可能重建；高开低走或缩量 → 二卖坐实
 - 不要在涨停当天因"板块热"或"涨停了"就推翻 chan.py 的客观结构判断
+
+### 业绩预增 ≠ 股票可买 (Critical Pitfall)
+
+存储芯片4只业绩暴增股（兆易11x/佰维30x/江波龙52x/德明利110x），chan.py 分析结果：
+
+| 标的 | 预增 | chan.py | 原因 |
+|------|------|---------|------|
+| 兆易创新 | 11x | 🔴 Sell-二卖 73分 | 年涨205%已充分price in |
+| 佰维存储 | 30x | 🟡 Hold 63分 | 年涨256%追高 |
+| 江波龙 | 52x | 🔴 Sell-一卖 63分 | 年涨145%卖点 |
+| 德明利 | 110x | 🟢 Buy-二买 60分 | 年仅涨6%,低位有买点 |
+
+**只有德明利有操作价值** — 业绩暴增但股价未透支。其余三只已充分定价，追高=接盘。**遇到"业绩暴增股"必须先跑 chan.py — 市场可能早已定价。**
 
 ### AKShare超时保护
 
@@ -472,6 +597,20 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 ### 板块资金流 (easy-tdx, 9秒)
 
 `board_hot.py` 提供概念+行业各Top10实时主力资金。集成到 `daily_report.py` 中。单位转换: `amount/1e8` → 亿, `main_net_amount/1e8` → 亿。
+
+### 竞价开盘 vs 盘中 (Opening Auction vs Intraday)
+
+竞价阶段板块涨幅通常只有0.5-1.5%且主力净流出（试盘），正式开盘后涨幅升至2-4%且主力转为净流入。**不要以竞价数据判断当日方向** — 等正式开盘30分钟后再分析。竞价到盘中的变化可判断主力真实意图：
+
+| 竞价→盘中 | 含义 |
+|---|---|
+| 净流出→净流入 | 试盘后主力进场 |
+| 涨幅收敛(+4%→+2%) | 健康消化 |
+| 涨幅扩大(+1%→+4%) | 主力大力推升 |
+
+### 盘中提问节奏
+
+用户在竞价/盘中选择性地问"XX能买吗"，此时必须拉取腾讯实时行情+通达信实时板块资金流，不能依赖过时的 yfinance 昨日收盘价做判断。价格可能在10分钟内从+6%变成-3%。**每次回复前必须刷新实时数据。**
 
 ## 外部知识库
 
