@@ -1,40 +1,46 @@
-# ClawHub 金融 Skill 审查报告
+# 外部 Skill Review 方法论
 
-> 2026-06-25 | 审查14个公开金融Skill | 吸收3个免费Skill设计精华
+> 2026-06-25 | 本轮会话吸收 ClawHub 10+ 个金融 Skill 的设计精华
 
-## 已吸收的免费Skill
+## Review 框架
 
-| 来源 | 吸收的设计 | 落地模块 |
-|---|---|---|
-| @cnyezi/a-stock-analysis | 分时量能+主力动向(新浪5分钟K线) | `volume_minute.py` |
-| @robin797860/stock-watcher | 同花顺10jqka自选股管理 | `portfolio.py` |
-| @thirtyfang/stock-monitor | 7规则分级预警+中国习惯(红涨绿跌) | `portfolio.py` |
-| @clawmaker/Quanti5 | ETF动量轮动+真实摩擦建模 | `etf_momentum.py` |
-
-## 需API Key的（待集成）
-
-| Skill | 需Key | 价值 |
-|---|---|---|
-| stocks-screener (东方财富) | EM_API_KEY | ⭐⭐⭐⭐⭐ 自然语言选股秒级 |
-| financial-data (东方财富) | EM_API_KEY | ⭐⭐⭐ 实时行情+财务 |
-| industry-research (东方财富) | EM_API_KEY | ⭐⭐⭐ 行业PDF研报 |
-
-## 已在使用/价值有限的
-
-| Skill | 结论 |
+| 维度 | 评分标准 |
 |---|---|
-| akshare-stock | ✅ 已在使用 |
-| tushare-finance | 需Tushare Token(注册即用) |
-| stock-analysis (yfinance) | 美股为主, 价值有限 |
-| stock-market-pro (yfinance) | 图表工具, 非A股 |
-| china-stock-analysis | 太基础, web search查价 |
-| crypto-market-data | Node.js/CoinGecko, 已有yfinance替代 |
-| stock-info-explorer | 与market-pro重复 |
-| stock-monitor | ✅ 已吸收预警设计 |
-| eastmoney skills | 需EM_API_KEY |
+| 数据源 | 是否免费/需Key/延迟/可靠性 |
+| 设计模式 | 持仓管理/预警系统/分时量能/图表 |
+| A股适用 | 直接可用/需改造/不适用 |
+| 集成难度 | 即插即用/需改造/需Key |
 
-## 关键教训
+## 已吸收的精华
 
-1. **ClawHub skill不在GitHub** — 通过OpenClaw registry发布，直接clone不可行
-2. **两个立即可用**: stock-watcher(同花顺/免费) + tushare(注册即用)
-3. **分时量能最大发现**: 早盘放量≠主力吸筹 — 300只抢筹中30%是卖出信号
+| 来源 | 设计 | 集成到 |
+|---|---|---|
+| stock-watcher (同花顺/免费) | 自选股管理+免费行情 | `portfolio.py` |
+| stock-monitor (7规则预警) | 分级预警🔴🟡🔵+红涨绿跌 | `portfolio.py` |
+| a-stock-analysis (新浪/免费) | 分时量能+主力动向 | `volume_minute.py` |
+| Quanti5 (ETF动量) | 自然月动量+趋势门+仓位调节 | `etf_momentum.py` |
+
+## 设计模式对照
+
+| 他们的模式 | 我们的实现 |
+|---|---|
+| 持仓: add/remove/show/alerts | `portfolio.py add 002475 --cost 67 --qty 1000` |
+| 预警: 成本%/日内%/均线/RSI/放量/动态止盈 | `portfolio.py alerts` |
+| 分时: 早盘30分/尾盘/放量TOP10/主力判断 | `volume_minute.py 603019` |
+| 动量: 混合窗口+趋势门+仓位分配 | `etf_momentum.py` |
+
+## 未吸收（需API Key）
+
+| Skill | Key | 价值 |
+|---|---|---|
+| stocks-screener (东方财富) | EM_API_KEY | 自然语言选股秒级 |
+| financial-data (东方财富) | EM_API_KEY | 实时行情+财务 |
+| industry-research (东方财富) | EM_API_KEY | 行业深度研报PDF |
+| tushare-finance | Tushare Token | 220+数据接口 |
+
+## 设计原则
+
+1. **免费优先** — 先集成不需要Key的
+2. **吸收设计模式，不改核心算法** — 缠论+阿娇是独有优势
+3. **保持独立可运行** — 每个模块 `python3 xxx.py` 即出结果
+4. **数据源标注来源** — 腾讯/新浪/AKShare/baostock
