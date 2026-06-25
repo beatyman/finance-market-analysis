@@ -106,6 +106,13 @@ python3 train.py --stocks 27 --years 3
 
 日报的格式是**固化标准**，不可随意改变。所有模块（宏观/板块/A股/港股/操作建议）的表结构和字段顺序必须保持一致。
 
+**⚠️ 严禁擅自改变模板 (Critical):** 用户已多次强调日报格式是固化的。新增模块（如ETF动量组合）只能在现有框架内追加独立段落，不能删除、合并或重命名现有段落。具体规范：
+- 现有8个段落名称和顺序固定（🗓️→🇨🇳→🌍→📈→🔥→📊→🎯→🇭🇰→📋）
+- 新增内容加在"操作建议"之前作为独立段落
+- 不可合并"宏观速览"替代"中国宏观+美国宏观"两个独立段落
+- 不可删除"港股机会"或"事件日历"等段落
+- 改变模板前必须向用户确认
+
 ### 事件日历验证 (CRITICAL — Fed官网 vs 静态推测)
 
 `event_calendar.py` 使用静态硬编码数据。**FOMC 会议纪要不在会后次日发布——通常在会后约 3 周**（如 6/16-17 会议 → 约 7/8 纪要）。生成日报前必须在报告开头输出当前事件日历，但需明确标注数据来源（硬编码 vs 官网核实）。
@@ -613,9 +620,36 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 
 用户在竞价/盘中选择性地问"XX能买吗"，此时必须拉取腾讯实时行情+通达信实时板块资金流，不能依赖过时的 yfinance 昨日收盘价做判断。价格可能在10分钟内从+6%变成-3%。**每次回复前必须刷新实时数据。**
 
+## Quanti5 ETF动量 — 自然月 vs 交易日 (Critical Pitfall)
+
+`etf_momentum.py` 使用 yfinance `period='1y'` 获取K线。动量计算公式是 **交易日回报**（20日/60日/120日），但用户常问"这个月涨了多少"。
+
+**交易日动量 vs 自然月动量差异显著：**
+- 交易日20日 ≈ 4周 ≈ 自然月 × 0.8（因有周末）
+- 科创芯片 20日回报 = +22.7%, 但自然月6月 = +35.0%
+- 用户质疑"月涨幅不对"时，需用自然月计算（按 `dates.strftime('%Y-%m')` 分组取首尾价差）
+
+**正确做法（已修正）：**
+```python
+# 自然月动量:
+months = {}
+for d, c in zip(dates, close):
+    if d not in months: months[d] = {'open': c, 'close': c}
+    months[d]['close'] = c
+jun_r = (months['2026-06']['close'] / months['2026-06']['open'] - 1) * 100
+# 动量得分: 6月×0.15 + 5月×0.35 + 4月×0.50
+```
+
+**趋势门控必须包含6个月回报 > 0** — 通信ETF 6月+23%但半年前跌太多(6月总回报-39%)，不应通过门控。
+
 ## 外部知识库
 
 - [fpyluck/chanstock-skill](https://github.com/fpyluck/chanstock-skill) — 缠论知识库 + 语义搜索
 - [MobiusQuant/OpenMobius-skill](https://github.com/MobiusQuant/OpenMobius-skill) — SMC/ICT概念库
 - [bambuo/chan-model-xgb](https://github.com/bambuo/chan-model-xgb) — XGBoost特征框架
 - [Vespa314/chan.py](https://github.com/Vespa314/chan.py) — 缠论引擎
+- [EV9H/Quanti5](https://github.com/EV9H/Quanti5) — A股ETF动量轮动量化平台（Next.js+TS, 真实摩擦建模, 回测+58%）
+- ClawHub Skills (需EM_API_KEY):
+  - [stocks-screener](https://clawhub.ai/financial-ai-analyst/skills/mx-stocks-screener) 🔥 — 自然语言选股(东方财富), 可替代全量扫描
+  - [stock-watcher](https://clawhub.ai/robin797860/skills/stock-watcher) — 同花顺自选股(免费, 无需Key)
+  - [industry-research](https://clawhub.ai/financial-ai-analyst/skills/industry-research-report) — 行业深度研报PDF

@@ -3,7 +3,16 @@
 日报生成器 v4.0 — 缠论多维分析日报
 用法: python3 daily_report.py
 输出: /root/chan_daily_report.md
-依赖: AKShare, easy-tdx, yfinance, chanpy
+
+数据源 (严格优先级):
+  1. 腾讯 qt.gtimg.cn — 实时股价 (0延迟, 所有A股)
+  2. baostock — K线日线 (最可靠, 无延迟)
+  3. yfinance — 宏观/港股/ETF (有2天延迟, 不影响结构分析)
+  4. AKShare — 中国国债/板块成分股 (5s重试)
+  5. easy-tdx — 板块实时资金流 (~9s)
+
+⚠️ yfinance A股K线滞后2天 — 最终买入区/距现价必须用腾讯实时价
+⚠️ 日报模板固化 — 禁止擅自改变段落顺序/名称
 """
 import yfinance as yf,numpy as np,sys,os,pandas as pd,time
 HERE=os.path.dirname(os.path.abspath(__file__))
