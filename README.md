@@ -22,7 +22,8 @@
 | 📈 板块热度 | 实时板块涨跌 + 资金轮动监测 |
 | 📉 量价分析 | 放量/缩量检测，主力吸筹/出货识别 |
 | 📚 知识库确认 | chanstock 缠论经典知识库 + 语义搜索验证 |
-| 🎯 多源数据 | Tencent / yfinance / AKShare / baostock 自动回退 |
+|| 🎯 多源数据 | Tencent / yfinance / AKShare / baostock 自动回退 |
+|| 🔥 热点板块扫描 | 29个科技主题，117只核心标的，每日一键扫描 |
 
 ---
 
@@ -77,6 +78,17 @@ python3 train.py --stocks 27 --years 3
 
 # 模型自动保存到 ../models/chan_xgb_56d.pkl
 ```
+
+### 热点板块批量扫描 🆕
+
+```bash
+# 每日一键扫描 117 只核心科技股（29 个主题板块）
+python3 hot_scan.py
+
+# 输出按主题分组的缠论分析结果 + 买入标的汇总
+```
+
+股票池: `references/hot_stocks.csv` — 覆盖半导体/光模块/PCB/存储/机器人/AI等 29 个板块
 
 ---
 
