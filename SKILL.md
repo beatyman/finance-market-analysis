@@ -65,6 +65,9 @@ cd scripts
 python3 analyze.py 002475     # A股
 python3 analyze.py hk00700    # 港股
 
+# 热点板块批量扫描
+python3 hot_scan.py                  # 117只核心科技股, 29主题
+
 # 全市场扫描
 python3 analyze.py --scan                    # A股全量
 python3 analyze.py --scan --market hk        # 港股全量
@@ -98,7 +101,9 @@ python3 train.py --stocks 27 --years 3
 | `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各Top10,主力资金,~9秒) |
 | `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
 | `t0_trade.py` | **日内做T策略** — 日线方向+30m价格区间+量价异常 |
-| `portfolio.py` | **持仓管理+预警** — 吸收 stock-watcher/stock-monitor 设计, 成本盈亏/分级预警/腾讯实时价, 挂单/止损/TP定制, 支持 add/remove/show/alerts 子命令 |\n| `volume_minute.py` | **分时量能分析** — 吸收 a-stock-analysis 设计, 新浪5分钟K线/早盘抢筹/尾盘异动/放量TOP10 |
+| `portfolio.py` | **持仓管理+预警** — 吸收 stock-watcher/stock-monitor 设计, 成本盈亏/分级预警/腾讯实时价, 挂单/止损/TP定制, 支持 add/remove/show/alerts 子命令 |
+| `volume_minute.py` | **分时量能分析** — 新浪5分钟K线/早盘抢筹/尾盘异动/放量TOP10 |
+| `hot_scan.py` | **热点板块批量扫描** — 读取 `references/hot_stocks.csv`（117只/29主题）一键全量缠论分析 |
 
 ## 日报生成
 
@@ -156,6 +161,64 @@ https://www.federalreserve.gov/newsevents.htm
 - 操作建议含具体仓位百分比
 
 ## 旧版日报 (参考模板)
+
+## 竞价抢筹分析 (9:15-9:25)
+
+A股集合竞价 9:15-9:25，9:25 产生开盘价。必须在 9:25 准时抓取。
+
+### 腾讯实时接口 (9:25)
+
+```python
+# 9:25 竞价撮合价 — 腾讯 qt.gtimg.cn 此时返回开盘价
+url = 'http://qt.gtimg.cn/q=sz002050,sh600703,...'
+# p[3]=现价(竞价撮合价) p[32]=涨跌幅 p[5]=开盘 p[6]=成交量
+```
+
+**限制**: 腾讯接口仅返回撮合价和成交量，不返回竞价委托明细（买一/卖一挂单量）。真正的竞价力度分析需要 Level-2 数据。
+
+### 竞价方向判断
+
+| 竞价表现 | 含义 |
+|---|---|
+| 高开+竞价量>日均20% | 🔥 主力抢筹 |
+| 低开+竞价缩量 | ❄️ 无人关注 |
+| 平开+竞价放量 | 🟡 多空分歧大 |
+
+### 竞价 × 缠论交叉
+
+竞价高开≠买入。必须看缠论位置：
+- 中枢内竞价低开 → 接近买点（如三花智控 6/26 竞价 ¥43.68，距买入区 ¥42-43 仅 1.6%）
+- 中枢上方竞价高开 → 追高风险
+- Sell 信号+竞价高开 → 出货窗口
+
+## 资金动量分析 (Volume Momentum)
+
+### 主力吸筹评分 (8分制)
+
+```python
+score = 0
+# 1. 成交量放大: 20日均量 > 60日均量 × 1.3 → +2
+# 2. 阳线放量: 阳线均量 > 阴线均量 × 1.3 → +2  
+# 3. 放量阳线天数: 20日内 ≥3天 单日量 > 20日均量 × 1.5 → +2
+# 4. 接近底部: 距60日低 < 10% → +2
+
+# ≥6: 强吸筹  4-5: 中等  2-3: 弱  0-1: 无
+```
+
+### 量价背离判断
+
+| 价格 | 量能 | 信号 |
+|---|---|---|
+| ↑ | ↑ | 🔥 量价齐升 — 健康上涨 |
+| ↑ | ↓ | ⚠️ 价涨量缩 — 动力减弱 |
+| ↓ | ↓ | ❄️ 价跌量缩 — 自然回调(非出货) |
+| ↓ | ↑ | 🟢 价跌量增 — 底部吸筹 |
+
+### 数据源
+
+- K线: baostock (可靠, 日终)
+- 实时成交量/竞价: 腾讯 qt.gtimg.cn (零延迟)
+- 分时量: 新浪 5分钟K线 (`money.finance.sina.com.cn`)
 
 ## 数据源（优先级从高到低）
 
@@ -628,6 +691,41 @@ python3 volume_minute.py --scan        # 全量沪深300扫描
 
 **仅2只通过双重确认（本次分析）：三花智控、江西铜业。**
 
+## 热点板块批量扫描 (hot_scan.py) 🆕
+
+**命令:** `cd scripts && python3 hot_scan.py`
+
+读取 `references/hot_stocks.csv` (117只/29主题)，全量运行 analyze.py，输出按主题分组的缠论分析结果 + 买入标的汇总。
+
+CSV 维护在 https://github.com/beatyman/finance-market-analysis (references/hot_stocks.csv)。
+
+**输出文件**: 标准输出（可重定向到 .md），含三部分:
+1. 按29个主题分组的个股分析表（BSP/评分/中枢/位置）
+2. 🎯 买入标的汇总（阿娇筛选 + 非中枢买点）
+3. 🔥 板块热度排行
+
+### 竞价抢筹分析 (9:25 Call Auction)
+
+A股集合竞价 9:15-9:25。9:25 撮合价确定后可立即抓取腾讯实时行情（qt.gtimg.cn），获取竞价撮合价。**但竞价量和委托明细需 Level-2 数据（收费）** — 当前仅能判断方向（高开/低开）和涨跌幅，无法判断竞价力度。
+
+```bash
+# 9:25 批量快照
+codes=("002050,601689,002527,...")
+curl -sL "http://qt.gtimg.cn/q=$(echo $codes | sed 's/,/,/g')" | parse
+```
+
+建议设 cron 每日 9:25 自动快照: `cronjob create --schedule '25 9 * * 1-5' --script hot_auction.py`
+
+### 买入信号的可操作性判断 (Critical — 本轮会话重大教训)
+
+**机械买入信号 ≠ 可操作。** 多只高评分标的的"买入区"在现价下方 50-80%（如天孚通信 Buy-三买 入场¥217 vs 现价¥342，距-37%；东材科技 Buy-二买 入场¥16 vs 现价¥78，距-79%）。这些是历史中枢残留信号——价格早已远离，不可操作。
+
+**只有以下两类买点有操作价值：**
+1. **中枢内买点** — 现价在中枢区间内 + Buy信号（如三花智控¥42在42-46中枢内）
+2. **中枢下方二买** — 现价在最近中枢下方 + Buy信号（如拓普集团¥56在63-75中枢下方）
+
+**硬性过滤规则**: 入场区距现价 > 15% 的买点一律标记为 "⚠️ 不可操作"。
+
 ## 日内做T策略 (t0_trade.py)
 
 `t0_trade.py` 用日线方向+30m价格区间+量价做日内交易建议。**chan.py 不支持30m K线分析**（CTime `auto=True/False` 均产生 "kline time err"），用价格极值+量价异常替代。
@@ -637,6 +735,52 @@ python3 volume_minute.py --scan        # 全量沪深300扫描
 - 先减仓至安全水位再做T
 - 日内振幅需>3%才有操作空间
 - 无中枢股票不做T（无锚定点）
+
+## 热点板块股票池 (hot_stocks.csv) — 每日批量扫描
+
+**股票池**: 117只核心科技股，覆盖29个主题板块（半导体/光模块/PCB/存储/机器人/AI等）。位于 `references/hot_stocks.csv` 及 GitHub 仓库 `beatyman/finance-market-analysis`。完整板块说明见 `references/hot_stocks.md`。
+
+**扫描命令:**
+```bash
+cd scripts
+python3 hot_scan.py    # 批量分析全部117只，按主题分组输出
+```
+
+**输出**: 按29个主题分组 → 每只 BSP/评分/中枢/位置 → 尾页买入标的汇总（阿娇筛选后仅中枢内买点）
+
+**CSV维护**: 用户在 WeChat 发送板块整理文本 → 去重合并 → 更新 `references/hot_stocks.csv` → 推送到 GitHub `beatyman/finance-market-analysis`
+
+**去重规则**: 
+- 同一代码跨多个板块时，CSV 中 `themes` 字段用 `|` 分隔
+- 分析时每只股票只跑一次 chan.py，但输出时标记所有所属板块
+- 新增板块/新标的直接追加到 CSV
+
+**CSV结构**: `code,name,theme_count,themes`
+
+**GitHub同步** (重要):
+```bash
+cd /root/finance-market-analysis
+# 更新 hot_stocks.csv 后
+git add references/hot_stocks.csv scripts/hot_scan.py
+git commit -m "update hot stocks" && git push
+```
+
+### 用户提供板块列表 → 自动处理流程
+
+用户发来板块列表文本时：
+1. 提取所有 `股票名称`，匹配已知代码
+2. 未知代码搜索确认（不臆造代码）
+3. 去重合并到 `references/hot_stocks.csv`
+4. 更新 `theme_count` 字段
+5. 推送到 GitHub
+6. 跑 `hot_scan.py` 批量分析
+
+### 板块去重合并规范
+
+用户经常发送类似板块的不同版本（如"磷化铟三杰"→"磷化铟四杰"）。处理规则：
+- 以**最新版本**板块定义为准
+- 新增标的追加到同一板块，不创建重复板块
+- 同一标的跨板块出现时增加 `theme_count`
 
 ## 板块扫描工作流 (12板块批量分析)
 
@@ -708,7 +852,7 @@ jun_r = (months['2026-06']['close'] / months['2026-06']['open'] - 1) * 100
 
 `easy_tdx.MacClient.from_best_host()` 连接时间极不稳定：正常 2-9 秒，但有时超时 15 秒+。**TOP 50 查询比 TOP 100 快 3 倍**（9秒 vs 30秒）。实战建议：用 `top_n=10`（9秒稳定），不要用 `top_n=100`。
 
-### 财经KOL推文 × 缠论交叉验证 (Media vs Price — 本轮会话发现)
+### 财经KOL推文 × 缠论交叉验证 (Media vs Price — 本轮会话发现) + 港股沽空 × 窝轮
 
 用户频繁转发财经推文（湖若深/Phyrex/花旗/供应链老兵等）。每条推文必须用缠论验证：
 - **花旗光互联"超级周期"** → 天孚/太辰光买入区在现价下方37-57% → 不能操作
@@ -718,7 +862,31 @@ jun_r = (months['2026-06']['close'] / months['2026-06']['open'] - 1) * 100
 
 规则：推文提供催化方向，缠论/A-shares提供入场纪律。两者矛盾时以缠论为准。
 
-## 外部知识库
+**港股沽空+窝轮交叉验证 (2026-06-28接入):** 见 `references/hk_short_selling_warrant.md` 和 `references/hk_short_selling_framework.md`。价跌+沽空比升=空头加码，Put全线涨+Call全线跌=双重确认不能抄底。与缠论Sell信号形成三重确认。
+
+**港股五巨头 沽空×窝轮×牛熊 三维框架:** 见 `references/hk_short_selling_framework.md`。沽空率三层级 + 涡轮Call/Put方向 + 牛熊证支撑/阻力 = 多空深度信号。腾讯(6.1%沽空/Call有承接/牛390熊480)最接近底部，美团(26.2%沽空/Call零成交/牛63底线)不可操作。
+
+**Filecoin扇区/订单过期查询:** 见 `references/filecoin_sector_expiration.md`。sectors用`sector_end`(日期字符串), claims用`deal_end`(日期字符串)。epoch≠Unix时间戳—需GENESIS+timedelta(seconds=epoch*30)转换。
+
+**湖若深宏观框架:** 见 `references/henryhu_macro_framework.md`。美元/黄金/Fed/通胀/消费债务 五大维度宏观验证。
+
+### AI产业链三层利润迁移 (Musolsol框架 — 25万阅读 — 2026-06-28接入)
+
+**三层架构 — 资金沿产业链逐层流动:**
+
+| 层 | 受益方 | 时间 | 状态 |
+|---|---|---|---|
+| ① GPU/算力 | NVIDIA 抽取全行业利润 | 2024-2025 | ✅ 已过 |
+| ② 存储/HBM | 三星/海力士/美光变成瓶颈 | 2025H2-2026 | ⚠️ 峰值 |
+| ③ 设备/材料 | 存储厂扩产→AMAT/LRCX/ASML | 2026-2027 | 🔜 下一轮 |
+
+**缠论映射:** 第②层存储 — 兆易Sell-二卖/江波龙Sell-一卖 = 利润峰值信号。
+第③层设备/材料 — 北方华创/中微公司，当前0中枢内买点，等中枢形成。
+
+**美股研究社版本 (taibaoshuo):**
+- 第一轮: NVDA → 第二轮: 存储+CPU → 第三轮: 设备+材料（即将进入存储全面扩产周期）
+
+**TingHu补充:** HBM占DRAM总量很小（70%转HBM是谣言—只是增量/先进制程）。传统DRAM产能巨大，扩产后供给暴增。
 
 - [fpyluck/chanstock-skill](https://github.com/fpyluck/chanstock-skill) — 缠论知识库 + 语义搜索
 - [MobiusQuant/OpenMobius-skill](https://github.com/MobiusQuant/OpenMobius-skill) — SMC/ICT概念库
