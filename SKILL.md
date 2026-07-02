@@ -105,6 +105,8 @@ python3 train.py --stocks 27 --years 3
 | `portfolio.py` | **持仓管理+预警** — 吸收 stock-watcher/stock-monitor 设计, 成本盈亏/分级预警/腾讯实时价, 挂单/止损/TP定制, 支持 add/remove/show/alerts 子命令 |
 | `volume_minute.py` | **分时量能分析** — 新浪5分钟K线/早盘抢筹/尾盘异动/放量TOP10 |
 | `hot_scan.py` | **热点板块批量扫描** — 读取 `references/hot_stocks.csv`（117只/29主题）一键全量缠论分析 |
+| `indicators.py` | **技术指标增强** — RSI/MACD/布林带一键汇总 + signal_strength评分 |
+| `integration.py` | **外部集成** — Kalman滤波波动率追踪(Financial-Models-Numerical-Methods) + 做T信号增强 |
 
 ## 日报生成
 
