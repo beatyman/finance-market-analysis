@@ -111,6 +111,7 @@ python3 train.py --stocks 27 --years 3
 | `hot_scan.py` | **热点板块批量扫描** — 读取 `references/hot_stocks.csv`（117只/29主题）一键全量缠论分析 |
 | `indicators.py` | **技术指标增强** — RSI/MACD/布林带一键汇总 + signal_strength评分 |
 | `integration.py` | **外部集成** — Kalman滤波波动率追踪(Financial-Models-Numerical-Methods) + 做T信号增强 |
+| `csi300_full_scan.py` 🆕 | **沪深300完整版扫描** — 双XGBoost + V4.5 + GZK + 3D评分 + PE + R:R + 买入/止损/TP，输出3 Sheet Excel |
 
 ## 日报生成
 
