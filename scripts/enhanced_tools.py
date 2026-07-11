@@ -1521,3 +1521,78 @@ def fetch_kline_fallback(code: str, start: str = "2025-07-01",
         return result
     except Exception:
         return []
+
+
+# ============================================================================
+# Module 14: 三维综合评分 (Composite 3D Score)
+# 来源: chanlun-quant/composite_scorer.py — 自包含，硬编码默认权重
+# 用法: compute_3d_score(tech_score=XGB分, fund_score=基本面分, news_score=消息面分)
+# ============================================================================
+
+# 默认权重与阈值
+_W_TECH = 0.40   # 技术面 40%
+_W_FUND = 0.30   # 基本面 30%
+_W_NEWS = 0.30   # 消息面 30%
+_TECH_BUY = 60   # 技术面 < 60 → 不建仓
+_FUND_HEAVY = 70 # 基本面 ≥ 70 → 可重仓
+_FUND_LIGHT = 40 # 基本面 < 40 → 仅轻仓
+_COMP_A = 75     # 综合 ≥ 75 → A级
+_COMP_B = 60     # 综合 ≥ 60 → B级
+_COMP_C = 45     # 综合 ≥ 45 → C级
+
+
+def compute_3d_score(tech_score: float, fund_score: float = 50,
+                     news_score: float = 50, w_tech: float = _W_TECH,
+                     w_fund: float = _W_FUND, w_news: float = _W_NEWS) -> dict:
+    """
+    三维综合评分 [0,100]。
+    输入: 技术分(XGB) + 基本面分(GZK/V4.5) + 消息面分(默认中性)
+    返回: {composite, grade, position, can_buy, reason}
+    """
+    tech_norm = max(0, min(100, tech_score))
+    composite = tech_norm * w_tech + fund_score * w_fund + news_score * w_news
+
+    # 共振惩罚
+    if tech_norm < 60 and fund_score < 60:
+        penalty = max(0, 60 - tech_norm) * w_tech + max(0, 60 - fund_score) * w_fund
+        composite += penalty * 0.5
+
+    composite = max(0, min(100, composite))
+
+    if composite >= _COMP_A: grade = 'A'
+    elif composite >= _COMP_B: grade = 'B'
+    elif composite >= _COMP_C: grade = 'C'
+    else: grade = 'D'
+
+    can_buy = tech_norm >= _TECH_BUY
+    if not can_buy: position = 0
+    elif fund_score >= _FUND_HEAVY and grade == 'A': position = 0.50
+    elif fund_score >= _FUND_HEAVY: position = 0.30
+    elif fund_score >= _FUND_LIGHT: position = 0.20 if grade >= 'B' else 0.10
+    else: position = 0.10
+
+    grade_map = {'A': '推荐重仓', 'B': '可买入', 'C': '观望', 'D': '回避'}
+    return {
+        'composite': round(composite, 1), 'grade': grade, 'position': position,
+        'can_buy': can_buy, 'reason': grade_map.get(grade, '?'),
+        'tech': tech_norm, 'fund': fund_score, 'news': news_score
+    }
+
+
+# ============================================================================
+# Module 15: 风控过滤器 (Risk Filter)
+# 来源: chanlun-quant/risk_filter.py — 自包含，零外部依赖
+# 用法: check_risk(code, name) → (blocked, reasons)
+# ============================================================================
+
+def check_risk(code: str, name: str) -> tuple:
+    """
+    基础风控检查（不含AKShare依赖）:
+    1. ST股检测  2. 人工黑名单(可扩展)
+    返回: (is_blocked: bool, reasons: list)
+    """
+    reasons = []
+    if 'ST' in name.upper() or '*ST' in name.upper():
+        reasons.append('ST股')
+        return True, reasons
+    return len(reasons) > 0, reasons
