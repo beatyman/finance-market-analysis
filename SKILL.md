@@ -241,6 +241,7 @@ score = 0
 | **新浪财经 (sina)** | — | ✅ **5分钟K线** | — | ~3秒 | **分时量能** |
 
 > ⚠️ `data.py`的`fetch_kline`默认源顺序已改为`['baostock','tencent','yfinance','akshare']`（2026-07-11）。baostock共享连接一次login遍历全量，替代原来的280次login/logout。
+> 详见 `references/baostock_batch_pattern.md`
 
 ### 实时买入清单工作流 (Tencent + baostock)
 
@@ -636,6 +637,18 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 3. **综合推荐Sheet** — Top15 + 逻辑列
 
 **禁止**: 删除宏观Sheet、减少信号Sheet列数、省略任何原有列。新增列追加不替换。
+
+### 综合推荐 阿娇二次筛选 (Critical — 2026-07-11)
+
+综合推荐Top15生成后**必须**阿娇二次筛选后再给出结论：
+1. ✅ 中枢内 + Buy → 可操作
+2. 🔴 中枢内 + Sell → 排除（3D=A但BSP=Sell的矛盾，BSP优先）
+3. 🟡 中枢内 + Hold/等信号 → 观察
+4. ❌ 中枢外无论BSP → 排除（天齐/赣锋/阳光/江波龙 3DA/B级但中枢外）
+5. ⚠️ YTD>100%+非三买 → 否决
+
+**教训**: 高3D评分≠可操作。天齐锂业(75 A级)中枢外、赣锋锂业(74 A级)无中枢。BSP优先级>3D评分。
+详见 `references/excel_template_v1.md`。
 
 ### 三维评分校准 (3D Score Calibration — 2026-07-10/11)
 

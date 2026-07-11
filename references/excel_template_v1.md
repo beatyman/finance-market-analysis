@@ -70,15 +70,27 @@
 排序: _rank = 3D分×0.5 + (旧XGB×0.3 if 中枢内 else 0) + (10 if V4.5≥8 else 0)
 取Top15，前5行绿底
 
+### 阿娇二次筛选（Critical — 2026-07-11）
+
+综合推荐的Top15并非全部可操作。生成报告后**必须**按阿娇标准二次筛选：
+1. 中枢内 + Buy信号 → ✅ 可操作
+2. 中枢内 + Sell → 🔴 排除（天赐材料3D=A但BSP=Sell，矛盾）
+3. 中枢内 + Hold/等信号 → 🟡 观察
+4. 中枢外(无论BSP) → ❌ 排除
+5. YTD>100%+非三买 → ⚠️ R4否决
+
+**教训**: 天齐锂业(3D=75 A级)中枢外、赣锋锂业无中枢 — 高评分≠可操作。BSP优先级 > 3D评分。
+
 ## 生成命令
 
 ```bash
 cd /root/.hermes/skills/a-share-market-analysis/scripts
 
-# 1. 跑扫描(产出 /tmp/hs300_YYYYMMDD_full.json)
-python3 -c "..."  # 见 scan_full_dual_model.py
+# 日常扫描（推荐 — baostock共享连接，2-3分钟）
+python3 csi300_full_scan.py
+# 输出: /root/chan_hs300_full_YYYYMMDD.xlsx（三Sheet: 信号/宏观/综合推荐）
 
-# 2. 生成Excel(产出 /root/hs300_signals_YYYYMMDD_full.xlsx)  
+# 旧版手动生成
 python3 << 'XEOF'
 import json, openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side

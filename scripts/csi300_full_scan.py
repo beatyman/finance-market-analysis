@@ -279,10 +279,10 @@ def main():
                     pass
 
         # Calculate entry/stop/TP from最近的 中枢
-        entry = px
-        stop = px
-        tp1 = px * 1.05
-        rr = 0
+        entry = None
+        stop = None
+        tp1 = None
+        rr = None
         
         if supports and resistances:
             # Find nearest 中枢
@@ -312,7 +312,7 @@ def main():
                 if stop > entry and stop > 0:
                     rr = round((entry - tp1) / (stop - entry), 1)
         
-        rr = max(0, min(rr, 20))  # cap at 20
+        rr = max(0, min(rr or 0, 20))  # cap at 20
         
         signal_type = 'buy' if bsp_buy else ('sell' if 'Sell' in label else 'neutral')
 
@@ -365,9 +365,9 @@ def main():
             'bsp': label,
             'v45': v45_score,
             'gzk': round(gzk_val, 1),
-            'entry': round(entry, 2),
-            'stop': round(stop, 2),
-            'tp1': round(tp1, 2),
+            'entry': round(entry, 2) if entry is not None else '—',
+            'stop': round(stop, 2) if stop is not None else '—',
+            'tp1': round(tp1, 2) if tp1 is not None else '—',
             'risk_status': 'BLOCKED' if blocked else 'OK',
             'tag': tag,
             'vol_signal': vol_analysis.get('signal', '-'),
