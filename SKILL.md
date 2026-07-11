@@ -103,7 +103,7 @@ python3 train.py --stocks 27 --years 3
 | `chanlun_kb_search.py` | chanstock语义搜索CLI |
 | `etf_momentum.py` | **Quanti5 ETF动量轮动** — 全ETF动量评分+趋势门+仓位调节, 月度调仓组合 |
 | `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各Top10,主力资金,~9秒) |
-| `enhanced_tools.py` | **增强工具箱 15模块 ~1599行** — V4.5/GZK/K线形态(Sequoia-X)/模块12:北向资金(东财push2)/模块13:K线多源回退(mootdx→腾讯)/模块14:三维综合评分(chanlun-quant)/模块15:风控过滤器 |
+| `enhanced_tools.py` | **增强工具箱 17模块 ~1730行** — V4.5/GZK/K线形态(Sequoia-X)/12:北向资金/13:K线回退/14:三维评分/15:风控过滤/16:MACD背驰/17:风控计划 |
 | `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
 | `t0_trade.py` | **日内做T策略** — 日线方向+30m价格区间+量价异常 |
 | `portfolio.py` | **持仓管理+预警** — 吸收 stock-watcher/stock-monitor 设计, 成本盈亏/分级预警/腾讯实时价, 挂单/止损/TP定制, 支持 add/remove/show/alerts 子命令 |
