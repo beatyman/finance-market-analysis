@@ -72,8 +72,9 @@ python3 analyze.py hk00700    # 港股
 # 热点板块批量扫描
 python3 hot_scan.py                  # 117只核心科技股, 29主题
 
-# 全市场扫描
-python3 analyze.py --scan                    # A股全量
+# 全市场扫描(新版推荐)
+python3 csi300_full_scan.py                        # 双XGB+3D评分+风控 3Sheet Excel
+python3 analyze.py --scan                    # 旧版A股全量
 python3 analyze.py --scan --market hk        # 港股全量
 python3 analyze.py --scan --min-score 70     # 仅高评分
 

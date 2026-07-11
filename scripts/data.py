@@ -107,7 +107,7 @@ def fetch_kline(code,market='a',period='1y',sources=None):
     sources: ['tencent','yfinance','akshare','baostock'] 或 None=全部试
     """
     if sources is None:
-        sources=['tencent','yfinance','akshare','baostock']
+        sources=['baostock','tencent','yfinance','akshare']
     
     # Build symbol
     if market=='a':

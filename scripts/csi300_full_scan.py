@@ -157,6 +157,33 @@ def main():
     quotes = fetch_a_quotes([(c, n) for c, n in stocks])
     print(f'  行情: {len(quotes)} 只')
 
+    # Pre-fetch all K-lines via baostock (shared connection, fast)
+    import baostock as bs
+    bs.login()
+    kline_cache = {}
+    for idx, (code, name) in enumerate(stocks):
+        try:
+            sym = 'sh.' + code if code.startswith('6') else 'sz.' + code
+            rs = bs.query_history_k_data_plus(sym,
+                'date,open,high,low,close,volume',
+                start_date='2025-07-01', end_date=datetime.now().strftime('%Y-%m-%d'),
+                frequency='d', adjustflag='2')
+            rows = []
+            while rs.error_code == '0' and rs.next():
+                rows.append(rs.get_row_data())
+            if len(rows) >= 100:
+                dates = [str(r[0]) for r in rows]
+                opens = [float(r[1]) for r in rows]
+                closes = [float(r[4]) for r in rows]
+                highs = [float(r[2]) for r in rows]
+                lows = [float(r[3]) for r in rows]
+                vols = [float(r[5]) for r in rows]
+                kline_cache[code] = (dates, opens, closes, highs, lows, vols)
+        except:
+            pass
+    bs.logout()
+    print(f'  K线缓存: {len(kline_cache)} 只')
+
     # Scan
     name_map = {c: n for c, n in stocks}
     results = []
@@ -169,10 +196,9 @@ def main():
         
         q = quotes[code]
         px = q['price']
-        chg_pct = q['change_pct']
 
-        # Fetch K-line
-        data = fetch_kline_a(code)
+        # Fetch K-line from cache (baostock, preloaded)
+        data = kline_cache.get(code)
         if not data:
             continue
         dates, opens, closes, highs, lows, vols = data
