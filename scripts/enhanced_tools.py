@@ -1596,3 +1596,134 @@ def check_risk(code: str, name: str) -> tuple:
         reasons.append('ST股')
         return True, reasons
     return len(reasons) > 0, reasons
+
+
+# ============================================================================
+# Module 16: MACD背驰辅助 (Divergence Helper)
+# 来源: yanwuyou/chanlun-stock-analyzer/chan_lib/dynamics.py 背驰6条件精简版
+# 用途: B中枢MACD回0轴检查 + 力度面积对比
+# ============================================================================
+
+def check_macd_divergence(close: 'np.ndarray', high: 'np.ndarray', low: 'np.ndarray',
+                          b_start: int, b_end: int, c_start: int, c_end: int,
+                          direction: str = 'up') -> dict:
+    """
+    MACD背驰检查（条件5+条件6）:
+    - 条件5: B中枢是否将MACD黄白线拉回0轴附近
+    - 条件6: c段MACD面积 < b段面积 且黄白线不创新高/低
+    返回: {has_divergence, b_near_zero, area_divergence, diff_divergence}
+    """
+    import numpy as np
+    
+    # Compute MACD
+    ema_fast = np.zeros_like(close)
+    ema_slow = np.zeros_like(close)
+    alpha_f = 2.0 / 13
+    alpha_s = 2.0 / 27
+    ema_fast[0] = close[0]
+    ema_slow[0] = close[0]
+    for i in range(1, len(close)):
+        ema_fast[i] = close[i] * alpha_f + ema_fast[i-1] * (1 - alpha_f)
+        ema_slow[i] = close[i] * alpha_s + ema_slow[i-1] * (1 - alpha_s)
+    
+    diff = ema_fast - ema_slow
+    alpha_d = 2.0 / 10
+    dea = np.zeros_like(diff)
+    dea[0] = diff[0]
+    for i in range(1, len(diff)):
+        dea[i] = diff[i] * alpha_d + dea[i-1] * (1 - alpha_d)
+    macd_hist = 2 * (diff - dea)
+    
+    # Condition 5: B zone near 0 axis
+    b_diff = diff[b_start:min(b_end+1, len(diff))]
+    b_max_abs = max(abs(b_diff.max()), abs(b_diff.min()))
+    b_near_zero = b_max_abs < np.std(diff) * 1.5
+    
+    # Condition 6: area comparison
+    b_hist = np.abs(macd_hist[b_start:min(b_end+1, len(macd_hist))])
+    c_hist = np.abs(macd_hist[c_start:min(c_end+1, len(macd_hist))])
+    b_area = float(np.trapz(b_hist) if len(b_hist) > 1 else b_hist.sum())
+    c_area = float(np.trapz(c_hist) if len(c_hist) > 1 else c_hist.sum())
+    area_divergence = c_area < b_area
+    
+    # DIF comparison
+    if direction == 'up':
+        b_diff_max = float(diff[b_start:min(b_end+1, len(diff))].max())
+        c_diff_max = float(diff[c_start:min(c_end+1, len(diff))].max())
+        diff_divergence = c_diff_max < b_diff_max
+    else:
+        b_diff_min = float(diff[b_start:min(b_end+1, len(diff))].min())
+        c_diff_min = float(diff[c_start:min(c_end+1, len(diff))].min())
+        diff_divergence = c_diff_min > b_diff_min
+    
+    has_div = (area_divergence or diff_divergence) and b_near_zero
+    
+    return {
+        'has_divergence': bool(has_div),
+        'b_near_zero': bool(b_near_zero),
+        'area_divergence': bool(area_divergence),
+        'diff_divergence': bool(diff_divergence),
+        'b_area': round(b_area, 1), 'c_area': round(c_area, 1),
+    }
+
+
+# ============================================================================
+# Module 17: 风控计划 (Risk Planner)
+# 来源: chanlun-trade-signal/app/risk/planner.py — 止损/仓位/入场区规则
+# 用法: build_risk_plan(signal_strength, signal, price, support, resistance)
+# ============================================================================
+
+def build_risk_plan(signal_strength: float, signal: str, latest_price: float,
+                    supports: list = None, resistances: list = None,
+                    max_leverage: int = 3, risk_per_trade: float = 0.01) -> dict:
+    """
+    根据缠论信号生成风控计划。
+    signal_strength: 0-1 信号强度
+    signal: "buy" / "sell" / "center_observe" / "neutral"
+    supports: 最近支撑位列表 [底分型价格, 中枢下沿, ...]
+    resistances: 最近压力位列表 [顶分型价格, 中枢上沿, ...]
+    """
+    supports = supports or []
+    resistances = resistances or []
+    
+    # 信号不足 → 只观察
+    if signal_strength < 0.5 or signal in ("neutral", "center_observe"):
+        return {
+            "action": "watch", "risk_level": "low",
+            "entry_zone": (latest_price, latest_price),
+            "stop_loss": latest_price,
+            "leverage": 1,
+            "reason": "信号不足，等待中枢突破或BSP信号确认"
+        }
+    
+    buffer = max(latest_price * 0.0035, latest_price * risk_per_trade * 0.35)
+    leverage = max(1, min(max_leverage, int(signal_strength * 5)))
+    
+    if "buy" in signal or signal == "bullish":
+        # 止损 = 最近支撑（中枢下沿或底分型最低）
+        stop = min(supports[-3:]) if supports else latest_price - buffer * 2
+        stop = min(stop, latest_price - buffer)
+        entry_low = max(stop + buffer, latest_price * 0.996)
+        entry_high = latest_price * 1.004
+        risk = (latest_price - stop) / latest_price * 100
+        return {
+            "action": "watch_long", "risk_level": "medium" if signal_strength < 0.8 else "high",
+            "entry_zone": (round(entry_low, 2), round(entry_high, 2)),
+            "stop_loss": round(stop, 2), "stop_pct": round(risk, 1),
+            "leverage": min(leverage, 3),
+            "reason": f"多头信号，止损设在{round(stop,2)}(-{round(risk,1)}%)"
+        }
+    
+    # 空头信号
+    resistance = max(resistances[-3:]) if resistances else latest_price + buffer * 2
+    resistance = max(resistance, latest_price + buffer)
+    entry_low = latest_price * 0.996
+    entry_high = min(resistance - buffer, latest_price * 1.004)
+    risk = (resistance - latest_price) / latest_price * 100
+    return {
+        "action": "watch_short", "risk_level": "medium" if signal_strength < 0.8 else "high",
+        "entry_zone": (round(entry_low, 2), round(entry_high, 2)),
+        "stop_loss": round(resistance, 2), "stop_pct": round(risk, 1),
+        "leverage": min(leverage, 3),
+        "reason": f"空头信号，止损设在{round(resistance,2)}(+{round(risk,1)}%)"
+    }

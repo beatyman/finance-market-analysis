@@ -103,6 +103,7 @@ python3 train.py --stocks 27 --years 3
 | `chanlun_kb_search.py` | chanstock语义搜索CLI |
 | `etf_momentum.py` | **Quanti5 ETF动量轮动** — 全ETF动量评分+趋势门+仓位调节, 月度调仓组合 |
 | `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各Top10,主力资金,~9秒) |
+| `enhanced_tools.py` | **增强工具箱 15模块 ~1599行** — V4.5/GZK/K线形态(Sequoia-X)/模块12:北向资金(东财push2)/模块13:K线多源回退(mootdx→腾讯)/模块14:三维综合评分(chanlun-quant)/模块15:风控过滤器 |
 | `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
 | `t0_trade.py` | **日内做T策略** — 日线方向+30m价格区间+量价异常 |
 | `portfolio.py` | **持仓管理+预警** — 吸收 stock-watcher/stock-monitor 设计, 成本盈亏/分级预警/腾讯实时价, 挂单/止损/TP定制, 支持 add/remove/show/alerts 子命令 |
@@ -324,6 +325,15 @@ spread = us10 - cn10  # 中美利差
 `board_hot.py` 提供概念+行业板块实时主力资金（easy-tdx 通达信协议）：
 
 ## 评分模型
+
+### 双模型 XGBoost (2026-07-10 部署)
+
+**旧模型** `chan_xgb_56d.pkl`: 200棵树, 56维, 有限样本训练。分数偏高（50-85范围）。
+**新模型** `chan_xgb_300s.pkl`: 300棵树, 58维, **300只CSI 300全量1年训练 → 41,459条样本, AUC 0.717**。分数偏低（25-62范围）。
+
+训练流程: 每股票取t=100..N-5时间点 → 缠论+特征提取 → 标签(前向5日收益>2%)=1 → XGBoostClassifier训练。
+阈值校准: 新模型>25 ≈ 旧模型>50。日常扫描同时输出新旧两列XGB，逐步过渡到只用新模型。
+模型文件: `models/chan_xgb_56d.pkl` (旧) | `models/chan_xgb_300s.pkl` (新, 300只训练) | `models/chan_xgb_latest.pkl` → 指向最新模型
 
 58维特征 (BSP×12 + 价格×6 + MACD×5 + 布林×2 + 波动×3 + RSI×2 + ADX×2 + 量价×2 + 缠论结构×17 + 均线×5 + 量比×2)。训练用核心27只×3年滑动窗口。
 
