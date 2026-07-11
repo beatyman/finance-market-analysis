@@ -229,16 +229,18 @@ score = 0
 - 实时成交量/竞价: 腾讯 qt.gtimg.cn (零延迟)
 - 分时量: 新浪 5分钟K线 (`money.finance.sina.com.cn`)
 
-## 数据源（优先级从高到低）
+## 数据源（优先级从高到低 — 2026-07-11优化）
 
 | 源 | 行情 | K线 | 板块 | 延迟 | 用途 |
 |---|---|---|---|---|---|
+| **baostock** | — | ✅ **首选K线** | — | 日终 | **共享连接批量拉取，最快** |
 | **腾讯 qt.gtimg.cn** | ✅ **实时** | ✅ | ✅(个股推断) | 0延迟 | **首选实时价** |
-| **baostock** | — | ✅ **最可靠** | — | 日终 | **首选K线** |
 | yfinance | — | ⚠️ 延迟2天 | — | 2天 | 备选(港股/美股) |
 | **AKShare (东财)** | — | ✅ | ✅ **990个板块** | 5s重试 | 板块成分股 |
 | **通达信 (easy-tdx)** | — | — | ✅ 概念+行业Top10 | ~9秒 | 实时资金流 |
 | **新浪财经 (sina)** | — | ✅ **5分钟K线** | — | ~3秒 | **分时量能** |
+
+> ⚠️ `data.py`的`fetch_kline`默认源顺序已改为`['baostock','tencent','yfinance','akshare']`（2026-07-11）。baostock共享连接一次login遍历全量，替代原来的280次login/logout。
 
 ### 实时买入清单工作流 (Tencent + baostock)
 
@@ -618,6 +620,14 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 4. 输出行 `r[4]` 当价格 → 应是 `r[3]`（价格是第4个元素，索引3）
 5. `r[6]` 当zs_str但在错误位置 → 确认元组打包顺序 `cu.zs_list[-1]` 在score之后
 
+### csi300_full_scan.py — 正式扫描脚本 (2026-07-11 取代内联版)
+
+**命令:** `cd scripts && python3 csi300_full_scan.py` → `/root/chan_hs300_full_YYYYMMDD.xlsx`
+
+495行正式脚本，baostock共享连接（1次login→全量K线缓存），2-3分钟输出271只信号（内联版仅127只）。`data.py`的`fetch_kline`默认源顺序已改为`['baostock','tencent','yfinance','akshare']`——baostock优先，快5倍。
+
+输出三Sheet（与历史格式一致）: 信号Sheet(21列) + 宏观Sheet + 综合推荐(17列Top15)
+
 ### Excel输出格式强制规范 (Critical — 2026-07-10用户纠正)
 
 全功能扫描Excel必须保持三个Sheet，不可减少：
@@ -627,7 +637,7 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 
 **禁止**: 删除宏观Sheet、减少信号Sheet列数、省略任何原有列。新增列追加不替换。
 
-### 三维评分校准 (3D Score Calibration — 2026-07-10)
+### 三维评分校准 (3D Score Calibration — 2026-07-10/11)
 
 阈值已校准为实际数据范围：
 - `_TECH_BUY = 40` (原60 — 新旧XGB模型40+即为有效信号)
@@ -635,7 +645,10 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 - `_FUND_LIGHT = 30` (原40)
 - `_COMP_A = 65, _COMP_B = 50, _COMP_C = 35`
 
-fund_score计算: `max(V4.5×2.5, GZK×1.5)` — 将原始V4.5(0-30)和GZK(0-15)缩放至0-75范围。
+**fund_score计算**: `max(V4.5×2.5, GZK×1.5)` — 将原始V4.5(0-30)和GZK(0-15)缩放至0-75范围。
+**tech_score**: `max(old_xgb, new_xgb×1.3)` — 新旧模型归一化到接近范围。
+
+**综合推荐排序**: `_rank = 3D分×0.5 + (旧XGB×0.3 if 中枢内 else 0) + (10 if V4.5≥8 else 0)`
 
 **注意**: 天赐材料等3D=A级但BSP=Sell — 3D评分纯量化，不感知BSP信号。BSP优先级 > 3D评分。
 

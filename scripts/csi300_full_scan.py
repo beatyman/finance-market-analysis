@@ -446,20 +446,9 @@ def main():
     ws.freeze_panes = 'A2'
     ws.auto_filter.ref = f'A1:U{len(results)+1}'
 
-    # --- Sheet 2: Macro ---
+    # --- Sheet 2: Macro (detailed) ---
     ws2 = wb.create_sheet('宏观')
-    macro_lines = [
-        [f'{today} 收盘', '缠论+双XGBoost+三维评分+风控', '17模块全功能扫描'],
-        [''],
-        ['━━━ 市场环境 ━━━'],
-        [f'DXY: {macro.get("DXY",{}).get("value","?")}', 
-         f'US10Y: {macro.get("UST10Y",{}).get("value","?")}%',
-         f'USD/CNY: {macro.get("USDCNY",{}).get("value","?")}'],
-        [f'扫描股票: {len(stocks)}只 CSI300 成分股'],
-        [f'有效信号: {len(results)}只 (3D分≥{args.min_score})'],
-        [''],
-        ['━━━ 信号统计 ━━━'],
-    ]
+    
     # Stats
     buys = sum(1 for r in results if 'Buy' in r['bsp'])
     sells = sum(1 for r in results if 'Sell' in r['bsp'])
@@ -467,18 +456,40 @@ def main():
     inzs = sum(1 for r in results if r['in_zs'] == '是')
     grade_a = sum(1 for r in results if r['grade'] == 'A')
     grade_b = sum(1 for r in results if r['grade'] == 'B')
+    buys_zs = sum(1 for r in results if r['in_zs'] == '是' and 'Buy' in r['bsp'])
     
-    macro_lines.append([f'买入信号: {buys}', f'卖出信号: {sells}', f'Hold: {holds}'])
-    macro_lines.append([f'中枢内: {inzs}', f'A级: {grade_a}', f'B级: {grade_b}'])
-    macro_lines.append([f'3D分范围: {results[-1]["score3d"] if results else 0}-{results[0]["score3d"] if results else 0}'])
-
+    macro_lines = [
+        [f'{today} 收盘 | 缠论+双XGBoost+三维评分+风控 | 17模块全功能扫描'],
+        [''],
+        ['━━━ 市场指数 ━━━'],
+        [f'DXY: {macro.get("DXY",{}).get("value","?")} | US10Y: {macro.get("UST10Y",{}).get("value","?")}% | USD/CNY: {macro.get("USDCNY",{}).get("value","?")}'],
+        [f'宏观方向: {macro_signal(macro).get("bias","中性")}'],
+        [''],
+        ['━━━ 扫描统计 ━━━'],
+        [f'CSI300成分股: {len(stocks)}只 | 有效信号: {len(results)}只'],
+        [f'Buy: {buys} | Sell: {sells} | Hold: {holds}'],
+        [f'中枢内买: {buys_zs} | 中枢内总计: {inzs}'],
+        [''],
+        ['━━━ 3D评分分布 ━━━'],
+        [f'A级(≥65): {grade_a} | B级(≥50): {grade_b} | C级(≥35): {len(results)-grade_a-grade_b}'],
+        [f'分数范围: {results[-1]["score3d"]:.0f}-{results[0]["score3d"]:.0f}'],
+        [''],
+        ['━━━ 综合判断 ━━━'],
+        ['评分按三维(技术40%+基本30%+消息30%)加权，中枢内买点优先。'],
+        ['A级标的可重仓(50%)，B级可配置(20-30%)，C级观望(10%)。'],
+        ['仅中枢内买点享有完整安全边际，中枢外买需次级别确认。'],
+    ]
+    
     for row_idx, line in enumerate(macro_lines, 1):
         for col_idx, val in enumerate(line, 1):
-            ws2.cell(row_idx, col_idx, val)
-
-    # --- Sheet 3: 综合推荐 ---
+            c = ws2.cell(row_idx, col_idx, val)
+            if '━' in str(val): c.font = Font(bold=True, size=11)
+    ws2.column_dimensions['A'].width = 80
+    
+    # --- Sheet 3: 综合推荐 (full columns) ---
     ws3 = wb.create_sheet('综合推荐')
-    rec_headers = ['#', '代码', '名称', '3D分', '等级', 'BSP', 'R:R', '买入', '止损', 'TP1', '标签']
+    rec_headers = ['#', '代码', '名称', '现价', '旧XGB', '新XGB', '3D分', '等级', '仓位%', 
+                   'R:R', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '逻辑']
     for c, h in enumerate(rec_headers, 1):
         cell = ws3.cell(1, c, h)
         cell.fill = hdr_fill
@@ -486,18 +497,31 @@ def main():
         cell.border = thin_border
         cell.alignment = Alignment(horizontal='center')
     
-    recs = [r for r in results if r['grade'] in ('A', 'B')][:15]
+    # Rank: 3D×0.5 + (XGB×0.3 if 中枢内) + V4.5 bonus
+    for r in results:
+        r['_rank'] = r['score3d'] * 0.5 + (r['old_xgb'] * 0.3 if r['in_zs'] == '是' else 0) + (10 if r['v45'] >= 8 else 0)
+    results.sort(key=lambda x: -x['_rank'])
+    
+    recs = results[:15]
     for i, r in enumerate(recs):
-        vals = [i+1, r['code'], r['name'], r['score3d'], r['grade'],
-                r['bsp'], r['rr'], r['entry'], r['stop'], r['tp1'], r['tag']]
+        logic = '+'.join([x for x in [
+            ('中枢内' if r['in_zs'] == '是' else ''),
+            ('3D' + r['grade']) if r['grade'] in ('A','B') else '',
+        ] if x])
+        rr_s = r['rr'] if r['rr'] > 0 else '—'
+        vals = [i+1, r['code'], r['name'], r['price'], r['old_xgb'], r['new_xgb'],
+                r['score3d'], r['grade'], r['position_pct'], rr_s,
+                r['v45'], r['gzk'], r['zs'][:15],
+                r['entry'], r['stop'], r['tp1'], logic]
         for c, v in enumerate(vals, 1):
             cell = ws3.cell(i+2, c, v)
             cell.border = thin_border
             cell.alignment = Alignment(horizontal='center')
+            if i < 5: cell.fill = green_fill
     
-    # Column widths for sheet 3
-    for c, w in [('A',4),('B',8),('C',12),('D',7),('E',5),('F',16),('G',5),('H',8),('I',8),('J',8),('K',18)]:
-        ws3.column_dimensions[c].width = w
+    for c, w in enumerate([4,8,10,7,5,5,5,4,6,4,5,5,15,7,7,7,18], 1):
+        ws3.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
+    ws3.freeze_panes = 'A2'
 
     # Save
     wb.save(out_path)
