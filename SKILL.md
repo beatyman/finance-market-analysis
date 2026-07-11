@@ -331,11 +331,18 @@ spread = us10 - cn10  # 中美利差
 **旧模型** `chan_xgb_56d.pkl`: 200棵树, 56维, 有限样本训练。分数偏高（50-85范围）。
 **新模型** `chan_xgb_300s.pkl`: 300棵树, 58维, **300只CSI 300全量1年训练 → 41,459条样本, AUC 0.717**。分数偏低（25-62范围）。
 
-训练流程: 每股票取t=100..N-5时间点 → 缠论+特征提取 → 标签(前向5日收益>2%)=1 → XGBoostClassifier训练。
-阈值校准: 新模型>25 ≈ 旧模型>50。日常扫描同时输出新旧两列XGB，逐步过渡到只用新模型。
-模型文件: `models/chan_xgb_56d.pkl` (旧) | `models/chan_xgb_300s.pkl` (新, 300只训练) | `models/chan_xgb_latest.pkl` → 指向最新模型
+**训练数据收集**: 每股票取t=100..N-5时间点 → 缠论+特征提取 → 标签(前向5日收益>2%)=1 → 断点续传checkpoint。
+**阈值校准**: 新模型>25 ≈ 旧模型>50。日常扫描同时输出新旧两列XGB，逐步过渡到只用新模型。
+**模型文件**: `models/chan_xgb_56d.pkl` (旧) | `models/chan_xgb_300s.pkl` (新, 300只训练) | `models/chan_xgb_latest.pkl` → 指向最新模型
 
 58维特征 (BSP×12 + 价格×6 + MACD×5 + 布林×2 + 波动×3 + RSI×2 + ADX×2 + 量价×2 + 缠论结构×17 + 均线×5 + 量比×2)。训练用核心27只×3年滑动窗口。
+
+### 三维综合评分 (Module 14)
+
+XGB(技术面40%) + GZK/V4.5(基本面30%) + 消息面(30%) → 综合[0-100] + 等级A/B/C/D + 仓位建议。
+- 技术面<60 → 不建仓
+- 基本面≥70 → 可重仓
+- 双弱共振惩罚 → 扣分减半
 
 ## 阿娇版筛选标准（重要工作流）
 
@@ -963,6 +970,9 @@ jun_r = (months['2026-06']['close'] / months['2026-06']['open'] - 1) * 100
 - [bambuo/chan-model-xgb](https://github.com/bambuo/chan-model-xgb) — XGBoost特征框架
 - [Vespa314/chan.py](https://github.com/Vespa314/chan.py) — 缠论引擎
 - [EV9H/Quanti5](https://github.com/EV9H/Quanti5) — A股ETF动量轮动量化平台（Next.js+TS, 真实摩擦建模, 回测+58%）
+- 📄 `references/repo-absorption-pattern.md` — 仓库吸收工作流(2026-07-10: 11仓库 → 6模块, enhanced_tools.py 1400→1730行)
+
+## 已吸收外部仓库 (模块12-17)
 - ClawHub Skills (需EM_API_KEY):
   - [stocks-screener](https://clawhub.ai/financial-ai-analyst/skills/mx-stocks-screener) 🔥 — 自然语言选股(东方财富), 可替代全量扫描
   - [stock-watcher](https://clawhub.ai/robin797860/skills/stock-watcher) — 同花顺自选股(免费, 无需Key)

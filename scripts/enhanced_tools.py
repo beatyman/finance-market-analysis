@@ -1533,12 +1533,12 @@ def fetch_kline_fallback(code: str, start: str = "2025-07-01",
 _W_TECH = 0.40   # 技术面 40%
 _W_FUND = 0.30   # 基本面 30%
 _W_NEWS = 0.30   # 消息面 30%
-_TECH_BUY = 60   # 技术面 < 60 → 不建仓
-_FUND_HEAVY = 70 # 基本面 ≥ 70 → 可重仓
-_FUND_LIGHT = 40 # 基本面 < 40 → 仅轻仓
-_COMP_A = 75     # 综合 ≥ 75 → A级
-_COMP_B = 60     # 综合 ≥ 60 → B级
-_COMP_C = 45     # 综合 ≥ 45 → C级
+_TECH_BUY = 40   # 技术面 < 40 → 不建仓（校准后：新旧模型40+为有效信号）
+_FUND_HEAVY = 55 # 基本面 ≥ 55 → 可重仓
+_FUND_LIGHT = 30 # 基本面 < 30 → 仅轻仓
+_COMP_A = 65     # 综合 ≥ 65 → A级
+_COMP_B = 50     # 综合 ≥ 50 → B级
+_COMP_C = 35     # 综合 ≥ 35 → C级
 
 
 def compute_3d_score(tech_score: float, fund_score: float = 50,
