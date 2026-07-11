@@ -1,48 +1,42 @@
-# X/Twitter 内容拉取 — curl+socks5代理方案
+# X/Twitter 推文获取 — SOCKS5代理模式 (2026-07-10更新)
 
-## 背景
+本机无法直连X.com，通过socks5代理(127.0.0.1:1080)访问。
 
-内置浏览器工具(`browser_navigate`)在非标准代理环境下（如本地1080端口socks5代理）会出现 `ERR_NO_SUPPORTED_PROXIES` 错误，导致无法访问X内容。此时需要回退到curl+socks5方案。
-
-## 验证代理可用性
+## 标准单条命令
 
 ```bash
-# 先验证代理是否连通
-curl -x socks5h://127.0.0.1:1080 -sL --max-time 8 'https://www.google.com' | head -c 100
+curl -x socks5h://127.0.0.1:1080 -sL --max-time 10 \
+  -H 'User-Agent: Mozilla/5.0' \
+  'https://x.com/{USERNAME}/status/{TWEET_ID}' 2>/dev/null \
+  | grep -oP 'property="og:description"\s+content="\K[^"]+'
 ```
 
-## 拉取X推文内容
-
+## 备选（og:description为空时提取title）
 ```bash
-# 1. 获取完整HTML（~50KB）
-curl -x socks5h://127.0.0.1:1080 -sL --max-time 12 \
-  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' \
-  'https://x.com/USERNAME/status/TWEET_ID' \
-  -o /tmp/tweet.html
-
-# 2. 提取og:description（<title>标签在部分页面不可用）
-grep -oP 'property="og:description"\s+content="\K[^"]+' /tmp/tweet.html
-
-# 3. 提取title作为备选
-grep -oP '<title>\K[^<]+' /tmp/tweet.html
+curl -x socks5h://127.0.0.1:1080 ... \
+  | grep -oP '<title>\K[^<]+'
 ```
 
-## 关键陷阱
+## 2026-07-10 批量验证
 
-- **proxychains不可用**: X检测proxychains模式返回空响应
-- **`<title>`标签不稳定**: 部分X页面title为空或用`&quot;`实体编码
-- **必须要User-Agent头**: 不带UA的请求会被X拒绝
-- **`socks5h` vs `socks5`**: 用`socks5h`让curl通过代理做DNS解析，避免DNS泄漏
-- **grep正则**: `og:description`的meta标签格式为 `property="og:description" content="..."`，用`\K`丢弃前面的匹配
+单次会话50+条推文均用此模式提取，成功率>95%。湖若深/Mistery/华尔街观察/Phyrex等所有源均可用。
 
-## 工作流优先级
+## 注意
+- `socks5h://` (非 `socks5://`) — h表示由curl解析主机名
+- 账号锁/私密时og:description为空（如WuChuanIJ） — 无需重试
+- 浏览器工具在socks5代理下报`ERR_NO_SUPPORTED_PROXIES` → 始终用curl
+- 不需要proxychains — X检测并返回空
 
+## Python urllib与代理冲突
+
+```python
+# 代理env vars在/etc/profile中
+export http_proxy="socks5h://127.0.0.1:1080"
+export https_proxy="socks5h://127.0.0.1:1080"
+
+# Python urllib不原生支持socks5 → 代理env vars会导致HTTP请求失败
+# 国内API（东财push2/腾讯qt.gtimg.cn/baostock）需先清理代理:
+import os
+for k in ['http_proxy','https_proxy','HTTP_PROXY','HTTPS_PROXY']:
+    os.environ.pop(k, None)
 ```
-1. browser_navigate → 最快但有代理限制
-2. curl+socks5h:1080 → 可靠但需手动解析HTML
-3. 用户直接粘贴内容 → 最可靠
-```
-
-## 2026-07-08验证
-
-已验证成功拉取Rookiex9o/iiiinvest等4条推文，单条耗时~3秒。
