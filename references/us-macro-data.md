@@ -136,6 +136,33 @@ python3 scripts/hk_short.py
 
 ## 7. 前瞻指引模板
 
+## 8. 商品期货 + 加密货币 — 东方财富 + CoinGecko (2026-07-13)
+
+### 沪金/沪银 (东方财富 futures)
+```python
+# secids: 113.aum(沪金), 113.agm(沪银)
+url = "https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=113.aum,113.agm&fields=f2,f3,f14"
+```
+
+### 有色金属 (东方财富 futures)
+```python
+# 沪铜/沪铝/沪锌/沪镍主连
+url = "https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=113.cum,113.alm,113.znm,113.nim&fields=f2,f3,f14"
+```
+
+### 美股指数 (东方财富)
+```python
+# secids: 100.SPX(标普), 100.NDX(纳斯达克), 100.DJIA(道琼斯)
+url = "https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=100.SPX,100.NDX,100.DJIA&fields=f2,f3,f14"
+```
+
+### 加密货币 (CoinGecko, 免费无需API Key)
+```python
+url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum&price_change_percentage=24h"
+```
+
+**脚本**: `scripts/us_macro.py` 已整合上述数据源
+
 ```
 美股XX收盘:
   半导体±X% → A股科技映射
