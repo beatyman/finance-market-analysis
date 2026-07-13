@@ -113,6 +113,20 @@ def macro_snapshot():
 
 ## 5. 前瞻指引模板
 
+## 6. 港股沽空数据 — HKEX官网 (2026-07-13)
+
+```bash
+python3 scripts/hk_short.py
+```
+
+数据源: `https://www.hkex.com.hk/eng/stat/smstat/ssturnover/{YYYYMM}/ss_{YYYYMMDD}.htm`
+
+覆盖标的: 美团(3690)/腾讯(0700)/阿里(9988)/小米(1810)/快手(1024)
+
+**脚本**: `scripts/hk_short.py` — curl+SOCKS5抓取HKEX每日沽空成交
+
+## 7. 前瞻指引模板
+
 ```
 美股XX收盘:
   半导体±X% → A股科技映射
