@@ -52,7 +52,7 @@ metadata:
           └─ 🥇 商品期货
               └─ ─ 个股分析 ─
                   ├── 缠论结构 (BSP/中枢/笔)
-                  ├── XGBoost 58维打分 (AUC 0.662)
+                  ├── XGBoost 58维打分 (AUC 0.717, 双模型并行)
                   ├── 知识库确认 (规则+chanstock语义搜索)
                   ├── SMC聪明钱 (Order Block/流动性/溢价区)
                   ├── 30分钟多级别确认 (日线+30m共振)
@@ -112,7 +112,7 @@ python3 train.py --stocks 27 --years 3
 | `hot_scan.py` | **热点板块批量扫描** — 读取 `references/hot_stocks.csv`（117只/29主题）一键全量缠论分析 |
 | `indicators.py` | **技术指标增强** — RSI/MACD/布林带一键汇总 + signal_strength评分 |
 | `integration.py` | **外部集成** — Kalman滤波波动率追踪(Financial-Models-Numerical-Methods) + 做T信号增强 |
-| `csi300_full_scan.py` 🆕 | **沪深300完整版扫描** — 双XGBoost + V4.5 + GZK + 3D评分 + PE + R:R + 买入/止损/TP，输出3 Sheet Excel |
+| `csi300_full_scan.py` | **沪深300完整版扫描(推荐)** — baostock共享连接(280→1次login), 271信号~5分钟, 双XGBoost+3D+阿娇+风控, 3Sheet Excel |
 
 ## 日报生成
 
@@ -240,6 +240,9 @@ score = 0
 | **通达信 (easy-tdx)** | — | — | ✅ 概念+行业Top10 | ~9秒 | 实时资金流 |
 | **新浪财经 (sina)** | — | ✅ **5分钟K线** | — | ~3秒 | **分时量能** |
 
+> ⚠️ `data.py`的`fetch_kline`默认源顺序已改为`['baostock','tencent','yfinance','akshare']`（2026-07-11）。baostock共享连接一次login遍历全量280只，从280次login/logout降到1次，速度提升5倍（600s→120s）。
+> 详见 `references/baostock_batch_pattern.md`
+
 > ⚠️ `data.py`的`fetch_kline`默认源顺序已改为`['baostock','tencent','yfinance','akshare']`（2026-07-11）。baostock共享连接一次login遍历全量，替代原来的280次login/logout。
 > 详见 `references/baostock_batch_pattern.md`
 
@@ -331,14 +334,26 @@ spread = us10 - cn10  # 中美利差
 
 ## 评分模型
 
-### 双模型 XGBoost (2026-07-10 部署)
+### 双模型 XGBoost (2026-07-11 300只训练完成)
 
 **旧模型** `chan_xgb_56d.pkl`: 200棵树, 56维, 有限样本训练。分数偏高（50-85范围）。
 **新模型** `chan_xgb_300s.pkl`: 300棵树, 58维, **300只CSI 300全量1年训练 → 41,459条样本, AUC 0.717**。分数偏低（25-62范围）。
 
-**训练数据收集**: 每股票取t=100..N-5时间点 → 缠论+特征提取 → 标签(前向5日收益>2%)=1 → 断点续传checkpoint。
+**训练脚本**: `scripts/train_xgb_batch.py` — baostock共享连接 + json checkpoint断点续传(~27分钟)。
+```bash
+cd scripts && timeout 1800 python3 train_xgb_batch.py
+# 产出: models/chan_xgb_300s.pkl + /tmp/xgb_train_samples.json(checkpoint)
+```
+标签: 前向5日收益>2%=1。每50只checkpoint保存。
+
 **阈值校准**: 新模型>25 ≈ 旧模型>50。日常扫描同时输出新旧两列XGB，逐步过渡到只用新模型。
-**模型文件**: `models/chan_xgb_56d.pkl` (旧) | `models/chan_xgb_300s.pkl` (新, 300只训练) | `models/chan_xgb_latest.pkl` → 指向最新模型
+**模型文件**: `models/chan_xgb_56d.pkl`(旧) | `models/chan_xgb_300s.pkl`(新) | `models/chan_xgb_latest.pkl`→新 | `models/chan_xgb_hk.pkl`→旧
+# 产出: models/chan_xgb_300s.pkl + /tmp/xgb_train_samples.json(checkpoint)
+```
+标签: 前向5日收益>2%=1。每50只checkpoint。
+
+**阈值校准**: 新模型>25 ≈ 旧模型>50。日常扫描同时输出新旧两列XGB，逐步过渡到只用新模型。
+**模型文件**: `models/chan_xgb_56d.pkl`(旧) | `models/chan_xgb_300s.pkl`(新) | `models/chan_xgb_latest.pkl`→新 | `models/chan_xgb_hk.pkl`→旧
 
 58维特征 (BSP×12 + 价格×6 + MACD×5 + 布林×2 + 波动×3 + RSI×2 + ADX×2 + 量价×2 + 缠论结构×17 + 均线×5 + 量比×2)。训练用核心27只×3年滑动窗口。
 
@@ -638,6 +653,25 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 
 **禁止**: 删除宏观Sheet、减少信号Sheet列数、省略任何原有列。新增列追加不替换。
 
+### 综合推荐 阿娇二次筛选 (Critical — 2026-07-11用户纠正)
+
+综合推荐Top15生成后**必须**阿娇二次筛选后再给出结论：
+1. ✅ 中枢内 + Buy → 可操作
+2. 🔴 中枢内 + Sell → 排除（3D=A但BSP=Sell的矛盾，BSP优先级 > 3D评分）
+3. 🟡 中枢内 + Hold/等信号 → 观察
+4. ❌ 中枢外无论BSP → 排除（天齐/赣锋/阳光/江波龙 3DA/B级但中枢外）
+5. ⚠️ YTD>100%+非三买 → 否决
+
+**教训**: 高3D评分≠可操作。天齐锂业(75 A级)中枢外。BSP优先级 > 3D评分。
+
+### 非买卖信号 entry/stop/tp1 显示 '—' (2026-07-11用户纠正)
+
+csi300_full_scan.py 中 Hold/等信号/中枢外 等非直接买卖信号，entry/stop/tp1 **必须显示 '—'** 而非等于现价。代码中 `entry = stop = tp1 = None` 作为默认值，Excel输出时转换为 '—'。
+
+**禁止**: 非买卖信号显示 entry=stop=px（如天齐47.8/47.8/50.19），这会误导成"可以买入"。
+
+### 综合推荐排序公式 (2026-07-10/11校准)
+
 ### 综合推荐 阿娇二次筛选 (Critical — 2026-07-11)
 
 综合推荐Top15生成后**必须**阿娇二次筛选后再给出结论：
@@ -648,7 +682,7 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 5. ⚠️ YTD>100%+非三买 → 否决
 
 **教训**: 高3D评分≠可操作。天齐锂业(75 A级)中枢外、赣锋锂业(74 A级)无中枢。BSP优先级>3D评分。
-详见 `references/excel_template_v1.md`。
+**Excel模板**: `references/excel_template_v1.md` — 三Sheet格式/排序规则/颜色规范/生成命令/宏观模板。后续每日按此模板生成。
 
 ### 三维评分校准 (3D Score Calibration — 2026-07-10/11)
 
@@ -658,12 +692,32 @@ sym = code + ('.SS' if code.startswith('6') else '.SZ')  # 002475.SZ ✓ 不是 
 - `_FUND_LIGHT = 30` (原40)
 - `_COMP_A = 65, _COMP_B = 50, _COMP_C = 35`
 
+**综合推荐排序**: `_rank = 3D分×0.5 + (旧XGB×0.3 if 中枢内 else 0) + (10 if V4.5≥8 else 0)`。
+中枢外XGB不给分（不追涨），V4.5≥8才奖励（区分稳定信号）。核心持仓（江铜V4.5=0）可能排名靠后——这是公式正确行为，综合推荐是发现新机会，核心持仓单独跟踪。
+
 **fund_score计算**: `max(V4.5×2.5, GZK×1.5)` — 将原始V4.5(0-30)和GZK(0-15)缩放至0-75范围。
 **tech_score**: `max(old_xgb, new_xgb×1.3)` — 新旧模型归一化到接近范围。
 
-**综合推荐排序**: `_rank = 3D分×0.5 + (旧XGB×0.3 if 中枢内 else 0) + (10 if V4.5≥8 else 0)`
+**⚠️ baostock共享连接优先 (2026-07-11优化)**: `data.py`的`fetch_kline`默认源顺序已改为`['baostock','tencent','yfinance','akshare']`。baostock一次login遍历全量280只股票K线，从280次login/logout降到1次，速度提升5倍（600s→120s）。csi300_full_scan.py中已实现共享连接模式（预加载→内存dict→批量分析）。不要改回单次调用。
 
-**注意**: 天赐材料等3D=A级但BSP=Sell — 3D评分纯量化，不感知BSP信号。BSP优先级 > 3D评分。
+**baostock批量模式代码模板**:
+```python
+import baostock as bs
+bs.login()
+kline_cache = {}
+for code in codes:  # 280只CSI300
+    rs = bs.query_history_k_data_plus(sym, ...)
+    rows = []; [rows.append(rs.get_row_data()) for _ in iter(rs.next, False)]
+    if len(rows) >= 100: kline_cache[code] = rows
+bs.logout()
+# 后续循环从 kline_cache 读取，不再调API
+```
+
+### 非买卖信号 entry/stop/tp1 显示 '—' (2026-07-11 用户纠正)
+
+csi300_full_scan.py 中 Hold/等信号/中枢外 等非直接买卖信号，entry/stop/tp1 **必须显示 '—'** 而非等于现价。代码中 `entry = stop = tp1 = None` 作为默认值，Excel输出时转换为 '—'。
+
+**禁止**: 非买卖信号显示 entry=stop=px（如天齐47.8/47.8/50.19），这会误导成"可以买入"。
 
 ### 存储芯片业绩预增 ≠ 股票可买 (Critical Pitfall)
 
