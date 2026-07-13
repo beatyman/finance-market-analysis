@@ -113,7 +113,16 @@ def macro_snapshot():
 
 ## 5. 前瞻指引模板
 
-## 6. 港股沽空数据 — HKEX官网 (2026-07-13)
+## 6. 港股沽空数据 — HKEX官网 + 东方财富备用
+
+**HKEX (主力)**: `https://www.hkex.com.hk/eng/stat/smstat/ssturnover/{YYYYMM}/ss_{YYYYMMDD}.htm`
+注：7月数据URL路径可能变更，fallback到东方财富
+
+**东方财富 (备用)**: `https://push2.eastmoney.com/api/qt/stock/get?secid=116.{code}&fields=f43,f170`
+
+覆盖标的: 腾讯(00700)/美团(03690)/阿里(09988)/小米(01810)/快手(01024)
+
+**脚本**: `scripts/hk_short.py`
 
 ```bash
 python3 scripts/hk_short.py
