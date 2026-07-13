@@ -173,3 +173,53 @@ def detect_golden_cross_resonance(close, high, low, volume):
         'resonance': score,
         'resonance_strong': score >= 65
     }
+
+
+def detect_fanbao(open_p, close, high, low, volume, turnover=None):
+    """
+    反包策略 (来源: quantjuzi/fanbao_strategy)
+    条件:
+      1. 昨天下跌 (close[-2] < close[-3])
+      2. 今天阳线反包 (close[-1] > high[-2])
+      3. 成交额 >= 10亿 (可选)
+      4. 今天未涨停 (close[-1] < pre_close * 1.095)
+      5. 涨幅 >= 3%
+    返回: (is_fanbao, strength, detail_dict)
+    """
+    n = len(close)
+    if n < 3: return False, 0, {}
+    
+    c_yesterday, c_today = close[-2], close[-1]
+    c_daybefore = close[-3]
+    h_yesterday = high[-2]
+    
+    # 1. 昨天下跌
+    if c_yesterday >= c_daybefore: return False, 0, {}
+    
+    # 2. 今天阳线反包
+    if open_p[-1] >= c_today: return False, 0, {}  # 非阳线
+    if c_today <= h_yesterday: return False, 0, {}  # 未反包
+    
+    # 3. 成交额 (如果提供了turnover)
+    if turnover is not None and turnover < 10e8: return False, 0, {}
+    
+    # 4. 未涨停
+    rise = (c_today - c_daybefore) / c_daybefore
+    if c_today >= c_daybefore * 1.095: return False, 0, {}
+    
+    # 5. 涨幅 >= 3%
+    if rise < 0.03: return False, 0, {}
+    
+    # 量: 今日放量
+    v_ratio = volume[-1] / volume[-5:].mean() if len(volume) >= 5 else 1
+    strength = 50 + min(30, int(rise * 500)) + min(20, int((v_ratio - 1) * 50))
+    strength = min(100, strength)
+    
+    return True, strength, {
+        'type': '反包',
+        'yesterday_pct': round((c_yesterday - c_daybefore) / c_daybefore * 100, 1),
+        'today_rise': round(rise * 100, 1),
+        'volume_ratio': round(v_ratio, 1),
+        'hold_days': 1,  # 次日买入, 隔日9:40卖出
+        'score': strength
+    }
