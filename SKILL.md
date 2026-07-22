@@ -1,7 +1,7 @@
 ---
 name: a-share-market-analysis
 description: A股4454+港股780缠论全量分析：chan.py买卖点 → XGBoost 58维打分 → 量价/板块/宏观/SMC/知识库多维度共振。支持单股分析/全市场扫描。
-version: 4.6.0
+version: 4.7.0
 author: Hermes
 license: MIT
 platforms: [linux, windows]
@@ -105,6 +105,8 @@ python3 train.py --stocks 27 --years 3
 | `etf_momentum.py` | **Quanti5 ETF动量轮动** — 全ETF动量评分+趋势门+仓位调节, 月度调仓组合 |
 | `board_hot.py` | 通达信easy-tdx板块热点(概念+行业各Top10,主力资金,~9秒) |
 | `enhanced_tools.py` | **增强工具箱 17模块 ~1730行** — V4.5/GZK/K线形态(Sequoia-X)/12:北向资金/13:K线回退/14:三维评分/15:风控过滤/16:MACD背驰/17:风控计划 |
+| `pattern_detect.py` | **K线形态检测 5项** — W底/多方炮/反包/强洗弱转强/金叉共振 (吸收bigApush+fanbao_strategy) |
+| `us_macro.py` | **美股+美债宏观** — 财政部XML(10Y/2Y/30Y) + Yahoo(美股/AI半导体/DXY/金属) |
 | `daily_report.py` | **日报生成器 v4** — 一键生成(宏观/期货/板块/A股/港股/操作), 固化报告格式 |
 | `t0_trade.py` | **日内做T策略** — 日线方向+30m价格区间+量价异常 |
 | `portfolio.py` | **持仓管理+预警** — 吸收 stock-watcher/stock-monitor 设计, 成本盈亏/分级预警/腾讯实时价, 挂单/止损/TP定制, 支持 add/remove/show/alerts 子命令 |
