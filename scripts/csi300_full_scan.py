@@ -285,24 +285,59 @@ def main():
         rr = None
         
         if supports and resistances:
-            # Find nearest 中枢
-            nearest_idx = 0
-            min_dist = float('inf')
-            for i, (zl, zh) in enumerate(zip(supports, resistances)):
-                center = (zl + zh) / 2
-                dist = abs(px - center)
-                if dist < min_dist:
-                    min_dist = dist
-                    nearest_idx = i
+            zl = zh = None
+            # First: try to find the zhongshu the stock is currently inside
+            for sl, sh in zip(supports, resistances):
+                if sl <= px <= sh:
+                    zl, zh = sl, sh
+                    break
             
-            zl = supports[nearest_idx]
-            zh = resistances[nearest_idx]
+            if zl is None:
+                # Not inside any zhongshu — find support (below) and resistance (above)
+                supports_below = [s for s in supports if s < px]
+                resistances_above = [r for r in resistances if r > px]
+                
+                if supports_below and resistances_above:
+                    # Between two zhongshu: use nearest below as support, nearest above as TP
+                    zl = max(supports_below)  # closest support below
+                    zh = min(resistances_above)  # closest resistance above
+                elif supports_below:
+                    # Below all zhongshu: use nearest below
+                    zl = max(supports_below)
+                    zh = resistances[supports.index(zl)] if zl in supports else resistances[-1]
+                elif resistances_above:
+                    # Above all zhongshu: use nearest above
+                    zh = min(resistances_above)
+                    zl = supports[resistances.index(zh)] if zh in resistances else supports[0]
+                else:
+                    # Fallback to nearest
+                    nearest_idx = 0
+                    min_dist = float('inf')
+                    for i, (sl, sh) in enumerate(zip(supports, resistances)):
+                        center = (sl + sh) / 2
+                        dist = abs(px - center)
+                        if dist < min_dist:
+                            min_dist = dist
+                            nearest_idx = i
+                    zl = supports[nearest_idx]
+                    zh = resistances[nearest_idx]
             
-            if bsp_buy:
-                # Buy: entry near 中枢下沿, stop below it
-                entry = round(zl + (zh - zl) * 0.1, 2)
-                stop = round(zl * 0.97, 2)
-                tp1 = round(zh, 2)
+            if zl is not None and zh is not None and bsp_buy:
+                if zl <= px <= zh:
+                    # Inside 中枢: entry near lower bound + 10%, stop = lower-3%
+                    entry = round(zl + (zh - zl) * 0.1, 2)
+                    stop = round(zl * 0.97, 2)
+                    tp1 = round(zh, 2)
+                elif px < zl:
+                    # Below support: entry at support, stop = px*0.97
+                    entry = round(zl, 2)
+                    stop = round(px * 0.97, 2)
+                    tp1 = round(zh, 2)
+                else:
+                    # Above support / between zhongshu: entry at px, stop below support
+                    entry = round(px, 2)
+                    stop = round(zl * 0.97, 2)
+                    tp1 = round(zh, 2)
                 if entry > stop and stop > 0:
                     rr = round((tp1 - entry) / (entry - stop), 1)
             elif 'Sell' in label:
