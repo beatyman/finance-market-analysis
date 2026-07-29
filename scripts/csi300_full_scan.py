@@ -343,8 +343,12 @@ def main():
             elif 'Sell' in label:
                 entry = px
                 stop = round(zh * 1.03, 2)
-                tp1 = round(zl, 2)
-                if stop > entry and stop > 0:
+                # Sell TP: zhongshu lower bound, but must be below entry
+                if zl < px:
+                    tp1 = round(zl, 2)
+                else:
+                    tp1 = round(px * 0.95, 2)  # price below zhongshu, use 5% below as target
+                if stop > entry and stop > 0 and tp1 < entry:
                     rr = round((entry - tp1) / (stop - entry), 1)
         
         rr = max(0, min(rr or 0, 20))  # cap at 20
