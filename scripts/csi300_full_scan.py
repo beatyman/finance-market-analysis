@@ -334,10 +334,10 @@ def main():
                     stop = round(entry * 0.97, 2)
                     tp1 = round(zh, 2)
                 else:
-                    # Above support / between zhongshu: entry at px, stop below support
+                    # Above zhongshu (三买): entry at px, stop at zhongshu upper-3%, TP next leg up
                     entry = round(px, 2)
-                    stop = round(zl * 0.97, 2)
-                    tp1 = round(zh, 2)
+                    stop = round(zh * 0.97, 2)
+                    tp1 = round(zh + (zh - zl), 2)
                 if entry > stop and stop > 0:
                     rr = round((tp1 - entry) / (entry - stop), 1)
             elif 'Sell' in label:
