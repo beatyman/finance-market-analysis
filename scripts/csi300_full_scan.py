@@ -329,9 +329,9 @@ def main():
                     stop = round(zl * 0.97, 2)
                     tp1 = round(zh, 2)
                 elif px < zl:
-                    # Below support: entry at support, stop = px*0.97
-                    entry = round(zl, 2)
-                    stop = round(px * 0.97, 2)
+                    # Below zhongshu: buy at current bargain price, stop based on entry
+                    entry = round(px, 2)
+                    stop = round(entry * 0.97, 2)
                     tp1 = round(zh, 2)
                 else:
                     # Above support / between zhongshu: entry at px, stop below support
