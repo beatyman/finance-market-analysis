@@ -342,12 +342,18 @@ def main():
                     rr = round((tp1 - entry) / (entry - stop), 1)
             elif 'Sell' in label:
                 entry = px
-                stop = round(zh * 1.03, 2)
-                # Sell TP: zhongshu lower bound, but must be below entry
-                if zl < px:
-                    tp1 = round(zl, 2)
+                # For Sell: find support below (TP) and resistance above (stop)
+                # Use stop above entry as default
+                sell_zl = [s for s in supports if s < px]
+                sell_zh = [r for r in resistances if r > px]
+                if sell_zh:
+                    stop = round(min(sell_zh) * 1.03, 2)
                 else:
-                    tp1 = round(px * 0.95, 2)  # price below zhongshu, use 5% below as target
+                    stop = round(px * 1.03, 2)
+                if sell_zl and sell_zl[-1] < px:
+                    tp1 = round(sell_zl[-1], 2)
+                else:
+                    tp1 = round(px * 0.95, 2)
                 if stop > entry and stop > 0 and tp1 < entry:
                     rr = round((entry - tp1) / (stop - entry), 1)
         
