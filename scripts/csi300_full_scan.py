@@ -556,7 +556,7 @@ def main():
     # --- Sheet 3: 综合推荐 (full columns) ---
     ws3 = wb.create_sheet('综合推荐')
     rec_headers = ['#', '代码', '名称', '现价', '旧XGB', '新XGB', '3D分', '等级', '仓位%', 
-                   'R:R', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '逻辑']
+                   'R:R', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
     for c, h in enumerate(rec_headers, 1):
         cell = ws3.cell(1, c, h)
         cell.fill = hdr_fill
@@ -576,10 +576,11 @@ def main():
             ('3D' + r['grade']) if r['grade'] in ('A','B') else '',
         ] if x])
         rr_s = r['rr'] if r['rr'] > 0 else '—'
+        direction = '多' if 'Buy' in str(r.get('bsp','')) else ('空' if 'Sell' in str(r.get('bsp','')) else '观望')
         vals = [i+1, r['code'], r['name'], r['price'], r['old_xgb'], r['new_xgb'],
                 r['score3d'], r['grade'], r['position_pct'], rr_s,
                 r['v45'], r['gzk'], r['zs'][:15],
-                r['entry'], r['stop'], r['tp1'], logic]
+                r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic]
         for c, v in enumerate(vals, 1):
             cell = ws3.cell(i+2, c, v)
             cell.border = thin_border
