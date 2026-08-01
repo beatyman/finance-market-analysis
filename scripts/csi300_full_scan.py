@@ -375,6 +375,27 @@ def main():
         # Volume
         vol_analysis = volume_analysis([float(x) for x in closes], [float(x) for x in vols])
 
+        # Wyckoff state from volume + price context
+        vol_sig = vol_analysis.get('signal', '')
+        price5 = (closes[-1] / closes[-6] - 1) * 100 if len(closes) >= 6 else 0
+        price20 = (closes[-1] / closes[-21] - 1) * 100 if len(closes) >= 21 else 0
+        
+        wyckoff = ''
+        if in_zs and ('缩' in str(vol_sig) or '量价正常' in str(vol_sig)):
+            wyckoff = 'S(弹簧/缩量区)' if price20 < 0 else 'A(吸筹待确认)'
+        elif in_zs and '放' in str(vol_sig):
+            wyckoff = 'B(放量突破)' if price5 > 0 else 'D(派发警告)'
+        elif not in_zs and '放' in str(vol_sig) and price5 > 3:
+            wyckoff = 'C(放量离开)'
+        elif '顶背' in str(vol_sig):
+            wyckoff = 'D(派发信号)'
+        elif '底背' in str(vol_sig):
+            wyckoff = 'A(吸筹底背离)'
+        elif '背' in str(vol_sig):
+            wyckoff = 'W(量价背离)'
+        else:
+            wyckoff = '-'
+
         # Tag
         tag = ''
         if in_zs and bsp_buy:
@@ -416,6 +437,7 @@ def main():
             'risk_status': 'BLOCKED' if blocked else 'OK',
             'tag': tag,
             'vol_signal': vol_analysis.get('signal', '-'),
+            'wyckoff': wyckoff,
             'sector': sec.get('sector', '-'),
         })
 
@@ -433,7 +455,7 @@ def main():
 
     headers = ['代码', '名称', '现价', 'PE', 'YTD%', '旧XGB', '新XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
-               '买入', '止损', 'TP1', '风控', '标签']
+               '买入', '止损', 'TP1', '风控', '标签', '威科夫']
 
     # Header style
     hdr_fill = PatternFill(start_color='1a1a2e', end_color='1a1a2e', fill_type='solid')
@@ -464,7 +486,7 @@ def main():
             r['zs'], r['in_zs'], r['bsp'],
             r['v45'], r['gzk'],
             r['entry'], r['stop'], r['tp1'],
-            r['risk_status'], r['tag']
+            r['risk_status'], r['tag'], r['wyckoff']
         ]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(row, c, v)
