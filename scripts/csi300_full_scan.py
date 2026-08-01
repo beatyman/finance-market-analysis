@@ -591,8 +591,7 @@ def main():
         ws3.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
     ws3.freeze_panes = 'A2'
 
-    # Save
-    wb.save(out_path)
+
     
     # Print top 20
     print(f'\n{"="*60}')
@@ -607,6 +606,52 @@ def main():
 
     print(f'\nSaved: {out_path} | {len(results)} signals')
     print(f'A级: {grade_a} | B级: {grade_b} | 中枢内买: {inzs}')
+
+    # --- 组合优化(Hierarchical Risk Parity) ---
+    try:
+        from portfolio_optimize import optimize_portfolio
+        buy_codes = [r['code'] for r in results if 'Buy' in str(r.get('bsp','')) and r['in_zs'] == '是']
+        if len(buy_codes) >= 3:
+            print(f'\n[组合优化] {len(buy_codes)}只中枢Buy → HRP风险平价...')
+            weights = optimize_portfolio(buy_codes, max_stocks=30, method='hrp')
+            if weights:
+                ws4 = wb.create_sheet('组合优化')
+                opt_headers = ['#', '代码', '名称', '权重%', '现价', '等级', 'R:R', '威科夫', '方向', '逻辑']
+                for c, h in enumerate(opt_headers, 1):
+                    cell = ws4.cell(1, c, h)
+                    cell.fill = hdr_fill; cell.font = hdr_font
+                    cell.border = thin_border; cell.alignment = Alignment(horizontal='center')
+
+                # Build name lookup
+                name_map = {r['code']: r['name'] for r in results}
+                rr_map = {r['code']: r['rr'] for r in results}
+                grade_map = {r['code']: r['grade'] for r in results}
+                price_map = {r['code']: r['price'] for r in results}
+                wyckoff_map = {r['code']: r.get('wyckoff','-') for r in results}
+                bsp_map = {r['code']: r.get('bsp','') for r in results}
+
+                ranked = sorted(weights.items(), key=lambda x: -x[1])
+                for i, (code, wt) in enumerate(ranked):
+                    name = name_map.get(code, code)
+                    direction = '多' if 'Buy' in str(bsp_map.get(code,'')) else ('空' if 'Sell' in str(bsp_map.get(code,'')) else '观望')
+                    logic = '+'.join([
+                        f'HRP{wt:.0%}',
+                        f'RR{rr_map.get(code,0)}' if rr_map.get(code,0) > 0 else '',
+                        wyckoff_map.get(code,'-') if wyckoff_map.get(code,'-') != '-' else ''
+                    ]).strip('+')
+                    vals = [i+1, code, name, round(wt*100,1), price_map.get(code,'-'),
+                            grade_map.get(code,'-'), rr_map.get(code,'-'),
+                            wyckoff_map.get(code,'-'), direction, logic]
+                    for c, v in enumerate(vals, 1):
+                        cell = ws4.cell(i+2, c, v)
+                        cell.border = thin_border
+                        cell.alignment = Alignment(horizontal='center')
+                        if i < 3: cell.font = Font(color='2F5496', bold=True)
+                print(f'  组合优化sheet: {len(ranked)}只 前3: {ranked[0][0]}({ranked[0][1]:.0%}) {ranked[1][0]}({ranked[1][1]:.0%}) {ranked[2][0]}({ranked[2][1]:.0%})')
+    except Exception as e:
+        print(f'  组合优化跳过: {e}')
+
+    wb.save(out_path)
 
 
 if __name__ == '__main__':
