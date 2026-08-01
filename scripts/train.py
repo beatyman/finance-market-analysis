@@ -25,13 +25,27 @@ os.makedirs(OUT,exist_ok=True)
 # ── Step 1: Data collection ──
 def collect_training_data(symbols=None, max_stocks=50, lookback_years=3):
     """收集训练数据: K线回放 + BSP特征提取 + 标签"""
+    import baostock as bs
+    bs.login()
+    
     if symbols is None:
-        # Core A-stock codes for training
-        a_codes=["002475","603019","002594","601899","002371","601138","600489","002837","300476","000977","688041","603986","603893","688008","601100","600089","002281","002463","002428","300475","000988","600030","300124","300750"]
-        hk_codes=["00700","09988","03690"]
-        stocks=[]
-        for c in a_codes[:max_stocks]:stocks.append((c,c))
-        for c in hk_codes[:max(max_stocks-len(a_codes),0)]:stocks.append(("hk"+c,c))
+        # Use CSI300 stocks via baostock (more reliable than yfinance through proxy)
+        import csv
+        stocks = []
+        csv_path = os.path.join(HERE, '..', 'references', 'hs300_stocks.csv')
+        if os.path.exists(csv_path):
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                for row in csv.DictReader(f):
+                    code = row.get('成分券代码', row.get('code', row.get('证券代码', '')))
+                    name = row.get('成分券名称', row.get('name', row.get('证券名称', '')))
+                    if code and len(code) == 6:
+                        stocks.append((code, name))
+        if not stocks:
+            # Fallback core A-stock codes
+            a_codes = ["002475","603019","002594","601899","002371","601138",
+                       "600489","002837","300476","000977","688041","603986"]
+            stocks = [(c, c) for c in a_codes]
+        stocks = stocks[:max_stocks]
     else:
         stocks=[(f'hk{s}','') for s in symbols]
     
@@ -39,19 +53,24 @@ def collect_training_data(symbols=None, max_stocks=50, lookback_years=3):
     for idx,(code,_) in enumerate(stocks):
         if idx%10==0:print('  收集 %d/%d'%(idx,len(stocks)),flush=True)
         try:
-            # Fetch multi-year K-line
-            sym='%04d.HK'%int(code.replace('hk',''))
-            df=yf.download(sym,period='%dy'%lookback_years,progress=False)
-            if len(df)<200:continue
+            # Fetch multi-year K-line via baostock
+            suffix = 'sh' if code.startswith('6') else 'sz'
+            symbol = suffix + '.' + code
+            rs = bs.query_history_k_data_plus(symbol,
+                'date,open,high,low,close,volume',
+                start_date='2023-01-01', end_date='2026-08-01',
+                frequency='d', adjustflag='2')
+            rows = []
+            while rs.error_code == '0' and rs.next(): rows.append(rs.get_row_data())
+            if len(rows) < 200: continue
             
-            def fv(x):return float(x.item() if hasattr(x,'item') else x)
-            dates=[x.strftime('%Y-%m-%d') for x in df.index.tolist()]
-            opens=[fv(x) for x in np.array(df['Open']).ravel()]
-            closes=[fv(x) for x in np.array(df['Close']).ravel()]
-            highs=[fv(x) for x in np.array(df['High']).ravel()]
-            lows=[fv(x) for x in np.array(df['Low']).ravel()]
-            vols=[fv(x) for x in np.array(df['Volume']).ravel()]
-            n=len(dates)
+            dates = [r[0] for r in rows]
+            opens = [float(r[1]) for r in rows]
+            highs = [float(r[2]) for r in rows]
+            lows = [float(r[3]) for r in rows]
+            closes = [float(r[4]) for r in rows]
+            vols = [float(r[5]) for r in rows]
+            n = len(dates)
             
             # Replay: 滑动窗口 chan.py 分析
             for window_end in range(200,n,5):  # every 5 bars
