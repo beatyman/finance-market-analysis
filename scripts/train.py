@@ -10,7 +10,7 @@ sys.path.insert(0,HERE)
 sys.path.insert(0,os.path.join(HERE,'..','chanpy'))
 
 from data import fetch_kline_hk,load_hk_stocks
-from chan_engine import CONFIG as CHAN_CONFIG,analyze as chan_analyze
+from chan_engine_v5 import analyze as chan_analyze
 from scorer import extract_features
 
 import yfinance as yf

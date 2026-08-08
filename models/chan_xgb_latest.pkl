@@ -1,1 +1,1 @@
-chan_xgb_300s.pkl
+chan_xgb_v5.pkl

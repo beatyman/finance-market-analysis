@@ -16,7 +16,9 @@ REF = os.path.join(HERE, '..', 'references')
 MODELS = os.path.join(HERE, '..', 'models')
 
 from data import fetch_kline_a, fetch_a_quotes, load_a_stocks
-from chan_engine import analyze as chan_analyze, get_bsp_label
+sys.path.insert(0,os.path.join(HERE,'..','chanpy'))
+from chan_engine_v5 import analyze as chan_analyze, get_bsp_label
+print('[v5 engine]',end=' ')
 from scorer import extract_features
 from macro import load_macro, macro_signal
 from sector_heat import sector_signal, get_sector_heat
@@ -338,6 +340,13 @@ def main():
                     entry = round(px, 2)
                     stop = round(zh * 0.97, 2)
                     tp1 = round(zh + (zh - zl), 2)
+                if entry > stop and stop > 0:
+                    rr = round((tp1 - entry) / (entry - stop), 1)
+            # v5新增: 中枢内等信号 — 也给出入场参考
+            elif zl is not None and zh is not None and zl <= px <= zh:
+                entry = round(zl + (zh - zl) * 0.1, 2)
+                stop = round(zl * 0.97, 2)
+                tp1 = round(zh, 2)
                 if entry > stop and stop > 0:
                     rr = round((tp1 - entry) / (entry - stop), 1)
             elif 'Sell' in label:
