@@ -97,7 +97,9 @@ python3 train.py --stocks 27 --years 3
 | `chan_kb.py` | 知识库确认 (chanstock语义搜索) |
 | `smc_insight.py` | SMC聪明钱视角 |
 | `volume_sector.py` | 量价分析 + 板块映射 |
-| `train.py` | XGBoost训练器 |
+| `train.py` | XGBoost训练器 (legacy) |
+| `train_v2_optimized.py` | **生产训练 v2.1** — 标注阈值扫参 + XGBoost网格搜索 + Rank IC评估 |
+| `train_production.py` | **全功能生产管线** — 增强标注 + 特征展开5940维 + Spearman/IC筛选 + purged切分 |
 | `event_calendar.py` | 宏观事件日历 — FOMC/地缘/中国数据 |
 | `sync_sector_windows.py` | Windows端AKShare板块数据同步脚本 |
 | `chanlun_kb_build.py` | chanstock知识库索引构建 |
@@ -114,7 +116,7 @@ python3 train.py --stocks 27 --years 3
 | `hot_scan.py` | **热点板块批量扫描** — 读取 `references/hot_stocks.csv`（117只/29主题）一键全量缠论分析 |
 | `indicators.py` | **技术指标增强** — RSI/MACD/布林带一键汇总 + signal_strength评分 |
 | `integration.py` | **外部集成** — Kalman滤波波动率追踪(Financial-Models-Numerical-Methods) + 做T信号增强 |
-| `csi300_full_scan.py` | **沪深300完整版扫描(推荐)** — baostock共享连接(280→1次login), 271信号~5分钟, 双XGBoost+3D+阿娇+风控, 3Sheet Excel |
+| `csi300_full_scan.py` | **沪深300完整版扫描(推荐)** — baostock共享连接, 生产XGBoost+3D+阿娇+风控, 3Sheet Excel |
 
 ## 日报生成
 
@@ -336,7 +338,29 @@ spread = us10 - cn10  # 中美利差
 
 ## 评分模型
 
-### 双模型 XGBoost (2026-07-11 300只训练完成)
+### 生产模型 v2.1 (2026-08-10 — chan.py 原版 + purged时序切分)
+
+**模型**: `chan_xgb_production.pkl` (1548KB) | **Rank IC: 0.037** | **55维特征**
+
+训练管线 (`train_v2_optimized.py`):
+- 标注: 5d return > 2.5% (阈值扫参最优, 5个阈值网格搜索)
+- 特征: 55维基础 (chan.py BSP + 技术指标 + 缠论结构)
+- 切分: Purged时间切分 (train≤2023, val=2024, test≥2025, ±5天缓冲区)
+- 缩放: Expanding window (防前视偏差)
+- 模型: XGBoost depth=6, lr=0.03, n=500 (5组网格搜索最优)
+- 评估: Rank IC (Spearman) = 0.037
+
+**全功能管线** (`train_production.py`):
+- 增强标注: Triple-Barrier(1.5×ATR) + 横截面分位数 + MFE/MAE
+- 特征展开: 55维 → 1430时序 + 4455横截面 = 5940维
+- 筛选: Winsorization(1-99%) + Spearman冗余(rank-then-Pearson) + 并行IC过滤(64核)
+- 纳入自 `/root/train/chan.py-main` 全部最佳实践
+
+**扫描/预测**:
+- `csi300_full_scan.py`: 集成生产模型, 输出Excel含生产XGB列, 排序公式使用prod_xgb
+- `scripts/scan_production.py`: 快速扫描(chan.py step_load → 特征 → XGBoost → 阿娇筛选)
+
+### 双模型 XGBoost (2026-07-11 300只训练完成, legacy)
 
 **旧模型** `chan_xgb_56d.pkl`: 200棵树, 56维, 有限样本训练。分数偏高（50-85范围）。
 **新模型** `chan_xgb_300s.pkl`: 300棵树, 58维, **300只CSI 300全量1年训练 → 41,459条样本, AUC 0.717**。分数偏低（25-62范围）。
