@@ -34,28 +34,47 @@ from enhanced_tools import (
 # ═══════════════ Model Loading ═══════════════
 _old_model = None
 _new_model = None
+_prod_model = None
+_prod_meta = None
 
 def load_models():
-    global _old_model, _new_model
+    global _old_model, _new_model, _prod_model, _prod_meta
+    import json
+    # Production model (v2.1, Rank IC=0.037, 55 features)
+    prod_path = os.path.join(MODELS, 'chan_xgb_production.pkl')
+    if os.path.exists(prod_path) and _prod_model is None:
+        with open(prod_path, 'rb') as f:
+            _prod_model = pickle.load(f)
+        meta_path = os.path.join(MODELS, 'chan_xgb_production_meta.json')
+        if os.path.exists(meta_path):
+            with open(meta_path) as f:
+                _prod_meta = json.load(f)
+        print(f'[prod model v2.1 | Rank IC={_prod_meta.get("rank_ic",0):.4f}]', end=' ')
+    # Legacy new model
     if _new_model is None:
         model_path = os.path.join(MODELS, 'chan_xgb_latest.pkl')
         if os.path.exists(model_path):
             with open(model_path, 'rb') as f:
                 _new_model = pickle.load(f)
+    # Legacy old model
     if _old_model is None:
         old_path = os.path.join(MODELS, 'chan_xgb_56d.pkl')
         if os.path.exists(old_path):
             with open(old_path, 'rb') as f:
                 _old_model = pickle.load(f)
-    return _old_model, _new_model
+    return _old_model, _new_model, _prod_model
 
-def predict_score(feats, model):
+def predict_score(feats, model, feat_order=None):
     """Predict score using a given XGBoost model"""
     if model is None:
         return None
     try:
-        nf = model.n_features_in_
-        vec = np.array([[feats[k] for k in sorted(feats.keys())[:nf]]])
+        if feat_order is not None:
+            # Production model: use explicit feature order
+            vec = np.array([[feats.get(k, 0.0) for k in feat_order]])
+        else:
+            nf = model.n_features_in_
+            vec = np.array([[feats[k] for k in sorted(feats.keys())[:nf]]])
         return int(model.predict_proba(vec)[0, 1] * 100)
     except:
         return None
@@ -126,8 +145,9 @@ def main():
     print(f'  输出: {out_path}')
 
     # Load models
-    old_model, new_model = load_models()
-    print(f'  模型: 旧={old_model is not None}, 新={new_model is not None}')
+    old_model, new_model, prod_model = load_models()
+    prod_feat_order = _prod_meta.get('feature_names', []) if _prod_meta else []
+    print(f'  模型: 生产={prod_model is not None}, 旧={old_model is not None}, 新legacy={new_model is not None}')
 
     # Load stocks
     stocks = load_csi300_stocks()
@@ -215,7 +235,8 @@ def main():
         # Feature extraction
         feats = extract_features(closes, highs, lows, opens, vols, bsp_buy, bsp_types, cur)
 
-        # Dual XGBoost
+        # XGBoost scores — production model primary
+        prod_xgb = predict_score(feats, prod_model, prod_feat_order) if prod_model else None
         old_xgb = predict_score(feats, old_model)
         new_xgb = predict_score(feats, new_model)
 
@@ -431,6 +452,7 @@ def main():
             'ytd': round(ytd, 1) if ytd is not None else None,
             'old_xgb': old_xgb if old_xgb is not None else 0,
             'new_xgb': new_xgb if new_xgb is not None else 0,
+            'prod_xgb': prod_xgb if prod_xgb is not None else 0,
             'score3d': score3d['composite'],
             'grade': score3d['grade'],
             'position_pct': score3d['position'] * 100,
@@ -462,7 +484,7 @@ def main():
     ws = wb.active
     ws.title = f'{today}信号'
 
-    headers = ['代码', '名称', '现价', 'PE', 'YTD%', '旧XGB', '新XGB', '3D分', 
+    headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '旧XGB', '新XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
                '买入', '止损', 'TP1', '风控', '标签', '威科夫']
 
@@ -490,7 +512,7 @@ def main():
         row = i + 2
         vals = [
             r['code'], r['name'], r['price'], r['pe'], r['ytd'],
-            r['old_xgb'], r['new_xgb'], r['score3d'],
+            r['prod_xgb'], r['old_xgb'], r['new_xgb'], r['score3d'],
             r['grade'], r['position_pct'], r['rr'],
             r['zs'], r['in_zs'], r['bsp'],
             r['v45'], r['gzk'],
@@ -575,7 +597,7 @@ def main():
     
     # Rank: 3D×0.5 + (XGB×0.3 if 中枢内) + V4.5 bonus
     for r in results:
-        r['_rank'] = r['score3d'] * 0.5 + (r['old_xgb'] * 0.3 if r['in_zs'] == '是' else 0) + (10 if r['v45'] >= 8 else 0)
+        r['_rank'] = r['score3d'] * 0.5 + (r['prod_xgb'] * 0.3 if r['in_zs'] == '是' else 0) + (10 if r['v45'] >= 8 else 0)
     results.sort(key=lambda x: -x['_rank'])
     
     recs = results[:15]
@@ -586,7 +608,7 @@ def main():
         ] if x])
         rr_s = r['rr'] if r['rr'] > 0 else '—'
         direction = '多' if 'Buy' in str(r.get('bsp','')) else ('空' if 'Sell' in str(r.get('bsp','')) else '观望')
-        vals = [i+1, r['code'], r['name'], r['price'], r['old_xgb'], r['new_xgb'],
+        vals = [i+1, r['code'], r['name'], r['price'], r['prod_xgb'], r['old_xgb'], r['new_xgb'],
                 r['score3d'], r['grade'], r['position_pct'], rr_s,
                 r['v45'], r['gzk'], r['zs'][:15],
                 r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic]
@@ -606,11 +628,11 @@ def main():
     print(f'\n{"="*60}')
     print(f'🏆 Top 20 (3D综合评分)')
     print(f'{"="*60}')
-    print(f'{"排名":<4} {"名称":<12} {"现价":<8} {"YTD%":<7} {"旧XGB":<6} {"新XGB":<6} {"3D分":<6} {"等级":<4} {"BSP":<18} {"标签":<20} {"R:R":<5}')
+    print(f'{"排名":<4} {"名称":<12} {"现价":<8} {"YTD%":<7} {"生产XGB":<8} {"旧XGB":<6} {"新XGB":<6} {"3D分":<6} {"等级":<4} {"BSP":<18} {"标签":<20} {"R:R":<5}')
     print('-' * 95)
     for i, r in enumerate(results[:20]):
         print(f'{i+1:<4} {r["name"]:<12} {r["price"]:<8} {str(r["ytd"]):<7} '
-              f'{r["old_xgb"]:<6} {r["new_xgb"]:<6} {r["score3d"]:<6} {r["grade"]:<4} '
+              f'{r["prod_xgb"]:<8} {r["old_xgb"]:<6} {r["new_xgb"]:<6} {r["score3d"]:<6} {r["grade"]:<4} '
               f'{r["bsp"]:<18} {r["tag"]:<20} {r["rr"]:<5}')
 
     print(f'\nSaved: {out_path} | {len(results)} signals')
