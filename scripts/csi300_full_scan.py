@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 沪深300 缠论全量分析 — 完整版
-双XGBoost + V4.5 + GZK + 三维评分 + 风控计划 + PE + 宏观
+生产XGBoost + V4.5 + GZK + 三维评分 + 风控计划 + PE + 宏观
 输出: ~/chan_hs300_full_YYYYMMDD.xlsx
 """
 import os, sys, csv, time, pickle, argparse
@@ -32,13 +32,11 @@ from enhanced_tools import (
 )
 
 # ═══════════════ Model Loading ═══════════════
-_old_model = None
-_new_model = None
 _prod_model = None
 _prod_meta = None
 
 def load_models():
-    global _old_model, _new_model, _prod_model, _prod_meta
+    global _prod_model, _prod_meta
     import json
     # Production model (v2.1, Rank IC=0.037, 55 features)
     prod_path = os.path.join(MODELS, 'chan_xgb_production.pkl')
@@ -50,19 +48,7 @@ def load_models():
             with open(meta_path) as f:
                 _prod_meta = json.load(f)
         print(f'[prod model v2.1 | Rank IC={_prod_meta.get("rank_ic",0):.4f}]', end=' ')
-    # Legacy new model
-    if _new_model is None:
-        model_path = os.path.join(MODELS, 'chan_xgb_latest.pkl')
-        if os.path.exists(model_path):
-            with open(model_path, 'rb') as f:
-                _new_model = pickle.load(f)
-    # Legacy old model
-    if _old_model is None:
-        old_path = os.path.join(MODELS, 'chan_xgb_56d.pkl')
-        if os.path.exists(old_path):
-            with open(old_path, 'rb') as f:
-                _old_model = pickle.load(f)
-    return _old_model, _new_model, _prod_model
+    return _prod_model
 
 def predict_score(feats, model, feat_order=None):
     """Predict score using a given XGBoost model"""
@@ -108,7 +94,6 @@ def fetch_pe_batch(stocks, cache_file=None):
             print(f'    PE查询: {idx}/{len(stocks)}', flush=True)
         try:
             sym = 'sh.' + code if code.startswith('6') else 'sz.' + code
-            # baostock day-end data: query last 5 days to catch latest
             from datetime import timedelta
             end_dt = datetime.now() - timedelta(days=1)
             start_dt = end_dt - timedelta(days=5)
@@ -144,10 +129,10 @@ def main():
     print(f'🔬 沪深300缠论全量分析 — 完整版 (17模块)')
     print(f'  输出: {out_path}')
 
-    # Load models
-    old_model, new_model, prod_model = load_models()
+    # Load model
+    prod_model = load_models()
     prod_feat_order = _prod_meta.get('feature_names', []) if _prod_meta else []
-    print(f'  模型: 生产={prod_model is not None}, 旧={old_model is not None}, 新legacy={new_model is not None}')
+    print(f'  生产模型: {"✅ 已加载" if prod_model is not None else "❌ 未找到"}')
 
     # Load stocks
     stocks = load_csi300_stocks()
@@ -235,10 +220,8 @@ def main():
         # Feature extraction
         feats = extract_features(closes, highs, lows, opens, vols, bsp_buy, bsp_types, cur)
 
-        # XGBoost scores — production model primary
+        # XGBoost score — production model only
         prod_xgb = predict_score(feats, prod_model, prod_feat_order) if prod_model else None
-        old_xgb = predict_score(feats, old_model)
-        new_xgb = predict_score(feats, new_model)
 
         # V4.5
         try:
@@ -270,9 +253,8 @@ def main():
         except:
             gzk_val = 0
 
-        # 3D Composite — old model calibrated to higher range, favor it
-        # Old model: 20-80 (avg 50), New model: 10-77 (avg 31)
-        tech_score = max((old_xgb or 0), (new_xgb or 0) * 1.3)
+        # 3D Composite — uses production XGB score as tech_score
+        tech_score = prod_xgb if prod_xgb is not None else 0
         tech_score = max(0, min(100, tech_score))
         fund_score = max(0, min(100, v45_score * 0.6 + gzk_val * 0.6))
         score3d = compute_3d_score(tech_score, fund_score, 50)
@@ -317,23 +299,28 @@ def main():
             
             if zl is None:
                 # Not inside any zhongshu — find support (below) and resistance (above)
-                supports_below = [s for s in supports if s < px]
-                resistances_above = [r for r in resistances if r > px]
+                # Track indices alongside values to avoid float equality bugs
+                supports_below = [(i, s) for i, s in enumerate(supports) if s < px]
+                resistances_above = [(i, r) for i, r in enumerate(resistances) if r > px]
                 
                 if supports_below and resistances_above:
                     # Between two zhongshu: use nearest below as support, nearest above as TP
-                    zl = max(supports_below)  # closest support below
-                    zh = min(resistances_above)  # closest resistance above
+                    best_s = max(supports_below, key=lambda x: x[1])  # closest support below
+                    best_r = min(resistances_above, key=lambda x: x[1])  # closest resistance above
+                    zl = best_s[1]
+                    zh = best_r[1]
                 elif supports_below:
-                    # Below all zhongshu: use nearest below
-                    zl = max(supports_below)
-                    zh = resistances[supports.index(zl)] if zl in supports else resistances[-1]
+                    # Below all zhongshu: use nearest support, paired resistance by same index
+                    best_s = max(supports_below, key=lambda x: x[1])
+                    zl = best_s[1]
+                    zh = resistances[best_s[0]]
                 elif resistances_above:
-                    # Above all zhongshu: use nearest above
-                    zh = min(resistances_above)
-                    zl = supports[resistances.index(zh)] if zh in resistances else supports[0]
+                    # Above all zhongshu: use nearest resistance, paired support by same index
+                    best_r = min(resistances_above, key=lambda x: x[1])
+                    zh = best_r[1]
+                    zl = supports[best_r[0]]
                 else:
-                    # Fallback to nearest
+                    # Fallback to nearest zhongshu center
                     nearest_idx = 0
                     min_dist = float('inf')
                     for i, (sl, sh) in enumerate(zip(supports, resistances)):
@@ -357,35 +344,36 @@ def main():
                     stop = round(entry * 0.97, 2)
                     tp1 = round(zh, 2)
                 else:
-                    # Above zhongshu (三买): entry at px, stop at zhongshu upper-3%, TP next leg up
-                    entry = round(px, 2)
-                    stop = round(zh * 0.97, 2)
-                    tp1 = round(zh + (zh - zl), 2)
-                if entry > stop and stop > 0:
-                    rr = round((tp1 - entry) / (entry - stop), 1)
-            # v5新增: 中枢内等信号 — 也给出入场参考
-            elif zl is not None and zh is not None and zl <= px <= zh:
-                entry = round(zl + (zh - zl) * 0.1, 2)
-                stop = round(zl * 0.97, 2)
-                tp1 = round(zh, 2)
+                    # Above zhongshu (三买): entry at zhongshu upper (等回调), stop at lower (安全边界),
+                    # TP = first leg projection upward (capped at entry+10% minimum)
+                    entry = round(zh, 2)
+                    stop = round(zl, 2)
+                    proj = round(zh + (zh - zl), 2)
+                    tp1 = max(proj, round(entry * 1.10, 2))  # TP must be > entry
                 if entry > stop and stop > 0:
                     rr = round((tp1 - entry) / (entry - stop), 1)
             elif 'Sell' in label:
                 entry = px
                 # For Sell: find support below (TP) and resistance above (stop)
-                # Use stop above entry as default
                 sell_zl = [s for s in supports if s < px]
                 sell_zh = [r for r in resistances if r > px]
                 if sell_zh:
                     stop = round(min(sell_zh) * 1.03, 2)
                 else:
                     stop = round(px * 1.03, 2)
-                if sell_zl and sell_zl[-1] < px:
-                    tp1 = round(sell_zl[-1], 2)
+                if sell_zl:
+                    tp1 = round(max(sell_zl), 2)  # nearest support below = TP
                 else:
                     tp1 = round(px * 0.95, 2)
                 if stop > entry and stop > 0 and tp1 < entry:
                     rr = round((entry - tp1) / (stop - entry), 1)
+            # 中枢内等信号(非买卖) — 给出入场参考
+            elif zl is not None and zh is not None and zl <= px <= zh:
+                entry = round(zl + (zh - zl) * 0.1, 2)
+                stop = round(zl * 0.97, 2)
+                tp1 = round(zh, 2)
+                if entry > stop and stop > 0:
+                    rr = round((tp1 - entry) / (entry - stop), 1)
         
         rr = max(0, min(rr or 0, 20))  # cap at 20
         
@@ -450,8 +438,6 @@ def main():
             'price': px,
             'pe': pe,
             'ytd': round(ytd, 1) if ytd is not None else None,
-            'old_xgb': old_xgb if old_xgb is not None else 0,
-            'new_xgb': new_xgb if new_xgb is not None else 0,
             'prod_xgb': prod_xgb if prod_xgb is not None else 0,
             'score3d': score3d['composite'],
             'grade': score3d['grade'],
@@ -484,7 +470,7 @@ def main():
     ws = wb.active
     ws.title = f'{today}信号'
 
-    headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '旧XGB', '新XGB', '3D分', 
+    headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
                '买入', '止损', 'TP1', '风控', '标签', '威科夫']
 
@@ -512,7 +498,7 @@ def main():
         row = i + 2
         vals = [
             r['code'], r['name'], r['price'], r['pe'], r['ytd'],
-            r['prod_xgb'], r['old_xgb'], r['new_xgb'], r['score3d'],
+            r['prod_xgb'], r['score3d'],
             r['grade'], r['position_pct'], r['rr'],
             r['zs'], r['in_zs'], r['bsp'],
             r['v45'], r['gzk'],
@@ -535,10 +521,10 @@ def main():
             for c in range(1, len(headers)+1):
                 ws.cell(row, c).fill = green_fill
 
-    # Column widths
-    widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':7, 'G':7, 'H':6,
-              'I':5, 'J':6, 'K':5, 'L':20, 'M':6, 'N':16, 'O':5, 'P':5,
-              'Q':8, 'R':8, 'S':8, 'T':6, 'U':18}
+    # Column widths (21 columns: A-U)
+    widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':9, 'G':5,
+              'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':5, 'O':5,
+              'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'A2'
@@ -557,7 +543,7 @@ def main():
     buys_zs = sum(1 for r in results if r['in_zs'] == '是' and 'Buy' in r['bsp'])
     
     macro_lines = [
-        [f'{today} 收盘 | 缠论+双XGBoost+三维评分+风控 | 17模块全功能扫描'],
+        [f'{today} 收盘 | 缠论+生产XGBoost+三维评分+风控 | 全功能扫描'],
         [''],
         ['━━━ 市场指数 ━━━'],
         [f'DXY: {macro.get("DXY",{}).get("value","?")} | US10Y: {macro.get("UST10Y",{}).get("value","?")}% | USD/CNY: {macro.get("USDCNY",{}).get("value","?")}'],
@@ -584,9 +570,9 @@ def main():
             if '━' in str(val): c.font = Font(bold=True, size=11)
     ws2.column_dimensions['A'].width = 80
     
-    # --- Sheet 3: 综合推荐 (full columns) ---
+    # --- Sheet 3: 综合推荐 ---
     ws3 = wb.create_sheet('综合推荐')
-    rec_headers = ['#', '代码', '名称', '现价', '旧XGB', '新XGB', '3D分', '等级', '仓位%', 
+    rec_headers = ['#', '代码', '名称', '现价', '生产XGB', '3D分', '等级', '仓位%', 
                    'R:R', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
     for c, h in enumerate(rec_headers, 1):
         cell = ws3.cell(1, c, h)
@@ -608,7 +594,7 @@ def main():
         ] if x])
         rr_s = r['rr'] if r['rr'] > 0 else '—'
         direction = '多' if 'Buy' in str(r.get('bsp','')) else ('空' if 'Sell' in str(r.get('bsp','')) else '观望')
-        vals = [i+1, r['code'], r['name'], r['price'], r['prod_xgb'], r['old_xgb'], r['new_xgb'],
+        vals = [i+1, r['code'], r['name'], r['price'], r['prod_xgb'],
                 r['score3d'], r['grade'], r['position_pct'], rr_s,
                 r['v45'], r['gzk'], r['zs'][:15],
                 r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic]
@@ -618,7 +604,8 @@ def main():
             cell.alignment = Alignment(horizontal='center')
             if i < 5: cell.fill = green_fill
     
-    for c, w in enumerate([4,8,10,7,5,5,5,4,6,4,5,5,15,7,7,7,18], 1):
+    # Column widths for 综合推荐 (18 columns, without legacy models)
+    for c, w in enumerate([4,8,10,7,9,4,6,4,5,5,15,7,7,7,18], 1):
         ws3.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
     ws3.freeze_panes = 'A2'
 
@@ -628,57 +615,76 @@ def main():
     print(f'\n{"="*60}')
     print(f'🏆 Top 20 (3D综合评分)')
     print(f'{"="*60}')
-    print(f'{"排名":<4} {"名称":<12} {"现价":<8} {"YTD%":<7} {"生产XGB":<8} {"旧XGB":<6} {"新XGB":<6} {"3D分":<6} {"等级":<4} {"BSP":<18} {"标签":<20} {"R:R":<5}')
-    print('-' * 95)
+    print(f'{"排名":<4} {"名称":<12} {"现价":<8} {"YTD%":<7} {"生产XGB":<8} {"3D分":<6} {"等级":<4} {"BSP":<18} {"标签":<20} {"R:R":<5}')
+    print('-' * 80)
     for i, r in enumerate(results[:20]):
         print(f'{i+1:<4} {r["name"]:<12} {r["price"]:<8} {str(r["ytd"]):<7} '
-              f'{r["prod_xgb"]:<8} {r["old_xgb"]:<6} {r["new_xgb"]:<6} {r["score3d"]:<6} {r["grade"]:<4} '
+              f'{r["prod_xgb"]:<8} {r["score3d"]:<6} {r["grade"]:<4} '
               f'{r["bsp"]:<18} {r["tag"]:<20} {r["rr"]:<5}')
 
     print(f'\nSaved: {out_path} | {len(results)} signals')
     print(f'A级: {grade_a} | B级: {grade_b} | 中枢内买: {inzs}')
 
-    # --- 组合优化(Hierarchical Risk Parity) ---
+    # --- 组合优化(Alpha-Risk Blended HRP) ---
     try:
-        from portfolio_optimize import optimize_portfolio
-        buy_codes = [r['code'] for r in results if 'Buy' in str(r.get('bsp','')) and r['in_zs'] == '是']
-        if len(buy_codes) >= 3:
-            print(f'\n[组合优化] {len(buy_codes)}只中枢Buy → HRP风险平价...')
-            weights = optimize_portfolio(buy_codes, max_stocks=30, method='hrp')
+        from portfolio_optimize import quality_filter, alpha_blended_hrp
+        
+        # Stage 1: Quality filter
+        qualified = quality_filter(results)
+        print(f'\n[组合优化] 质量过滤: {len(qualified)}/{len(results)}只通过 ' +
+              f'(Buy+中枢内+R:R≥1.0+生产XGB≥40)')
+        
+        if len(qualified) >= 3:
+            # Stage 2-5: Alpha-Risk Blended HRP
+            weights, metrics = alpha_blended_hrp(
+                qualified, 
+                tilt_factor=0.5, 
+                max_position=0.20,
+                min_position=0.02,
+                max_stocks=30
+            )
+            
             if weights:
                 ws4 = wb.create_sheet('组合优化')
-                opt_headers = ['#', '代码', '名称', '权重%', '现价', '等级', 'R:R', '威科夫', '方向', '逻辑']
+                opt_headers = ['#', '代码', '名称', '权重%', 'Alpha', 'HRP基%', '倾斜', 
+                               '现价', '生产XGB', '3D分', 'R:R', 'V4.5', '威科夫', '方向']
                 for c, h in enumerate(opt_headers, 1):
                     cell = ws4.cell(1, c, h)
                     cell.fill = hdr_fill; cell.font = hdr_font
                     cell.border = thin_border; cell.alignment = Alignment(horizontal='center')
 
-                # Build name lookup
+                # Build lookup maps
                 name_map = {r['code']: r['name'] for r in results}
+                px_map = {r['code']: r['price'] for r in results}
+                xgb_map = {r['code']: r['prod_xgb'] for r in results}
+                s3d_map = {r['code']: r['score3d'] for r in results}
                 rr_map = {r['code']: r['rr'] for r in results}
-                grade_map = {r['code']: r['grade'] for r in results}
-                price_map = {r['code']: r['price'] for r in results}
+                v45_map = {r['code']: r['v45'] for r in results}
                 wyckoff_map = {r['code']: r.get('wyckoff','-') for r in results}
-                bsp_map = {r['code']: r.get('bsp','') for r in results}
 
                 ranked = sorted(weights.items(), key=lambda x: -x[1])
                 for i, (code, wt) in enumerate(ranked):
+                    m = metrics.get(code, {})
                     name = name_map.get(code, code)
-                    direction = '多' if 'Buy' in str(bsp_map.get(code,'')) else ('空' if 'Sell' in str(bsp_map.get(code,'')) else '观望')
-                    logic = '+'.join([
-                        f'HRP{wt:.0%}',
-                        f'RR{rr_map.get(code,0)}' if rr_map.get(code,0) > 0 else '',
-                        wyckoff_map.get(code,'-') if wyckoff_map.get(code,'-') != '-' else ''
-                    ]).strip('+')
-                    vals = [i+1, code, name, round(wt*100,1), price_map.get(code,'-'),
-                            grade_map.get(code,'-'), rr_map.get(code,'-'),
-                            wyckoff_map.get(code,'-'), direction, logic]
+                    vals = [
+                        i+1, code, name, round(wt*100, 1),
+                        m.get('alpha', '-'), m.get('hrp_w', '-'), m.get('tilt', '-'),
+                        px_map.get(code, '-'), xgb_map.get(code, '-'),
+                        s3d_map.get(code, '-'), rr_map.get(code, '-'),
+                        v45_map.get(code, '-'), wyckoff_map.get(code, '-'),
+                        '多'
+                    ]
                     for c, v in enumerate(vals, 1):
                         cell = ws4.cell(i+2, c, v)
                         cell.border = thin_border
                         cell.alignment = Alignment(horizontal='center')
-                        if i < 3: cell.font = Font(color='2F5496', bold=True)
-                print(f'  组合优化sheet: {len(ranked)}只 前3: {ranked[0][0]}({ranked[0][1]:.0%}) {ranked[1][0]}({ranked[1][1]:.0%}) {ranked[2][0]}({ranked[2][1]:.0%})')
+                        if i < 3:
+                            cell.font = Font(color='2F5496', bold=True)
+                
+                # Column widths
+                for c, w in enumerate([4,8,10,7,6,7,6,6,8,6,5,5,14], 1):
+                    ws4.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
+                ws4.freeze_panes = 'A2'
     except Exception as e:
         print(f'  组合优化跳过: {e}')
 

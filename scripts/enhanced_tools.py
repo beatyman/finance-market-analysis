@@ -1568,7 +1568,7 @@ def compute_3d_score(tech_score: float, fund_score: float = 50,
     if not can_buy: position = 0
     elif fund_score >= _FUND_HEAVY and grade == 'A': position = 0.50
     elif fund_score >= _FUND_HEAVY: position = 0.30
-    elif fund_score >= _FUND_LIGHT: position = 0.20 if grade >= 'B' else 0.10
+    elif fund_score >= _FUND_LIGHT: position = 0.20 if grade in ('A', 'B') else 0.10
     else: position = 0.10
 
     grade_map = {'A': '推荐重仓', 'B': '可买入', 'C': '观望', 'D': '回避'}

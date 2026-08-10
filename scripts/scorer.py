@@ -11,9 +11,11 @@ def extract_features(closes,highs,lows,opens,vols,bsp_buy,bsp_types,cur):
     
     # ═══ 1. BSP one-hot (12) ═══
     for d in ['buy','sell']:
-        match=bsp_buy if d=='buy' else (not bsp_buy and bsp_types)
+        is_buy = (d == 'buy')
+        match = bsp_buy if is_buy else (not bsp_buy)
+        actual_types = bsp_types if (match and bsp_types) else []
         for bt in ['type1','type1p','type2','type2s','type3a','type3b']:
-            f['bsp_%s_%s'%(d,bt)]=1.0 if match and bt in str(bsp_types) else 0.0
+            f['bsp_%s_%s'%(d,bt)] = 1.0 if bt in actual_types else 0.0
     
     # ═══ 2. 价格动量 (6) ═══
     f['price_return_1']=(cc/C[-2]-1)*100 if n>=2 else 0
