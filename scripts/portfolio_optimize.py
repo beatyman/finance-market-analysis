@@ -11,28 +11,25 @@ Pipeline:
 """
 import numpy as np
 import pandas as pd
-import baostock as bs
 from typing import Dict, List, Optional, Tuple
 
 
 def fetch_prices(codes, start='2025-08-01', end='2026-08-01'):
-    """拉取多只股票的1年日线价格"""
-    bs.login()
+    """拉取多只股票的1年日线价格(新浪数据源, baostock已拉黑)"""
+    import sys, os
+    HERE = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, HERE)
+    from tencent_data import fetch_kline
     prices = pd.DataFrame()
     for code in codes:
-        sym = ('sh.' if code.startswith('6') else 'sz.') + code
-        rs = bs.query_history_k_data_plus(sym, 'date,close',
-            start_date=start, end_date=end, frequency='d', adjustflag='2')
-        rows = []
-        while rs.error_code == '0' and rs.next():
-            rows.append(rs.get_row_data())
-        if len(rows) < 100:
+        try:
+            dates, opens, highs, lows, closes, vols = fetch_kline(code)
+            if len(dates) < 100:
+                continue
+            s = pd.Series(closes, index=pd.to_datetime(dates), name=code)
+            prices[code] = s
+        except:
             continue
-        s = pd.Series([float(r[1]) for r in rows],
-                      index=pd.to_datetime([r[0] for r in rows]),
-                      name=code)
-        prices[code] = s
-    bs.logout()
     return prices
 
 

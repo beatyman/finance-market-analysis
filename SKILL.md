@@ -483,6 +483,10 @@ R:R = 5.5:1 | 30分钟: 🟡 日线买但30m未确认
 
 ### 数据源
 
+- **baostock 多进程并发登录 = 黑名单 (2026-08-13重大教训)** — 多进程Pool每个worker `bs.login()` 会触发反滥用机制，返回 `10001011 黑名单用户`，整个IP被拉黑数小时。**绝不可64核并行登录baostock**。正确：单进程登录+串行遍历，或改用腾讯历史K线API。
+- **腾讯历史K线API (web.ifzq.gtimg.cn/appstock/app/fqkline/get)** — 单次640根上限，3年数据需分页(用`end=最早日期`往前翻)。格式`[date,open,close,high,low,volume]`(注意close在high前)。64核并行也会限流，需节流(每请求sleep 0.1s)。见 `scripts/tencent_data.py`。
+- **XGBoost 3.x 无 `gpu_hist`** — 报错 `valid values are: {'approx','auto','exact','hist'}`。GPU版改用 `tree_method='hist', device='cuda'`；CPU版用 `tree_method='hist', n_jobs=64`。
+- **训练必须带进度日志+缓存+节流 (2026-08-13教训)** — v1无进度日志，2小时空转无法判断状态。v2用`imap_unordered`+计数器+`/tmp/train_v2.log`+状态文件。数据源要节流防限流。
 - **AKShare东财API有频率限制，不是IP被封** — 第一次请求常超时，5s重试后即通。`_ak_with_retry(fn, max_retries=3)` 封装在 `sector_heat.py` 中
 - `sector_heat.py` 的 `get_sector_from_akshare()` 应限制 `max_retries=2`（行业）/ `max_retries=1`（概念），避免阻塞 `analyze.py` 主流程
 - 板块资金流腾讯接口 `zllr/zllc` 单位为元，需/10000转万元

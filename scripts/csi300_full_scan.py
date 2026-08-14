@@ -20,6 +20,7 @@ sys.path.insert(0,os.path.join(HERE,'..','chanpy'))
 from chan_engine_v5 import analyze as chan_analyze, get_bsp_label
 print('[v5 engine]',end=' ')
 from scorer import extract_features
+from gann_enhance import compute_gann_enhance
 from macro import load_macro, macro_signal
 from sector_heat import sector_signal, get_sector_heat
 from volume_sector import volume_analysis
@@ -38,16 +39,14 @@ _prod_meta = None
 def load_models():
     global _prod_model, _prod_meta
     import json
-    # Production model (v2.1, Rank IC=0.037, 55 features)
-    prod_path = os.path.join(MODELS, 'chan_xgb_production.pkl')
+    # 新模型 v5+talib (101维, AUC 0.667)
+    prod_path = os.path.join(MODELS, 'chan_xgb_v5_talib.pkl')
+    if not os.path.exists(prod_path):
+        prod_path = os.path.join(MODELS, 'chan_xgb_latest.pkl')
     if os.path.exists(prod_path) and _prod_model is None:
         with open(prod_path, 'rb') as f:
             _prod_model = pickle.load(f)
-        meta_path = os.path.join(MODELS, 'chan_xgb_production_meta.json')
-        if os.path.exists(meta_path):
-            with open(meta_path) as f:
-                _prod_meta = json.load(f)
-        print(f'[prod model v2.1 | Rank IC={_prod_meta.get("rank_ic",0):.4f}]', end=' ')
+        print(f'[model v5+talib {_prod_model.n_features_in_}维]', end=' ')
     return _prod_model
 
 def predict_score(feats, model, feat_order=None):
@@ -131,7 +130,7 @@ def main():
 
     # Load model
     prod_model = load_models()
-    prod_feat_order = _prod_meta.get('feature_names', []) if _prod_meta else []
+    prod_feat_order = []  # v5+talib模型用 list 拼接特征, 不用 feat_order
     print(f'  生产模型: {"✅ 已加载" if prod_model is not None else "❌ 未找到"}')
 
     # Load stocks
@@ -164,31 +163,16 @@ def main():
     quotes = fetch_a_quotes([(c, n) for c, n in stocks])
     print(f'  行情: {len(quotes)} 只')
 
-    # Pre-fetch all K-lines via baostock (shared connection, fast)
-    import baostock as bs
-    bs.login()
+    # Pre-fetch all K-lines via 新浪数据源(baostock已拉黑)
+    from tencent_data import fetch_kline
     kline_cache = {}
     for idx, (code, name) in enumerate(stocks):
         try:
-            sym = 'sh.' + code if code.startswith('6') else 'sz.' + code
-            rs = bs.query_history_k_data_plus(sym,
-                'date,open,high,low,close,volume',
-                start_date='2025-07-01', end_date=datetime.now().strftime('%Y-%m-%d'),
-                frequency='d', adjustflag='2')
-            rows = []
-            while rs.error_code == '0' and rs.next():
-                rows.append(rs.get_row_data())
-            if len(rows) >= 100:
-                dates = [str(r[0]) for r in rows]
-                opens = [float(r[1]) for r in rows]
-                closes = [float(r[4]) for r in rows]
-                highs = [float(r[2]) for r in rows]
-                lows = [float(r[3]) for r in rows]
-                vols = [float(r[5]) for r in rows]
+            dates, opens, highs, lows, closes, vols = fetch_kline(code)
+            if len(dates) >= 100:
                 kline_cache[code] = (dates, opens, closes, highs, lows, vols)
         except:
             pass
-    bs.logout()
     print(f'  K线缓存: {len(kline_cache)} 只')
 
     # Scan
@@ -217,11 +201,37 @@ def main():
         except Exception as e:
             continue
 
-        # Feature extraction
+        # Feature extraction (58维缠论 + 43维ta-lib = 101维, 与训练顺序一致)
         feats = extract_features(closes, highs, lows, opens, vols, bsp_buy, bsp_types, cur)
+        try:
+            from talib_features import add_talib_features, get_talib_feature_names
+            talib_feats = add_talib_features(closes, highs, lows, vols)
+            talib_names = get_talib_feature_names()
+            feat_vec = [feats[k] for k in sorted(feats.keys())] + \
+                       [talib_feats.get(k, 0.0) for k in talib_names]
+        except Exception:
+            feat_vec = [feats[k] for k in sorted(feats.keys())]
 
-        # XGBoost score — production model only
-        prod_xgb = predict_score(feats, prod_model, prod_feat_order) if prod_model else None
+        # XGBoost score — v5+talib 101维模型
+        if prod_model is not None:
+            try:
+                nf = prod_model.n_features_in_
+                vec = np.array([feat_vec[:nf]], dtype=np.float32)
+                prod_xgb = int(prod_model.predict_proba(vec)[0, 1] * 100)
+            except Exception:
+                prod_xgb = None
+        else:
+            prod_xgb = None
+
+        # 四框架增强 (江恩八分位 + MACD共振 + Ari动量)
+        try:
+            enh = compute_gann_enhance(np.array(closes), np.array(highs), np.array(lows))
+            enhance_score = enh['enhance_score']
+            enhance_detail = '{}|{}|{}'.format(
+                enh['gann']['direction'], enh['macd']['resonance'], enh['ari']['env'])
+        except Exception:
+            enhance_score = 50.0
+            enhance_detail = '-'
 
         # V4.5
         try:
@@ -442,6 +452,8 @@ def main():
             'score3d': score3d['composite'],
             'grade': score3d['grade'],
             'position_pct': score3d['position'] * 100,
+            'enhance': enhance_score,
+            'enhance_detail': enhance_detail,
             'rr': round(rr, 1),
             'zs': zs_str or '-',
             'in_zs': '是' if in_zs else '否',
@@ -573,7 +585,7 @@ def main():
     # --- Sheet 3: 综合推荐 ---
     ws3 = wb.create_sheet('综合推荐')
     rec_headers = ['#', '代码', '名称', '现价', '生产XGB', '3D分', '等级', '仓位%', 
-                   'R:R', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
+                   'R:R', '四框架', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
     for c, h in enumerate(rec_headers, 1):
         cell = ws3.cell(1, c, h)
         cell.fill = hdr_fill
@@ -581,9 +593,12 @@ def main():
         cell.border = thin_border
         cell.alignment = Alignment(horizontal='center')
     
-    # Rank: 3D×0.5 + (XGB×0.3 if 中枢内) + V4.5 bonus
+    # Rank: 3D×0.4 + XGB×0.25(中枢内) + 四框架增强×0.2 + V4.5 bonus
     for r in results:
-        r['_rank'] = r['score3d'] * 0.5 + (r['prod_xgb'] * 0.3 if r['in_zs'] == '是' else 0) + (10 if r['v45'] >= 8 else 0)
+        r['_rank'] = (r['score3d'] * 0.4
+                      + (r['prod_xgb'] * 0.25 if r['in_zs'] == '是' else 0)
+                      + r['enhance'] * 0.2
+                      + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
     
     recs = results[:15]
@@ -596,7 +611,7 @@ def main():
         direction = '多' if 'Buy' in str(r.get('bsp','')) else ('空' if 'Sell' in str(r.get('bsp','')) else '观望')
         vals = [i+1, r['code'], r['name'], r['price'], r['prod_xgb'],
                 r['score3d'], r['grade'], r['position_pct'], rr_s,
-                r['v45'], r['gzk'], r['zs'][:15],
+                r['enhance'], r['v45'], r['gzk'], r['zs'][:15],
                 r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic]
         for c, v in enumerate(vals, 1):
             cell = ws3.cell(i+2, c, v)
@@ -604,8 +619,8 @@ def main():
             cell.alignment = Alignment(horizontal='center')
             if i < 5: cell.fill = green_fill
     
-    # Column widths for 综合推荐 (18 columns, without legacy models)
-    for c, w in enumerate([4,8,10,7,9,4,6,4,5,5,15,7,7,7,18], 1):
+    # Column widths for 综合推荐 (19 columns)
+    for c, w in enumerate([4,8,10,7,9,4,6,4,5,7,5,5,15,7,7,7,5,8,18], 1):
         ws3.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
     ws3.freeze_panes = 'A2'
 
