@@ -31,6 +31,16 @@ from enhanced_tools import (
     check_risk, full_enhanced_analysis,
     mainline_score
 )
+from risk_engine import (atr_equal_risk_notional, risk_of_ruin,
+                         GateContext, eval_all_gates, ExitPolicy, DSLTracker)
+
+# 风险引擎用户持仓(用于 opposite_direction_guard 禁止金字塔加仓)
+USER_POSITIONS = [
+    {'coin': '601899', 'side': 'long'},  # 紫金矿业
+    {'coin': '600362', 'side': 'long'},  # 江西铜业
+    {'coin': '000630', 'side': 'long'},  # 铜陵有色
+    {'coin': '300866', 'side': 'long'},  # 安克创新
+]
 
 # ═══════════════ Model Loading ═══════════════
 _prod_model = None
@@ -441,6 +451,39 @@ def main():
 
         # Risk check
         blocked, risk_reasons = check_risk(code, name)
+
+        # ══════ 风险引擎集成 (risk_engine) — ATR等风险仓位 + 门控 + DSL ══════
+        risk_size = '—'   # 建议股数(100股整手)
+        risk_gate = '-'    # 门控状态 PASS/BLOCK
+        risk_ror = None    # 爆仓概率
+        if bsp_buy and isinstance(entry, (int, float)) and isinstance(stop, (int, float)) \
+                and entry > stop > 0:
+            stop_dist = (entry - stop) / entry
+            size = atr_equal_risk_notional(
+                equity=1_000_000, risk_per_trade_pct=0.02,
+                atr_abs=entry - stop, entry_px=entry, sl_atr_mult=1.0,
+                max_trade_notional_usd=200_000, config_max_leverage=1)
+            risk_size = int(size.notional_usd / entry / 100) * 100
+            ctx = GateContext(
+                confidence=score3d['composite'] / 100.0,
+                current_positions=USER_POSITIONS,
+                trade_notional_usd=size.notional_usd,
+                daily_pnl=0.0,
+                market_volume_24h_usd=1e8,
+                coin=code, trade_side='long',
+                has_binary_news_risk=False,
+                equity=1_000_000, total_open_notional=0.0,
+                composite_score=score3d['composite'])
+            gates = eval_all_gates(ctx, {
+                'min_confidence': 0.45, 'max_concurrent': 5,
+                'max_trade_notional_usd': 200_000, 'max_daily_loss_usd': -30_000,
+                'max_total_notional_pct': 1.0,
+            }, regime='neutral')
+            risk_gate = 'PASS' if not gates['blocked'] else 'BLOCK'
+            win_rate = min(0.6, 0.4 + score3d['composite'] / 300)
+            payoff = max(1.0, min(4.0, float(rr or 2.0)))
+            risk_ror = risk_of_ruin(win_rate=win_rate, payoff_ratio=payoff,
+                                    risk_per_trade_pct=0.02)
         
         results.append({
             'code': code,
@@ -468,6 +511,9 @@ def main():
             'vol_signal': vol_analysis.get('signal', '-'),
             'wyckoff': wyckoff,
             'sector': sec.get('sector', '-'),
+            'risk_size': risk_size,
+            'risk_gate': risk_gate,
+            'risk_ror': round(risk_ror, 4) if risk_ror is not None else '—',
         })
 
     print(f'  完成: {len(results)} 只信号')
@@ -484,7 +530,8 @@ def main():
 
     headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
-               '买入', '止损', 'TP1', '风控', '标签', '威科夫']
+               '买入', '止损', 'TP1', '风控', '标签', '威科夫',
+               '风险仓位', '风险门控', '爆仓概率']
 
     # Header style
     hdr_fill = PatternFill(start_color='1a1a2e', end_color='1a1a2e', fill_type='solid')
@@ -515,7 +562,8 @@ def main():
             r['zs'], r['in_zs'], r['bsp'],
             r['v45'], r['gzk'],
             r['entry'], r['stop'], r['tp1'],
-            r['risk_status'], r['tag'], r['wyckoff']
+            r['risk_status'], r['tag'], r['wyckoff'],
+            r['risk_size'], r['risk_gate'], r['risk_ror']
         ]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(row, c, v)
@@ -533,14 +581,15 @@ def main():
             for c in range(1, len(headers)+1):
                 ws.cell(row, c).fill = green_fill
 
-    # Column widths (21 columns: A-U)
+    # Column widths (24 columns: A-X)
     widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':9, 'G':5,
               'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':5, 'O':5,
-              'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18}
+              'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18,
+              'V':9, 'W':9, 'X':9}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'A2'
-    ws.auto_filter.ref = f'A1:U{len(results)+1}'
+    ws.auto_filter.ref = f'A1:X{len(results)+1}'
 
     # --- Sheet 2: Macro (detailed) ---
     ws2 = wb.create_sheet('宏观')

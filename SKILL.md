@@ -117,6 +117,8 @@ python3 train.py --stocks 27 --years 3
 | `indicators.py` | **技术指标增强** — RSI/MACD/布林带一键汇总 + signal_strength评分 |
 | `integration.py` | **外部集成** — Kalman滤波波动率追踪(Financial-Models-Numerical-Methods) + 做T信号增强 |
 | `csi300_full_scan.py` | **沪深300完整版扫描(推荐)** — baostock共享连接, 生产XGBoost+3D+阿娇+风控, 3Sheet Excel |
+| `gann_enhance.py` | **四框架增强** — 江恩八分位+MACD多级别共振+Ari动量(降采样周线) |
+| `risk_engine.py` | **风险优先引擎** — ATR等风险仓位+11道门控+DSL两阶段退出(吸收hermes-trader), 见 `references/expert_lenses_committee.md` |
 
 ## 日报生成
 
@@ -389,6 +391,47 @@ XGB(技术面40%) + GZK/V4.5(基本面30%) + 消息面(30%) → 综合[0-100] + 
 - 技术面<60 → 不建仓
 - 基本面≥70 → 可重仓
 - 双弱共振惩罚 → 扣分减半
+
+## 风险优先引擎 (risk_engine.py — 吸收 hermes-trader)
+
+纯函数模块，零外部依赖，资产类别无关（A股/加密/期货通用）。与用户核心哲学"交易=规避风险而非追逐机会"、"高手比仓位"、"破位必减仓"一致。
+
+```python
+from risk_engine import *
+
+# 1. ATR 等风险仓位（Turtle N）—— 每笔止损亏固定%权益，杠杆是输出不是输入
+s = atr_equal_risk_notional(equity=100000, risk_per_trade_pct=0.01,
+                            atr_abs=5.0, entry_px=100, sl_atr_mult=2.0)
+# notional = 1% × 10万 / (2×5/100) = $10000，杠杆 0.1x
+
+# 2. 爆仓概率
+risk_of_ruin(win_rate=0.55, payoff_ratio=1.5, risk_per_trade_pct=0.01)  # ≈0（安全）
+risk_of_ruin(win_rate=0.40, payoff_ratio=1.0, risk_per_trade_pct=0.05)  # =1（必然爆仓）
+
+# 3. 11 道风险门控
+ctx = GateContext(confidence=0.9, current_positions=[], trade_notional_usd=10000,
+                  daily_pnl=-200, market_volume_24h_usd=1e8, coin='BTC',
+                  trade_side='long', has_binary_news_risk=False,
+                  equity=100000, total_open_notional=0)
+res = eval_all_gates(ctx, {}, regime='up')  # blocked + block_reasons
+
+# 4. DSL 两阶段动态退出（Phase1 损失保护 → Phase2 利润锁定）
+t = DSLTracker('600547', 'long', entry_px=29.34, policy=ExitPolicy())
+v = t.check(28.5)  # 每个 tick 调用
+```
+
+11 道门控要点：
+- `daily_giveback_gate` — 锁住盈利日：当日 PnL 回撤超阈值停开新仓（赢的一天不吐回）
+- `short_liquidity_floor` — 空头需更高流动性（薄市场会被挤压，港股沽空同样适用）
+- `opposite_direction_guard` — 禁止翻单/金字塔加仓（持仓只由 DSL 引擎管理）
+- `market_regime_gate` — 顺 regime 放行，逆势需高 conviction 或自身信号
+- `correlation_cap` — 加密多头相关性上限
+
+## 专家透镜投委会 (references/expert_lenses_committee.md — 吸收 stock-analysis)
+
+15 专家透镜对抗分析：巴菲特/芒格/段永平/张坤/格雷厄姆/卡拉曼/林奇/欧奈尔/木头姐/达利欧/索罗斯/利弗莫尔/米勒维尼/西蒙斯/冯柳。
+
+用法：技术面（缠论+XGBoost+四框架）定入场纪律，专家透镜提供基本面多视角。冯柳透镜（预期差/困境反转）适合周期底部（江铜一买/铜陵二买），利弗莫尔透镜（趋势/止损/仓位）与"破位必减仓"一致，格雷厄姆透镜（安全边际）与"安全边界决定执行"一致。
 
 ## 阿娇版筛选标准（重要工作流）
 
