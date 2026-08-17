@@ -677,7 +677,7 @@ def main():
         cell.border = thin_border
         cell.alignment = Alignment(horizontal='center')
     
-    # Rank 优化: XGB×0.30(生产模型第一) + R:R×0.20(盈亏比第二) + 3D×0.15 + 筹码×0.10 + 四框架×0.10 + 距买入区×0.10 + V4.5奖励
+    # Rank 优化: XGB×0.35(生产模型第一) + R:R×0.15(盈亏比第二) + 3D×0.15 + 筹码×0.10 + 四框架×0.10 + 距买入区×0.10 + V4.5奖励
     # XGB是生产模型(AUC0.667, 统计验证), 权重最高; R:R盈亏比排第二
     for r in results:
         chip = r['chip_score'] if isinstance(r['chip_score'], (int, float)) else 50.0
@@ -693,9 +693,9 @@ def main():
         if isinstance(entry_v, (int, float)) and isinstance(price_v, (int, float)) and price_v > 0:
             dist_pct = (entry_v - price_v) / price_v * 100
             dist_score = max(0.0, min(100.0, 100.0 + dist_pct * 5.0))
-        r['_rank'] = (r['prod_xgb'] * 0.30          # XGB第一(生产模型AUC0.667)
-                      + rr_score * 0.20             # R:R第二(盈亏比)
-                      + r['score3d'] * 0.15         # 3D第三
+        r['_rank'] = (r['prod_xgb'] * 0.35          # XGB第一(生产模型AUC0.667)
+                      + rr_score * 0.15             # R:R第二(盈亏比)
+                      + r['score3d'] * 0.15         # 3D
                       + chip * 0.10                 # 筹码
                       + r['enhance'] * 0.10         # 四框架
                       + dist_score * 0.10           # 距买入区
