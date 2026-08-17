@@ -672,17 +672,41 @@ def main():
         cell.border = thin_border
         cell.alignment = Alignment(horizontal='center')
     
-    # Rank: 3D×0.35 + XGB×0.25(中枢内) + 四框架×0.15 + 筹码×0.10 + V4.5 bonus
+    # Rank 优化: R:R×0.30 + 3D×0.25 + 筹码×0.15 + 四框架×0.10 + XGB×0.10 + 距买入区×0.10 + V4.5奖励
+    # 核心: R:R盈亏比权重最高(安全边界), 距买入区体现可操作性
     for r in results:
         chip = r['chip_score'] if isinstance(r['chip_score'], (int, float)) else 50.0
-        r['_rank'] = (r['score3d'] * 0.35
-                      + (r['prod_xgb'] * 0.25 if r['in_zs'] == '是' else 0)
-                      + r['enhance'] * 0.15
-                      + chip * 0.10
+        # R:R 归一化(0-100): R:R=5→100分, R:R=2.5→50分, R:R=1→20分
+        rr_val = r['rr'] if isinstance(r['rr'], (int, float)) and r['rr'] > 0 else 0
+        rr_score = min(100.0, rr_val * 20.0)
+        # 距买入区(买入区在现价下方为负距): -0.5%→97.5分, -5%→75分, -15%→25分
+        dist_score = 50.0
+        entry_v = r['entry']; price_v = r['price']
+        if isinstance(entry_v, (int, float)) and isinstance(price_v, (int, float)) and price_v > 0:
+            dist_pct = (entry_v - price_v) / price_v * 100
+            dist_score = max(0.0, min(100.0, 100.0 + dist_pct * 5.0))
+        r['_rank'] = (rr_score * 0.30
+                      + r['score3d'] * 0.25
+                      + chip * 0.15
+                      + r['enhance'] * 0.10
+                      + (r['prod_xgb'] * 0.10 if r['in_zs'] == '是' else 0)
+                      + dist_score * 0.10
                       + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
-    
-    recs = [r for r in results if not r.get('chip_veto')][:15]
+
+    # 阿娇否决项: 方向非多 / 威科夫派发(D) / 筹码否决(深度套牢+远高成本)
+    def veto(r):
+        direction = '多' if 'Buy' in str(r.get('bsp', '')) else ('空' if 'Sell' in str(r.get('bsp', '')) else '观望')
+        if direction != '多':
+            return True
+        wy = str(r.get('wyckoff', '') or '')
+        if wy.startswith('D('):  # 派发信号
+            return True
+        if r.get('chip_veto'):
+            return True
+        return False
+
+    recs = [r for r in results if not veto(r)][:15]
     for i, r in enumerate(recs):
         logic = '+'.join([x for x in [
             ('中枢内' if r['in_zs'] == '是' else ''),
