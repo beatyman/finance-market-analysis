@@ -280,8 +280,12 @@ def main():
         # 3D Composite — uses production XGB score as tech_score
         tech_score = prod_xgb if prod_xgb is not None else 0
         tech_score = max(0, min(100, tech_score))
-        fund_score = max(0, min(100, v45_score * 0.6 + gzk_val * 0.6))
-        score3d = compute_3d_score(tech_score, fund_score, 50)
+        # fund 统一量纲: V4.5(0-30)归一化到0-100 + GZK(0-100), 各占50%
+        v45_norm = min(100.0, v45_score / 30.0 * 100.0)
+        fund_score = max(0, min(100, v45_norm * 0.5 + gzk_val * 0.5))
+        # 3D: tech×0.55 + fund×0.45 (移除news硬编码, 原news=50浪费30%权重)
+        score3d = compute_3d_score(tech_score, fund_score, 50,
+                                   w_tech=0.55, w_fund=0.45, w_news=0.0)
 
         if score3d['composite'] < args.min_score:
             continue
@@ -676,9 +680,12 @@ def main():
     # 核心: R:R盈亏比权重最高(安全边界), 距买入区体现可操作性
     for r in results:
         chip = r['chip_score'] if isinstance(r['chip_score'], (int, float)) else 50.0
-        # R:R 归一化(0-100): R:R=5→100分, R:R=2.5→50分, R:R=1→20分
+        # R:R 评分: 封顶8(避免低波动股虚高) + XGB胜率修正(低胜率的高R:R压制)
         rr_val = r['rr'] if isinstance(r['rr'], (int, float)) and r['rr'] > 0 else 0
-        rr_score = min(100.0, rr_val * 20.0)
+        rr_capped = min(rr_val, 8.0)  # R:R>8封顶(银行/保险/航空低波动→虚高)
+        rr_score = rr_capped * 12.5   # R:R=8→100, R:R=5→62.5, R:R=2.5→31
+        if r['prod_xgb'] < 40:        # XGB<40=低胜率, R:R虚高标的打7折
+            rr_score *= 0.7
         # 距买入区(买入区在现价下方为负距): -0.5%→97.5分, -5%→75分, -15%→25分
         dist_score = 50.0
         entry_v = r['entry']; price_v = r['price']
@@ -694,7 +701,7 @@ def main():
                       + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
 
-    # 阿娇否决项: 方向非多 / 威科夫派发(D) / 筹码否决(深度套牢+远高成本)
+    # 阿娇否决项: 方向非多 / 威科夫派发(D) / 筹码否决(深度套牢+远高成本) / 距买入区>20%(不可操作)
     def veto(r):
         direction = '多' if 'Buy' in str(r.get('bsp', '')) else ('空' if 'Sell' in str(r.get('bsp', '')) else '观望')
         if direction != '多':
@@ -704,6 +711,11 @@ def main():
             return True
         if r.get('chip_veto'):
             return True
+        # 距买入区>20%(买入区在现价下方20%以上, 不可操作)否决
+        entry_v = r.get('entry'); price_v = r.get('price')
+        if isinstance(entry_v, (int, float)) and isinstance(price_v, (int, float)) and price_v > 0:
+            if (entry_v - price_v) / price_v * 100 < -20:
+                return True
         return False
 
     recs = [r for r in results if not veto(r)][:15]
