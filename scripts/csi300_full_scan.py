@@ -361,24 +361,25 @@ def main():
                     zh = resistances[nearest_idx]
             
             if zl is not None and zh is not None and bsp_buy:
-                if zl <= px <= zh:
-                    # Inside 中枢: entry near lower bound + 10%, stop = lower-3%
-                    entry = round(zl + (zh - zl) * 0.1, 2)
-                    stop = round(zl * 0.97, 2)
-                    tp1 = round(zh, 2)
-                elif px < zl:
-                    # Below zhongshu: buy at current bargain price, stop based on entry
-                    entry = round(px, 2)
-                    stop = round(entry * 0.97, 2)
+                # 统一 R:R 逻辑: entry=现价, stop=ATR自适应(最少3%保护), tp1=结构目标
+                # ATR14(波动率自适应止损, 替代固定3%)
+                atr14 = 0.0
+                if len(closes) >= 15:
+                    trs = []
+                    for i in range(1, len(closes)):
+                        trs.append(max(highs[i] - lows[i],
+                                       abs(highs[i] - closes[i-1]),
+                                       abs(lows[i] - closes[i-1])))
+                    atr14 = sum(trs[-14:]) / 14
+                entry = round(px, 2)
+                stop = round(px - max(2.0 * atr14, 0.03 * px), 2)
+                if px < zh:
+                    # 中枢内/中枢下: 目标=中枢上沿(阻力)
                     tp1 = round(zh, 2)
                 else:
-                    # Above zhongshu (三买): entry at zhongshu upper (等回调), stop at lower (安全边界),
-                    # TP = first leg projection upward (capped at entry+10% minimum)
-                    entry = round(zh, 2)
-                    stop = round(zl, 2)
-                    proj = round(zh + (zh - zl), 2)
-                    tp1 = max(proj, round(entry * 1.10, 2))  # TP must be > entry
-                if entry > stop and stop > 0:
+                    # 三买(已突破中枢上沿): 目标=投影(上沿+带宽)
+                    tp1 = max(round(zh + (zh - zl), 2), round(entry * 1.10, 2))
+                if entry > stop and stop > 0 and tp1 > entry:
                     rr = round((tp1 - entry) / (entry - stop), 1)
             elif 'Sell' in label:
                 entry = px
