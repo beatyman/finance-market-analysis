@@ -316,6 +316,7 @@ def main():
         stop = None
         tp1 = None
         rr = None
+        zl_low = None  # 中枢下沿(用于距买入区=现价距安全买点的距离)
         
         if supports and resistances:
             zl = zh = None
@@ -360,6 +361,8 @@ def main():
                     zl = supports[nearest_idx]
                     zh = resistances[nearest_idx]
             
+            if zl is not None:
+                zl_low = zl  # 保存中枢下沿(距买入区锚)
             if zl is not None and zh is not None and bsp_buy:
                 # 统一 R:R 逻辑: entry=现价, stop=ATR自适应(最少3%保护), tp1=结构目标
                 # ATR14(波动率自适应止损, 替代固定3%)
@@ -530,6 +533,7 @@ def main():
             'enhance_detail': enhance_detail,
             'rr': round(rr, 1),
             'zs': zs_str or '-',
+            'zl': round(zl_low, 2) if zl_low is not None else None,
             'in_zs': '是' if in_zs else '否',
             'bsp': label,
             'v45': v45_score,
@@ -687,12 +691,12 @@ def main():
         rr_score = rr_capped * 12.5   # R:R=8→100, R:R=5→62.5, R:R=2.5→31
         if r['prod_xgb'] < 40:        # XGB<40=低胜率, R:R虚高标的打7折
             rr_score *= 0.7
-        # 距买入区(买入区在现价下方为负距): -0.5%→97.5分, -5%→75分, -15%→25分
+        # 距买入区=现价距中枢下沿(安全买点): 双边惩罚, 贴着下沿→100分, 超跌或追高→降分
         dist_score = 50.0
-        entry_v = r['entry']; price_v = r['price']
-        if isinstance(entry_v, (int, float)) and isinstance(price_v, (int, float)) and price_v > 0:
-            dist_pct = (entry_v - price_v) / price_v * 100
-            dist_score = max(0.0, min(100.0, 100.0 + dist_pct * 5.0))
+        zl_v = r.get('zl'); price_v = r['price']
+        if isinstance(zl_v, (int, float)) and isinstance(price_v, (int, float)) and zl_v > 0:
+            dist_pct = (price_v - zl_v) / zl_v * 100  # 正=追高(下沿上方), 负=超跌(下沿下方)
+            dist_score = max(0.0, min(100.0, 100.0 - abs(dist_pct) * 5.0))
         r['_rank'] = (r['prod_xgb'] * 0.35          # XGB第一(生产模型AUC0.667)
                       + rr_score * 0.15             # R:R第二(盈亏比)
                       + r['score3d'] * 0.15         # 3D
@@ -716,10 +720,10 @@ def main():
         rr_v = r.get('rr')
         if isinstance(rr_v, (int, float)) and rr_v < 1.5:
             return True
-        # 距买入区>20%(买入区在现价下方20%以上, 不可操作)否决
-        entry_v = r.get('entry'); price_v = r.get('price')
-        if isinstance(entry_v, (int, float)) and isinstance(price_v, (int, float)) and price_v > 0:
-            if (entry_v - price_v) / price_v * 100 < -20:
+        # 现价距中枢下沿>20%(超跌或追高)否决
+        zl_v = r.get('zl'); price_v = r.get('price')
+        if isinstance(zl_v, (int, float)) and isinstance(price_v, (int, float)) and zl_v > 0:
+            if abs((price_v - zl_v) / zl_v * 100) > 20:
                 return True
         return False
 
