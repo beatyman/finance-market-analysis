@@ -119,6 +119,7 @@ python3 train.py --stocks 27 --years 3
 | `csi300_full_scan.py` | **沪深300完整版扫描(推荐)** — baostock共享连接, 生产XGBoost+3D+阿娇+风控, 3Sheet Excel |
 | `gann_enhance.py` | **四框架增强** — 江恩八分位+MACD多级别共振+Ari动量(降采样周线) |
 | `risk_engine.py` | **风险优先引擎** — ATR等风险仓位+11道门控+DSL两阶段退出(吸收hermes-trader), 见 `references/expert_lenses_committee.md` |
+| `cyq_chip.py` | **筹码分布CYQ** — A股三角分布筹码算法(获利盘/平均成本/集中度, 吸收InStock) |
 
 ## 日报生成
 
@@ -442,6 +443,20 @@ TradingAgents(65K⭐) A股特化 fork，补充三大 A股特有维度（作为�
 3. **解禁面** — 解禁规模(>20%重大) + 减持动力(溢价倍数) + **2024减持新规三条禁止减持**（破发/破净/分红不达标）+ 历史减持
 
 **硬核规则**：2024减持新规下，控股股东破发/破净/分红不达标时不得减持——判断解禁压力前必先核对这三条，解禁市值大≠即时抛压。
+
+## 筹码分布 + A股数据源 (scripts/cyq_chip.py + references/astock_data_sources.md — 吸收 InStock)
+
+筹码分布 CYQ（A股特有三角分布算法）：判断主力成本、获利盘、套牢盘。
+
+```python
+from cyq_chip import calc_cyq
+r = calc_cyq(opens, closes, highs, lows, turnovers, crange=120, cyq_days=210)
+# benefit_part 获利盘比例 | avg_cost 平均成本(主力成本锚) | concentration_90 集中度
+```
+
+关键判据：`benefit_part<0.1`深度套牢(反弹减仓)、`concentration_90<0.1`主力控盘、`现价<avg_cost`跌破主力成本。与缠论中枢互补——中枢定安全边界，筹码定主力成本。
+
+数据源接口（免费直连）：东财龙虎榜 `datacenter-web.eastmoney.com/api/data/v1/get`(reportName=RPT_DAILYBILLBOARD_DETAILSNEW)、同花顺涨停原因 `zx.10jqka.com.cn/event/api/getharden`、东财大宗交易/资金流向 `push2.eastmoney.com`。
 
 ## 阿娇版筛选标准（重要工作流）
 

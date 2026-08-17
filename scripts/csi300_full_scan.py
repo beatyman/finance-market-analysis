@@ -33,6 +33,7 @@ from enhanced_tools import (
 )
 from risk_engine import (atr_equal_risk_notional, risk_of_ruin,
                          GateContext, eval_all_gates, ExitPolicy, DSLTracker)
+from cyq_chip import calc_cyq, calc_chip_score, fetch_turnover_batch
 
 # 风险引擎用户持仓(用于 opposite_direction_guard 禁止金字塔加仓)
 USER_POSITIONS = [
@@ -184,6 +185,9 @@ def main():
         except:
             pass
     print(f'  K线缓存: {len(kline_cache)} 只')
+
+    # 换手率: 东财接口限流严重, 筹码分布用成交量归一化兜底(覆盖100%), 东财仅可选精度提升
+    turnover_map = {}
 
     # Scan
     name_map = {c: n for c, n in stocks}
@@ -484,7 +488,29 @@ def main():
             payoff = max(1.0, min(4.0, float(rr or 2.0)))
             risk_ror = risk_of_ruin(win_rate=win_rate, payoff_ratio=payoff,
                                     risk_per_trade_pct=0.02)
-        
+
+        # ══════ 筹码分布(CYQ) + 筹码评分 ══════
+        chip_score_val = None
+        chip_veto = False
+        chip_detail = '—'
+        chip_benefit = None
+        chip_avg_cost = None
+        if len(closes) >= 30:
+            try:
+                # 换手率: 东财取到用真实值, 否则用成交量归一化代理(默认均值3%)
+                turnover_avg = turnover_map.get(code, 3.0)
+                mean_vol = sum(vols) / len(vols) if vols else 1.0
+                turnovers = [max(0.1, turnover_avg * (v / mean_vol)) for v in vols]
+                cyq = calc_cyq(opens, closes, highs, lows, turnovers,
+                               crange=120, cyq_days=210)
+                if cyq.get('benefit_part') is not None:
+                    chip_score_val, chip_veto, chip_detail = calc_chip_score(
+                        cyq['benefit_part'], cyq['concentration_90'], px, cyq['avg_cost'])
+                    chip_benefit = cyq['benefit_part']
+                    chip_avg_cost = cyq['avg_cost']
+            except Exception:
+                pass
+
         results.append({
             'code': code,
             'name': name,
@@ -514,6 +540,10 @@ def main():
             'risk_size': risk_size,
             'risk_gate': risk_gate,
             'risk_ror': round(risk_ror, 4) if risk_ror is not None else '—',
+            'chip_score': chip_score_val if chip_score_val is not None else '—',
+            'chip_veto': chip_veto,
+            'chip_benefit': chip_benefit,
+            'chip_avg_cost': chip_avg_cost,
         })
 
     print(f'  完成: {len(results)} 只信号')
@@ -634,7 +664,7 @@ def main():
     # --- Sheet 3: 综合推荐 ---
     ws3 = wb.create_sheet('综合推荐')
     rec_headers = ['#', '代码', '名称', '现价', '生产XGB', '3D分', '等级', '仓位%', 
-                   'R:R', '四框架', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
+                   'R:R', '四框架', '筹码', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
     for c, h in enumerate(rec_headers, 1):
         cell = ws3.cell(1, c, h)
         cell.fill = hdr_fill
@@ -642,15 +672,17 @@ def main():
         cell.border = thin_border
         cell.alignment = Alignment(horizontal='center')
     
-    # Rank: 3D×0.4 + XGB×0.25(中枢内) + 四框架增强×0.2 + V4.5 bonus
+    # Rank: 3D×0.35 + XGB×0.25(中枢内) + 四框架×0.15 + 筹码×0.10 + V4.5 bonus
     for r in results:
-        r['_rank'] = (r['score3d'] * 0.4
+        chip = r['chip_score'] if isinstance(r['chip_score'], (int, float)) else 50.0
+        r['_rank'] = (r['score3d'] * 0.35
                       + (r['prod_xgb'] * 0.25 if r['in_zs'] == '是' else 0)
-                      + r['enhance'] * 0.2
+                      + r['enhance'] * 0.15
+                      + chip * 0.10
                       + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
     
-    recs = results[:15]
+    recs = [r for r in results if not r.get('chip_veto')][:15]
     for i, r in enumerate(recs):
         logic = '+'.join([x for x in [
             ('中枢内' if r['in_zs'] == '是' else ''),
@@ -660,7 +692,7 @@ def main():
         direction = '多' if 'Buy' in str(r.get('bsp','')) else ('空' if 'Sell' in str(r.get('bsp','')) else '观望')
         vals = [i+1, r['code'], r['name'], r['price'], r['prod_xgb'],
                 r['score3d'], r['grade'], r['position_pct'], rr_s,
-                r['enhance'], r['v45'], r['gzk'], r['zs'][:15],
+                r['enhance'], r['chip_score'], r['v45'], r['gzk'], r['zs'][:15],
                 r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic]
         for c, v in enumerate(vals, 1):
             cell = ws3.cell(i+2, c, v)
@@ -668,8 +700,8 @@ def main():
             cell.alignment = Alignment(horizontal='center')
             if i < 5: cell.fill = green_fill
     
-    # Column widths for 综合推荐 (19 columns)
-    for c, w in enumerate([4,8,10,7,9,4,6,4,5,7,5,5,15,7,7,7,5,8,18], 1):
+    # Column widths for 综合推荐 (20 columns)
+    for c, w in enumerate([4,8,10,7,9,4,6,4,5,7,6,5,5,15,7,7,7,5,8,18], 1):
         ws3.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
     ws3.freeze_panes = 'A2'
 
