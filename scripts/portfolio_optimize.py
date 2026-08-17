@@ -86,7 +86,7 @@ def quality_filter(results: List[dict]) -> List[dict]:
     条件:
       - Buy 信号
       - 中枢内 (有安全边界)
-      - R:R ≥ 1.0 (盈亏比为正)
+      - R:R ≥ 1.5 (盈亏比划算, 止损空间≤盈利空间的2/3)
       - 生产XGB ≥ 40 (信号有效)
     """
     filtered = []
@@ -95,7 +95,7 @@ def quality_filter(results: List[dict]) -> List[dict]:
             continue
         if r.get('in_zs') != '是':
             continue
-        if r.get('rr', 0) < 1.0:
+        if r.get('rr', 0) < 1.5:
             continue
         if r.get('prod_xgb', 0) < 40:
             continue

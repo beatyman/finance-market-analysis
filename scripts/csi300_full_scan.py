@@ -702,7 +702,7 @@ def main():
                       + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
 
-    # 阿娇否决项: 方向非多 / 威科夫派发(D) / 筹码否决(深度套牢+远高成本) / 距买入区>20%(不可操作)
+    # 阿娇否决项: 方向非多 / 威科夫派发(D) / 筹码否决 / R:R<1.5 / 距买入区>20%(不可操作)
     def veto(r):
         direction = '多' if 'Buy' in str(r.get('bsp', '')) else ('空' if 'Sell' in str(r.get('bsp', '')) else '观望')
         if direction != '多':
@@ -711,6 +711,10 @@ def main():
         if wy.startswith('D('):  # 派发信号
             return True
         if r.get('chip_veto'):
+            return True
+        # R:R<1.5 否决(盈亏比不划算, 止损空间>盈利空间1.5倍以上)
+        rr_v = r.get('rr')
+        if isinstance(rr_v, (int, float)) and rr_v < 1.5:
             return True
         # 距买入区>20%(买入区在现价下方20%以上, 不可操作)否决
         entry_v = r.get('entry'); price_v = r.get('price')
@@ -765,7 +769,7 @@ def main():
         # Stage 1: Quality filter
         qualified = quality_filter(results)
         print(f'\n[组合优化] 质量过滤: {len(qualified)}/{len(results)}只通过 ' +
-              f'(Buy+中枢内+R:R≥1.0+生产XGB≥40)')
+              f'(Buy+中枢内+R:R≥1.5+生产XGB≥40)')
         
         if len(qualified) >= 3:
             # Stage 2-5: Alpha-Risk Blended HRP
