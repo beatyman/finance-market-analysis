@@ -120,6 +120,8 @@ python3 train.py --stocks 27 --years 3
 | `gann_enhance.py` | **四框架增强** — 江恩八分位+MACD多级别共振+Ari动量(降采样周线) |
 | `risk_engine.py` | **风险优先引擎** — ATR等风险仓位+11道门控+DSL两阶段退出(吸收hermes-trader), 见 `references/expert_lenses_committee.md` |
 | `cyq_chip.py` | **筹码分布CYQ** — A股三角分布筹码算法(获利盘/平均成本/集中度, 吸收InStock) |
+| `invest_strategies.py` | **10个A股经典形态选股策略** — 放量上涨/高紧旗形/停机坪/海龟突破/平台突破/放量跌停/持续上涨/低ATR/无大幅回撤/回踩年线(吸收InStock core/strategy, 零talib依赖) |
+| `factor_preprocess.py` | **因子预处理(吸收AlphaPurify 42种全吸收)** — winsorize缩尾12种+neutralize中性化15种+standardize标准化15种, 横截面纯函数(零polars依赖), 标准三段式管线 |
 
 ## 日报生成
 
@@ -459,6 +461,52 @@ r = calc_cyq(opens, closes, highs, lows, turnovers, crange=120, cyq_days=210)
 关键判据：`benefit_part<0.1`深度套牢(反弹减仓)、`concentration_90<0.1`主力控盘、`现价<avg_cost`跌破主力成本。与缠论中枢互补——中枢定安全边界，筹码定主力成本。
 
 数据源接口（免费直连）：东财龙虎榜 `datacenter-web.eastmoney.com/api/data/v1/get`(reportName=RPT_DAILYBILLBOARD_DETAILSNEW)、同花顺涨停原因 `zx.10jqka.com.cn/event/api/getharden`、东财大宗交易/资金流向 `push2.eastmoney.com`。
+
+## 经典形态选股策略 (scripts/invest_strategies.py — 吸收 InStock core/strategy)
+
+10 个纯函数 A股经典选股形态，零 talib 依赖（MA 用 pandas rolling 替代），统一输入 `df`(DataFrame 含 `date/open/high/low/close/volume/p_change`列)，返回 bool。
+
+```python
+from invest_strategies import scan_all, STRATEGIES
+hits = scan_all(df)  # {'放量上涨': False, '高紧旗形': True, ...}
+```
+
+| 策略 | 函数 | 核心条件 |
+|---|---|---|
+| 放量上涨 | `check_volume_breakout` | 涨幅≥2%+收阳 + 成交额≥2亿 + 量比≥2 |
+| 高紧旗形 | `check_high_tight_flag` | 龙虎榜有机构(istop=True) + 24~10日高低比≥1.9 + 连续两天涨停≥9.5% |
+| 停机坪 | `check_parking_apron` | 15日涨停放量 + 后续3日高开小阳(振幅<3%) |
+| 海龟突破 | `check_turtle_breakout` | 收盘价≥60日最高收盘价 |
+| 平台突破 | `check_breakthrough_platform` | 放量突破MA60 + 突破前偏离MA60在-5%~20% |
+| 放量跌停 | `check_climax_limitdown` | 跌>9.5% + 成交额≥2亿 + 量比≥4（恐慌底） |
+| 持续上涨 | `check_keep_increasing` | MA30多头递增 + MA30[末]>1.2×MA30[首] |
+| 低ATR成长 | `check_low_atr` | 近10日平均\|涨跌幅\|<10% + 高低比>1.1 |
+| 无大幅回撤 | `check_low_backtrace_increase` | 60日涨幅≥60% + 无单日跌7%/两日跌10% |
+| 回踩年线 | `check_backtrace_ma250` | 年线下突破 + 年线上回踩 + 缩量(量比>2,回撤<0.8) |
+
+**用法**：作为缠论 + XGBoost 的**形态共振层**——缠论定结构（中枢/买卖点），形态策略定"经典形态确认"。高紧旗形/停机坪是欧奈尔式强势股形态（配合龙虎榜机构），海龟/平台突破是趋势跟随，回踩年线/放量跌停是反转信号。
+
+## 因子预处理 (scripts/factor_preprocess.py — 吸收 AlphaPurify)
+
+量化因子标准三段式：**winsorize(去极值) → neutralize(去风险暴露) → standardize(标准化)**，全部横截面(groupby 交易日)计算，零 polars 依赖。已吸收**全部 42 种方法**。
+
+```python
+from factor_preprocess import purify, WINSORIZE, NEUTRALIZE, STANDARDIZE
+# 一键净化: MAD缩尾 + OLS去市值/行业 + RankGauss正态化
+df = purify(df, 'factor', date_col='date',
+            neutralizer_cols=['log_mktcap'], dummy_cols=['industry'],
+            winsorize='mad', neutralize='ols', standardize='rank_gauss')
+```
+
+- 缩尾 12 种: `mean_std`/`mad`(鲁棒)/`iqr`/`quantile`/`zscore`/`rolling_quantile`/`boxcox_compress`/`rankgauss`/`tanh`/`huber`/`ransac`
+- 中性化 15 种: `ols`(最常用去市值/行业)/`ridge`/`lasso`/`elasticnet`/`polynomial`/`kernelridge`/`huber`/`theilsen`/`bayesianridge`/`randomforest`/`gbdt`/`pca`/`ica`/`rank`/`partialcorrelation`
+- 标准化 15 种: `zscore`/`robust_zscore`/`rank`/`rank_gauss`/`minmax`/`normal_scores`/`quantile_binning`/`log_zscore`/`boxcox`/`yeo_johnson`/`rolling`/`rolling_robust`/`rolling_minmax`/`volatility_scaling`/`ewma`
+
+完整 42 种方法清单 + 适用场景见 `references/factor_preprocessing.md`。
+
+**⚠️ 实验结论 (2026-08-21)**：横截面预处理对 **XGBoost 树模型有害**（AUC 0.667→0.51）。树模型对单调变换不敏感，横截面分组破坏了特征的绝对水平与时序一致性。**树模型用按列整体缩尾；横截面预处理只用于线性模型/IC 计算**。`train_production.py` 已集成开关 `PURIFY_WINSORIZE`（默认 None 走 legacy）。
+
+**Pitfall**: 中性化必须按交易日横截面做，时间序列整体做会引入前视偏差。
 
 ## 阿娇版筛选标准（重要工作流）
 

@@ -82,6 +82,15 @@ IC_MIN_ABS = 0.02
 IR_MIN = 0.3
 IC_WINDOW_DAYS = 30  # reduced from 60 for speed
 
+# 因子净化 (吸收 AlphaPurify 42种方法, 见 scripts/factor_preprocess.py)
+# ⚠️ 实验结论(2026-08-21): 横截面预处理对 XGBoost 树模型有害——
+#   横截面MAD缩尾 AUC 0.5165 / quantile 0.5108 / +zscore 0.5074, 均 < 旧方法按列整体1-99%的 0.667。
+#   原因: 树模型对单调变换不敏感, 横截面分组统计破坏了特征的绝对水平与时序一致性。
+#   横截面预处理保留给线性模型/IC计算场景(见 factor_preprocess.py), 训练默认关闭。
+PURIFY_WINSORIZE = None         # 横截面缩尾: None(默认,用旧方法)/mad/quantile/iqr/mean_std
+PURIFY_STANDARDIZE = None       # 横截面标准化: 树模型不需要, 保持 None (线性模型可用 zscore/rank)
+PURIFY_NEUTRALIZE = None        # 中性化(需市值/行业风险因子列, 暂无→关): ols/ridge/pca
+
 EPS = 1e-8
 
 
@@ -593,13 +602,36 @@ def build_cross_derived(df: pd.DataFrame, cont_cols: List[str],
 # ══════════════════════════════════════════════════════════
 
 def winsorize_features(df: pd.DataFrame, feat_cols: List[str]) -> pd.DataFrame:
-    """Winsorize at 1%-99% per column."""
+    """Winsorize at 1%-99% per column (legacy, 按列整体)."""
     result = df.copy()
     for col in feat_cols:
         s = result[col].dropna()
         if s.empty: continue
         lo, hi = s.quantile(WINSOR_LOWER), s.quantile(WINSOR_UPPER)
         result[col] = result[col].clip(lower=lo, upper=hi)
+    return result
+
+
+def cross_sectional_purify(df: pd.DataFrame, feat_cols: List[str], date_col: str = 'date',
+                           winsorize: str = 'mad', standardize: str = 'zscore',
+                           neutralize: Optional[str] = None) -> pd.DataFrame:
+    """横截面因子净化 (吸收 AlphaPurify 42种方法).
+
+    对每个特征列按交易日(date_col)横截面分组, 依次执行:
+      1. winsorize 缩尾去极值 (mad/quantile/iqr/mean_std/...)
+      2. standardize 标准化 (zscore/rank/rank_gauss/...)
+      3. neutralize 中性化 (可选, 需 neutralizer_cols)
+
+    相比 legacy winsorize_features(按列整体1%-99%), 横截面处理更符合
+    因子挖掘规范——同一天的所有股票一起统计, 消除日间分布漂移。
+    """
+    from factor_preprocess import WINSORIZE, STANDARDIZE
+    result = df.copy()
+    for i, col in enumerate(feat_cols):
+        if winsorize and winsorize in WINSORIZE:
+            result = WINSORIZE[winsorize](result, col, date_col)
+        if standardize and standardize in STANDARDIZE:
+            result = STANDARDIZE[standardize](result, col, date_col)
     return result
 
 
@@ -984,8 +1016,15 @@ def main():
     keep_cols = na_ratio[na_ratio <= 0.8].index.tolist()
     print(f"  NaN filter: {len(all_feat_cols)} → {len(keep_cols)} (dropped {len(all_feat_cols)-len(keep_cols)} >80% NaN)")
 
-    # Winsorization
-    feat_df = winsorize_features(feat_df, keep_cols)
+    # 因子净化: PURIFY_WINSORIZE 配置了→横截面净化; None→旧方法按列整体1-99%(验证最优AUC 0.667)
+    if PURIFY_WINSORIZE:
+        feat_df = cross_sectional_purify(feat_df, keep_cols, date_col='date',
+                                         winsorize=PURIFY_WINSORIZE,
+                                         standardize=PURIFY_STANDARDIZE)
+        print(f"  横截面净化: {PURIFY_WINSORIZE}缩尾 + {PURIFY_STANDARDIZE or '无'}标准化")
+    else:
+        feat_df = winsorize_features(feat_df, keep_cols)
+        print(f"  缩尾: 按列整体 1%-99% (legacy, 验证最优 AUC 0.667)")
 
     # Spearman redundancy filter
     keep_cols = spearman_redundancy_filter(feat_df, keep_cols)

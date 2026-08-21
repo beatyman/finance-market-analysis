@@ -28,8 +28,13 @@ def fetch_kline_sina(code, datalen=1023):
     except Exception:
         return [], [], [], [], [], []
 
-def fetch_kline_tencent(code, start='2023-01-01', end='2026-08-13'):
+def _today():
+    from datetime import datetime
+    return datetime.now().strftime('%Y-%m-%d')
+
+def fetch_kline_tencent(code, start='2023-01-01', end=None):
     """腾讯历史K线(备选) — 本地缓存+自动分页"""
+    end = end or _today()
     cache_file = os.path.join(_CACHE_DIR, '{}.json'.format(code))
     if os.path.exists(cache_file):
         try:
@@ -91,18 +96,20 @@ def fetch_kline_tencent(code, start='2023-01-01', end='2026-08-13'):
     return dates, opens, highs, lows, closes, vols
 
 
-def fetch_kline(code, start='2023-01-01', end='2026-08-13'):
+def fetch_kline(code, start='2023-01-01', end=None):
     """统一数据源 — 新浪首选(缓存), 腾讯备选
     
     Returns: (dates, opens, highs, lows, closes, vols)
     """
-    # 本地缓存优先(不限来源)
+    end = end or _today()
+    # 本地缓存优先(仅当数据新鲜: 最新日期==end 或 缓存日期>=上一交易日)
     cache_file = os.path.join(_CACHE_DIR, '{}.json'.format(code))
     if os.path.exists(cache_file):
         try:
             with open(cache_file, 'r') as f:
                 cached = json.load(f)
-            if len(cached.get('dates', [])) >= 200:
+            cdates = cached.get('dates', [])
+            if len(cdates) >= 200 and cdates and cdates[-1] >= end:
                 return (cached['dates'], cached['opens'], cached['highs'],
                         cached['lows'], cached['closes'], cached['vols'])
         except:
