@@ -192,7 +192,49 @@ def main():
     # Scan
     name_map = {c: n for c, n in stocks}
     results = []
-    
+
+    # ═══════ 因子预处理: 预收集特征 + winsorize 去极值 (吸收 factor_preprocess) ═══════
+    # 对 280 只股票的 101 维特征做横截面 1%-99% 缩尾, 让 XGBoost 打分不被极端特征值扭曲。
+    # 两阶段: 先收集全部特征向量 → 按列 1%-99% clip → 主循环复用 winsorized 特征。
+    print(f'  [预处理] 预收集特征 + winsorize 去极值...')
+    feat_cache = {}
+    for _code, _name in stocks:
+        if _code not in quotes:
+            continue
+        _data = kline_cache.get(_code)
+        if not _data:
+            continue
+        _dates, _opens, _closes, _highs, _lows, _vols = _data
+        try:
+            _cur, _bsp_buy, _bsp_types, _px2, _zs_str, _pos = chan_analyze(
+                _dates, _opens, _closes, _highs, _lows, _code)
+        except Exception:
+            continue
+        _feats = extract_features(_closes, _highs, _lows, _opens, _vols, _bsp_buy, _bsp_types, _cur)
+        try:
+            from talib_features import add_talib_features, get_talib_feature_names
+            _talib_feats = add_talib_features(_closes, _highs, _lows, _vols)
+            _talib_names = get_talib_feature_names()
+            _feat_vec = [_feats[k] for k in sorted(_feats.keys())] + \
+                        [_talib_feats.get(k, 0.0) for k in _talib_names]
+        except Exception:
+            _feat_vec = [_feats[k] for k in sorted(_feats.keys())]
+        feat_cache[_code] = (_feat_vec, _cur, _bsp_buy, _bsp_types, _zs_str, _pos,
+                             _closes, _highs, _lows, _vols, _opens)
+
+    # 横截面 1%-99% winsorize (每列独立裁剪极端值)
+    if feat_cache:
+        _codes = list(feat_cache.keys())
+        _mat = np.array([feat_cache[c][0] for c in _codes], dtype=np.float64)
+        for _j in range(_mat.shape[1]):
+            _col = _mat[:, _j]
+            _lo, _hi = np.nanpercentile(_col, [1, 99])
+            _mat[:, _j] = np.clip(_col, _lo, _hi)
+        for _i, _c in enumerate(_codes):
+            _entry = feat_cache[_c]
+            feat_cache[_c] = (_mat[_i].tolist(),) + _entry[1:]
+    print(f'  [预处理] 特征收集 {len(feat_cache)} 只, winsorize 完成')
+
     for idx, (code, name) in enumerate(stocks):
         if code not in quotes:
             continue
@@ -202,31 +244,13 @@ def main():
         q = quotes[code]
         px = q['price']
 
-        # Fetch K-line from cache (baostock, preloaded)
-        data = kline_cache.get(code)
-        if not data:
+        # 从预收集缓存取数据 (winsorized 特征 + chan 结果)
+        cached = feat_cache.get(code)
+        if not cached:
             continue
-        dates, opens, closes, highs, lows, vols = data
-        
-        # Chan analysis
-        try:
-            cur, bsp_buy, bsp_types, px2, zs_str, pos = chan_analyze(
-                dates, opens, closes, highs, lows, code)
-        except Exception as e:
-            continue
+        feat_vec, cur, bsp_buy, bsp_types, zs_str, pos, closes, highs, lows, vols, opens = cached
 
-        # Feature extraction (58维缠论 + 43维ta-lib = 101维, 与训练顺序一致)
-        feats = extract_features(closes, highs, lows, opens, vols, bsp_buy, bsp_types, cur)
-        try:
-            from talib_features import add_talib_features, get_talib_feature_names
-            talib_feats = add_talib_features(closes, highs, lows, vols)
-            talib_names = get_talib_feature_names()
-            feat_vec = [feats[k] for k in sorted(feats.keys())] + \
-                       [talib_feats.get(k, 0.0) for k in talib_names]
-        except Exception:
-            feat_vec = [feats[k] for k in sorted(feats.keys())]
-
-        # XGBoost score — v5+talib 101维模型
+        # XGBoost score — v5+talib 101维模型 (winsorized 特征)
         if prod_model is not None:
             try:
                 nf = prod_model.n_features_in_
