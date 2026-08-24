@@ -533,6 +533,20 @@ df = purify(df, 'factor', date_col='date',
 
 **A股映射**：黄金主升浪→铜金矿企双主线（紫金/江铜/铜陵 = 金信用属性 + 铜 AI 实体属性共振）。
 
+## Price Action 分析框架 (references/price_action_framework.md — 吸收 price-action-skill)
+
+整合 ICT(智能钱) + GEX/Gamma(期权对冲) + 经典价格行为 + VWAP 四支柱，与 smc-ict-trading 互补。
+
+- **ICT**：SSL/BSL 流动性池、FVG 公允价值缺口、Displacement 位移、BOS/CHoCH 结构切换
+- **GEX/Gamma**：Call/Put 墙、零 gamma 线（美股/港股期权，A股映射到 50ETF/300ETF 期权）
+- **VWAP/开盘区间**：VWAP 收复=做多触发、开盘区间突破=趋势日
+- **工作流**：Top-Down 六步（HTF bias → GEX → 日内结构 → 流动性地图 → 触发 → 共振计数）
+- **级别优先级栈**：GEX墙 > 日线S/R > SSL/BSL > FVG > VWAP > 整数关口（共振3+ = 高确信）
+- **设置模板**：Entry trigger/zone/Stop/T1/T2/Invalidation/Conviction 完整字段
+- **输出模式**：Mode A 结构化分析 / Mode B 社区帖(富途牛牛,不爹味) / Mode C 日内复盘
+
+**融合映射**：ICT 扫荡↔缠论假突破、FVG↔中枢回踩、VWAP收复↔中枢下沿放量确认、级别栈↔缠论>XGBoost>筹码>资金共振。
+
 ## 阿娇版筛选标准（重要工作流）
 
 chan.py 的 BSP 检测是机械化的，会产生经典缠论中不成立的信号。分析板块/个股时**必须**用阿娇标准二次筛选：
