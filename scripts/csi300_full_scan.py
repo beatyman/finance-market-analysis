@@ -845,7 +845,8 @@ def main():
     headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
                '买入', '止损', 'TP1', '风控', '标签', '威科夫',
-               '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分', '共振', '资金(亿)']
+               '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分', '共振', '资金(亿)',
+               '基本面', '龙头']
 
     # Header style
     hdr_fill = PatternFill(start_color='1a1a2e', end_color='1a1a2e', fill_type='solid')
@@ -879,7 +880,9 @@ def main():
             r['risk_status'], r['tag'], r['wyckoff'],
             r['risk_size'], r['risk_gate'], r['risk_ror'],
             r['sr_detail'], r['sr_score'], r['resonance_label'],
-            round(r['flow_5d'] / 1e8, 2)
+            round(r['flow_5d'] / 1e8, 2),
+            (f"{r['fund_score6']}/{r['fund_rating']}" if r.get('fund_score6') is not None else '—'),
+            ('龙头' if (r.get('rel_pagerank') or 0) > 0.004 else '-')
         ]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(row, c, v)
@@ -901,11 +904,11 @@ def main():
     widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':9, 'G':5,
               'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':5, 'O':5,
               'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18,
-              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6, 'AA':9, 'AB':9}
+              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6, 'AA':9, 'AB':9, 'AC':11, 'AD':6}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'A2'
-    ws.auto_filter.ref = f'A1:AB{len(results)+1}'
+    ws.auto_filter.ref = f'A1:AD{len(results)+1}'
 
     # --- Sheet 2: Macro (detailed) ---
     ws2 = wb.create_sheet('宏观')
