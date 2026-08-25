@@ -547,6 +547,16 @@ df = purify(df, 'factor', date_col='date',
 
 **融合映射**：ICT 扫荡↔缠论假突破、FVG↔中枢回踩、VWAP收复↔中枢下沿放量确认、级别栈↔缠论>XGBoost>筹码>资金共振。
 
+## S&R 支撑阻力带聚类 (references/spx_price_action_framework.md + scripts/sr_zones.py — 吸收 SPX-Price-Action-Compass)
+
+Al Brooks/Bob Volman 经典价格行为量化算法，核心增量是**可执行的 S&R 聚类脚本** `sr_zones.py`（纯函数零依赖）。
+
+- **Swing 极点**：前后向滑动窗口（默认5/5）找局部高低点
+- **S&R 一维凝聚聚类**：Swing 价格按 0.15% 公差聚类 → support(仅low)/resistance(仅high)/flip(支阻互换) 三类 + 触碰强度 + Top8
+- **严格几何形态**：Doji<8%实体、Pin Bar影线>60%/实体<30%、双顶底价差0.12%/距离8-40根、头肩肩差0.2%/距6根
+- **用法**：`from sr_zones import sr_zones, split_sr; zones=sr_zones(highs,lows); res,sup=split_sr(zones,close[-1])`
+- **融合**：S&R带 + 缠论中枢 + 筹码峰 = 三重共振验证（flip互换位 ↔ 中枢上沿跌破变阻力）
+
 ## 阿娇版筛选标准（重要工作流）
 
 chan.py 的 BSP 检测是机械化的，会产生经典缠论中不成立的信号。分析板块/个股时**必须**用阿娇标准二次筛选：
