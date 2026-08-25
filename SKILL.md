@@ -588,6 +588,16 @@ Al Brooks/Bob Volman 经典价格行为量化算法，核心增量是**可执行
 - **融合**：关系特征(中心性/Pagerank/DTW均值/行业超额)作为 XGBoost 新特征维度；多层异构图(行业L1/L2/L3+概念+机构持仓+DTW+相关性)
 - **局限**：GNN 训练需 PyTorch+GPU(重), 只吸收纯计算的关系特征, 不引入 GNN
 
+## 财报质量核查/预期差 (references/equity_research_framework.md + scripts/beneish_mscore.py — 吸收 equity-research-skill)
+
+机构级投研框架核心是**预期差投资**（现价隐含什么预期）+ **财报质量核查**（先验真后估值）。
+
+- **Beneish M-Score 八变量**：`from beneish_mscore import beneish_mscore`，M>-1.78=可能操纵(金融股不适用)
+- **财报可信度 A/B/C/D**：预注册否决项，C级动作最高观望、D级规避（↔阿娇否决哲学）
+- **预期差**：反向 DCF+PVGO 解现价隐含预期，Gap表"市场隐含vs我的预期vs base rate分位"
+- **结论标定**：估值标签(低估/合理/高估)+动作矩阵+仓位思维(不对称比<1.5不建仓)
+- **融合**：M-Score补基本面六项评分的"质量"维度(数字打分不查假利润)
+
 ## 阿娇版筛选标准（重要工作流）
 
 chan.py 的 BSP 检测是机械化的，会产生经典缠论中不成立的信号。分析板块/个股时**必须**用阿娇标准二次筛选：
