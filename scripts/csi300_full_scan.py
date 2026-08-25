@@ -127,6 +127,37 @@ def fetch_pe_batch(stocks, cache_file=None):
     
     return pe_map
 
+# ═══════════════ 主力资金流批量查询 (新浪 MoneyFlow) ═══════════════
+def fetch_flow_batch(codes, sleep=0.08):
+    """批量取近5日主力净流入累计(元)。返回 {code: flow_5d}"""
+    import subprocess, json
+    flows = {}
+    for idx, code in enumerate(codes):
+        if idx % 50 == 0:
+            print(f'    资金流查询: {idx}/{len(codes)}', flush=True)
+        code = str(code).zfill(6)
+        prefix = ('sh' + code) if code.startswith('6') else ('sz' + code)
+        url = ('https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/'
+               'MoneyFlow.ssl_qsfx_zjlrqs?page=1&num=5&sort=opendate&asc=0&daima=' + prefix)
+        try:
+            r = subprocess.run(['curl', '-s', '--max-time', '6', url],
+                               stdout=subprocess.PIPE, timeout=8)
+            raw = r.stdout.decode('utf-8', errors='replace')
+            data = json.loads(raw)
+            flow_5d = 0.0
+            if isinstance(data, list):
+                for d in data:
+                    try:
+                        flow_5d += float(d.get('r0_net') or 0)
+                    except Exception:
+                        pass
+            flows[code] = flow_5d
+        except Exception:
+            flows[code] = 0.0
+        if sleep:
+            time.sleep(sleep)
+    return flows
+
 # ═══════════════ Main Scan ═══════════════
 def main():
     parser = argparse.ArgumentParser(description='沪深300缠论全量分析-完整版')
@@ -235,6 +266,10 @@ def main():
             _entry = feat_cache[_c]
             feat_cache[_c] = (_mat[_i].tolist(),) + _entry[1:]
     print(f'  [预处理] 特征收集 {len(feat_cache)} 只, winsorize 完成')
+
+    # 主力资金流批量拉取(近5日净流入)
+    print('  [资金流] 批量拉取近5日主力净流入...')
+    flow_map = fetch_flow_batch([c for c, _ in stocks], sleep=0.06)
 
     for idx, (code, name) in enumerate(stocks):
         if code not in quotes:
@@ -580,6 +615,10 @@ def main():
             resonance += 1  # 锚3: 筹码健康
         resonance_label = {3: '三重共振', 2: '双锚', 1: '单锚', 0: '无锚'}[resonance]
 
+        # 主力资金流评分: 近5日净流入(亿元) → 0-100 (每+1亿→+50分)
+        flow_5d = flow_map.get(code, 0.0)
+        flow_score = max(0.0, min(100.0, 50.0 + flow_5d / 1e8 * 50.0))
+
         results.append({
             'code': code,
             'name': name,
@@ -620,6 +659,8 @@ def main():
             'sr_s': sr_s,
             'resonance': resonance,
             'resonance_label': resonance_label,
+            'flow_5d': flow_5d,
+            'flow_score': round(flow_score, 1),
         })
 
     print(f'  完成: {len(results)} 只信号')
@@ -637,7 +678,7 @@ def main():
     headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
                '买入', '止损', 'TP1', '风控', '标签', '威科夫',
-               '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分', '共振']
+               '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分', '共振', '资金(亿)']
 
     # Header style
     hdr_fill = PatternFill(start_color='1a1a2e', end_color='1a1a2e', fill_type='solid')
@@ -670,7 +711,8 @@ def main():
             r['entry'], r['stop'], r['tp1'],
             r['risk_status'], r['tag'], r['wyckoff'],
             r['risk_size'], r['risk_gate'], r['risk_ror'],
-            r['sr_detail'], r['sr_score'], r['resonance_label']
+            r['sr_detail'], r['sr_score'], r['resonance_label'],
+            round(r['flow_5d'] / 1e8, 2)
         ]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(row, c, v)
@@ -692,11 +734,11 @@ def main():
     widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':9, 'G':5,
               'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':5, 'O':5,
               'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18,
-              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6, 'AA':9}
+              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6, 'AA':9, 'AB':9}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'A2'
-    ws.auto_filter.ref = f'A1:AA{len(results)+1}'
+    ws.auto_filter.ref = f'A1:AB{len(results)+1}'
 
     # --- Sheet 2: Macro (detailed) ---
     ws2 = wb.create_sheet('宏观')
@@ -741,7 +783,7 @@ def main():
     # --- Sheet 3: 综合推荐 ---
     ws3 = wb.create_sheet('综合推荐')
     rec_headers = ['#', '代码', '名称', '现价', '生产XGB', '3D分', '等级', '仓位%', 
-                   'R:R', '四框架', '筹码', 'S&R带', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
+                   'R:R', '四框架', '筹码', 'S&R带', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑', '分类']
     for c, h in enumerate(rec_headers, 1):
         cell = ws3.cell(1, c, h)
         cell.fill = hdr_fill
@@ -767,11 +809,13 @@ def main():
         # S&R 评分: 现价在支撑带(安全)与阻力带(追高)之间的位置, 贴支撑=100
         sr_sc = r.get('sr_score') if isinstance(r.get('sr_score'), (int, float)) else 50.0
         resonance = r.get('resonance', 0) or 0
+        flow_sc = r.get('flow_score') if isinstance(r.get('flow_score'), (int, float)) else 50.0
         r['_rank'] = (r['prod_xgb'] * 0.35          # XGB第一(生产模型AUC0.667)
                       + rr_score * 0.15             # R:R第二(期望值修正)
                       + r['score3d'] * 0.15         # 3D
                       + chip * 0.10                 # 筹码
-                      + r['enhance'] * 0.10         # 四框架
+                      + r['enhance'] * 0.05         # 四框架
+                      + flow_sc * 0.05              # 主力资金流(近5日净流入)
                       + dist_score * 0.05           # 距买入区(中枢下沿锚)
                       + sr_sc * 0.05                # S&R支撑阻力带(贴支撑加分)
                       + (8 if resonance >= 3 else (3 if resonance == 2 else 0))  # 三锚共振奖励
@@ -810,10 +854,16 @@ def main():
         ] if x])
         rr_s = r['rr'] if r['rr'] > 0 else '—'
         direction = '多' if 'Buy' in str(r.get('bsp','')) else ('空' if 'Sell' in str(r.get('bsp','')) else '观望')
+        # 二维分类: 共振度 × XGB胜率 (位置安全 vs 会涨)
+        high_xgb = (r['prod_xgb'] or 0) >= 47
+        triple = (r.get('resonance') or 0) >= 3
+        category = ('核心买入' if high_xgb and triple else
+                    '进攻候选' if high_xgb else
+                    '防御观察' if triple else '观望')
         vals = [i+1, r['code'], r['name'], r['price'], r['prod_xgb'],
                 r['score3d'], r['grade'], r['position_pct'], rr_s,
                 r['enhance'], r['chip_score'], r['sr_detail'], r['v45'], r['gzk'], r['zs'][:15],
-                r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic]
+                r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic, category]
         for c, v in enumerate(vals, 1):
             cell = ws3.cell(i+2, c, v)
             cell.border = thin_border
@@ -821,7 +871,7 @@ def main():
             if i < 5: cell.fill = green_fill
     
     # Column widths for 综合推荐 (20 columns)
-    for c, w in enumerate([4,8,10,7,9,4,6,4,5,7,6,11,5,5,15,7,7,7,5,8,18], 1):
+    for c, w in enumerate([4,8,10,7,9,4,6,4,5,7,6,11,5,5,15,7,7,7,5,8,18,10], 1):
         ws3.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
     ws3.freeze_panes = 'A2'
 
