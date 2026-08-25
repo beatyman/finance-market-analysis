@@ -578,6 +578,16 @@ Al Brooks/Bob Volman 经典价格行为量化算法，核心增量是**可执行
 - **数据源**：东财 push2ex(getTopicZTPool等, ut=7eea3edcaed734bea9cbfc24409ed989)；注意push2ex可访问但push2his/push2被DNS污染
 - **融合**：情绪冷/冰点时 CSI300 扫描降仓；龙虎榜席位(机构vs游资)比主力净流入更细
 
+## 关系特征/图结构 (references/gnn_stock_graph_framework.md + scripts/relation_features.py — 吸收 skill-dl-gnn-stock-graph)
+
+补"图结构维度"——XGBoost 树模型无法捕捉股票间联动关系。纯 numpy 零依赖。
+
+- **DTW 形态相似度**：`from relation_features import dtw_similarity, find_similar_peers`——龙头涨停→找形态相似跟风股
+- **PageRank 中心性**：纯 numpy 迭代，图节点重要性(龙头识别)
+- **用法**：`find_similar_peers(target_returns, returns_matrix, symbols, top_k=10)`
+- **融合**：关系特征(中心性/Pagerank/DTW均值/行业超额)作为 XGBoost 新特征维度；多层异构图(行业L1/L2/L3+概念+机构持仓+DTW+相关性)
+- **局限**：GNN 训练需 PyTorch+GPU(重), 只吸收纯计算的关系特征, 不引入 GNN
+
 ## 阿娇版筛选标准（重要工作流）
 
 chan.py 的 BSP 检测是机械化的，会产生经典缠论中不成立的信号。分析板块/个股时**必须**用阿娇标准二次筛选：
