@@ -34,6 +34,7 @@ from enhanced_tools import (
 from risk_engine import (atr_equal_risk_notional, risk_of_ruin,
                          GateContext, eval_all_gates, ExitPolicy, DSLTracker)
 from cyq_chip import calc_cyq, calc_chip_score, fetch_turnover_batch
+from sr_zones import sr_zones, split_sr
 
 # 风险引擎用户持仓(用于 opposite_direction_guard 禁止金字塔加仓)
 USER_POSITIONS = [
@@ -543,6 +544,32 @@ def main():
             except Exception:
                 pass
 
+        # ══════ S&R 支撑阻力带 (sr_zones 聚类算法) ══════
+        sr_score = 50.0
+        sr_r = None   # 最近阻力
+        sr_s = None   # 最近支撑
+        sr_detail = '—'
+        try:
+            sr_zones_list = sr_zones(highs, lows, tolerance=0.005, top=8)
+            sr_res, sr_sup = split_sr(sr_zones_list, px)
+            sr_r = sr_res[0]['price'] if sr_res else None
+            sr_s = sr_sup[0]['price'] if sr_sup else None
+            if sr_r is not None and sr_s is not None and sr_r > sr_s:
+                sr_pos = (px - sr_s) / (sr_r - sr_s)  # 0=贴支撑, 1=贴阻力
+                sr_score = max(0.0, min(100.0, 100.0 - sr_pos * 100.0))
+            elif sr_s is not None and sr_s > 0:
+                # 只有支撑: 现价距支撑越近越安全(贴支撑=100, 距支撑>25%→0)
+                dist_s = (px - sr_s) / sr_s * 100
+                sr_score = max(0.0, min(100.0, 100.0 - dist_s * 4))
+            elif sr_r is not None and sr_r > 0:
+                # 只有阻力: 现价距阻力越远越安全(贴阻力=0, 距阻力>25%→100)
+                dist_r = (sr_r - px) / sr_r * 100
+                sr_score = max(0.0, min(100.0, dist_r * 4))
+            if sr_r is not None or sr_s is not None:
+                sr_detail = f'R:{sr_r if sr_r else "-"}/S:{sr_s if sr_s else "-"}'
+        except Exception:
+            pass
+
         results.append({
             'code': code,
             'name': name,
@@ -577,6 +604,10 @@ def main():
             'chip_veto': chip_veto,
             'chip_benefit': chip_benefit,
             'chip_avg_cost': chip_avg_cost,
+            'sr_score': round(sr_score, 1),
+            'sr_detail': sr_detail,
+            'sr_r': sr_r,
+            'sr_s': sr_s,
         })
 
     print(f'  完成: {len(results)} 只信号')
@@ -594,7 +625,7 @@ def main():
     headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
                '买入', '止损', 'TP1', '风控', '标签', '威科夫',
-               '风险仓位', '风险门控', '爆仓概率']
+               '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分']
 
     # Header style
     hdr_fill = PatternFill(start_color='1a1a2e', end_color='1a1a2e', fill_type='solid')
@@ -626,7 +657,8 @@ def main():
             r['v45'], r['gzk'],
             r['entry'], r['stop'], r['tp1'],
             r['risk_status'], r['tag'], r['wyckoff'],
-            r['risk_size'], r['risk_gate'], r['risk_ror']
+            r['risk_size'], r['risk_gate'], r['risk_ror'],
+            r['sr_detail'], r['sr_score']
         ]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(row, c, v)
@@ -648,11 +680,11 @@ def main():
     widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':9, 'G':5,
               'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':5, 'O':5,
               'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18,
-              'V':9, 'W':9, 'X':9}
+              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'A2'
-    ws.auto_filter.ref = f'A1:X{len(results)+1}'
+    ws.auto_filter.ref = f'A1:Z{len(results)+1}'
 
     # --- Sheet 2: Macro (detailed) ---
     ws2 = wb.create_sheet('宏观')
@@ -697,7 +729,7 @@ def main():
     # --- Sheet 3: 综合推荐 ---
     ws3 = wb.create_sheet('综合推荐')
     rec_headers = ['#', '代码', '名称', '现价', '生产XGB', '3D分', '等级', '仓位%', 
-                   'R:R', '四框架', '筹码', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
+                   'R:R', '四框架', '筹码', 'S&R带', 'V4.5', 'GZK', '中枢', '买入', '止损', 'TP1', '方向', '威科夫', '逻辑']
     for c, h in enumerate(rec_headers, 1):
         cell = ws3.cell(1, c, h)
         cell.fill = hdr_fill
@@ -721,12 +753,15 @@ def main():
         if isinstance(zl_v, (int, float)) and isinstance(price_v, (int, float)) and zl_v > 0:
             dist_pct = (price_v - zl_v) / zl_v * 100  # 正=追高(下沿上方), 负=超跌(下沿下方)
             dist_score = max(0.0, min(100.0, 100.0 - abs(dist_pct) * 5.0))
+        # S&R 评分: 现价在支撑带(安全)与阻力带(追高)之间的位置, 贴支撑=100
+        sr_sc = r.get('sr_score') if isinstance(r.get('sr_score'), (int, float)) else 50.0
         r['_rank'] = (r['prod_xgb'] * 0.35          # XGB第一(生产模型AUC0.667)
                       + rr_score * 0.15             # R:R第二(盈亏比)
                       + r['score3d'] * 0.15         # 3D
                       + chip * 0.10                 # 筹码
                       + r['enhance'] * 0.10         # 四框架
-                      + dist_score * 0.10           # 距买入区
+                      + dist_score * 0.05           # 距买入区(中枢下沿锚)
+                      + sr_sc * 0.05                # S&R支撑阻力带(贴支撑加分)
                       + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
 
@@ -761,7 +796,7 @@ def main():
         direction = '多' if 'Buy' in str(r.get('bsp','')) else ('空' if 'Sell' in str(r.get('bsp','')) else '观望')
         vals = [i+1, r['code'], r['name'], r['price'], r['prod_xgb'],
                 r['score3d'], r['grade'], r['position_pct'], rr_s,
-                r['enhance'], r['chip_score'], r['v45'], r['gzk'], r['zs'][:15],
+                r['enhance'], r['chip_score'], r['sr_detail'], r['v45'], r['gzk'], r['zs'][:15],
                 r['entry'], r['stop'], r['tp1'], direction, r['wyckoff'], logic]
         for c, v in enumerate(vals, 1):
             cell = ws3.cell(i+2, c, v)
@@ -770,7 +805,7 @@ def main():
             if i < 5: cell.fill = green_fill
     
     # Column widths for 综合推荐 (20 columns)
-    for c, w in enumerate([4,8,10,7,9,4,6,4,5,7,6,5,5,15,7,7,7,5,8,18], 1):
+    for c, w in enumerate([4,8,10,7,9,4,6,4,5,7,6,11,5,5,15,7,7,7,5,8,18], 1):
         ws3.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
     ws3.freeze_panes = 'A2'
 
