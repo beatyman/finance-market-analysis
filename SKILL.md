@@ -559,6 +559,15 @@ Al Brooks/Bob Volman 经典价格行为量化算法，核心增量是**可执行
 - **用法**：`from sr_zones import sr_zones, split_sr; zones=sr_zones(highs,lows); res,sup=split_sr(zones,close[-1])`
 - **融合**：S&R带 + 缠论中枢 + 筹码峰 = 三重共振验证（flip互换位 ↔ 中枢上沿跌破变阻力）
 
+## 基本面六项评分 (references/stock_3d_framework.md + scripts/fundamental_score.py — 吸收 Stock-Analysis-3D)
+
+补三维评分"基本面"真缺口（原 fund=v45经验分+gzk 都是技术面）。30分制六项财务：PE/PB/ROE/营收增速/毛利率/负债率各5分，纯函数零依赖。
+
+- **用法**：`from fundamental_score import fundamental_score; r=fundamental_score(pe,pb,roe,revenue_yoy,gross_margin,debt_to_asset)`
+- **评级**：24-30优秀/18-23良好/12-17中等/6-11偏弱/0-5差
+- **融合**：五维交叉验证 = XGB × 共振度(中枢+S&R+筹码) × 资金流 × R:R期望值 × 基本面六项
+- **硬性规则**：RSI>80不给买入、乖离MA5>5%不追高、缩量回调=最佳买点
+
 ## 阿娇版筛选标准（重要工作流）
 
 chan.py 的 BSP 检测是机械化的，会产生经典缠论中不成立的信号。分析板块/个股时**必须**用阿娇标准二次筛选：
