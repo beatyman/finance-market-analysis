@@ -570,6 +570,16 @@ def main():
         except Exception:
             pass
 
+        # ══════ 三锚共振度: 中枢内 + S&R贴支撑 + 筹码健康 ══════
+        resonance = 0
+        if in_zs:
+            resonance += 1  # 锚1: 中枢内买
+        if sr_score >= 70:
+            resonance += 1  # 锚2: S&R贴支撑(安全买点)
+        if chip_score_val is not None and chip_score_val >= 60:
+            resonance += 1  # 锚3: 筹码健康
+        resonance_label = {3: '三重共振', 2: '双锚', 1: '单锚', 0: '无锚'}[resonance]
+
         results.append({
             'code': code,
             'name': name,
@@ -608,6 +618,8 @@ def main():
             'sr_detail': sr_detail,
             'sr_r': sr_r,
             'sr_s': sr_s,
+            'resonance': resonance,
+            'resonance_label': resonance_label,
         })
 
     print(f'  完成: {len(results)} 只信号')
@@ -625,7 +637,7 @@ def main():
     headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '3D分', 
                '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
                '买入', '止损', 'TP1', '风控', '标签', '威科夫',
-               '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分']
+               '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分', '共振']
 
     # Header style
     hdr_fill = PatternFill(start_color='1a1a2e', end_color='1a1a2e', fill_type='solid')
@@ -658,7 +670,7 @@ def main():
             r['entry'], r['stop'], r['tp1'],
             r['risk_status'], r['tag'], r['wyckoff'],
             r['risk_size'], r['risk_gate'], r['risk_ror'],
-            r['sr_detail'], r['sr_score']
+            r['sr_detail'], r['sr_score'], r['resonance_label']
         ]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(row, c, v)
@@ -680,11 +692,11 @@ def main():
     widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':9, 'G':5,
               'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':5, 'O':5,
               'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18,
-              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6}
+              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6, 'AA':9}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'A2'
-    ws.auto_filter.ref = f'A1:Z{len(results)+1}'
+    ws.auto_filter.ref = f'A1:AA{len(results)+1}'
 
     # --- Sheet 2: Macro (detailed) ---
     ws2 = wb.create_sheet('宏观')
@@ -741,12 +753,11 @@ def main():
     # XGB是生产模型(AUC0.667, 统计验证), 权重最高; R:R盈亏比排第二
     for r in results:
         chip = r['chip_score'] if isinstance(r['chip_score'], (int, float)) else 50.0
-        # R:R 评分: 封顶8(避免低波动股虚高) + XGB胜率修正(低胜率的高R:R压制)
+        # R:R 期望值修正: 裸R:R × XGB胜率修正, 封顶6(深跌低位股R:R虚高, 低胜率压制)
         rr_val = r['rr'] if isinstance(r['rr'], (int, float)) and r['rr'] > 0 else 0
-        rr_capped = min(rr_val, 8.0)  # R:R>8封顶(银行/保险/航空低波动→虚高)
-        rr_score = rr_capped * 12.5   # R:R=8→100, R:R=5→62.5, R:R=2.5→31
-        if r['prod_xgb'] < 40:        # XGB<40=低胜率, R:R虚高标的打7折
-            rr_score *= 0.7
+        xgb_adj = max(0.4, min(1.5, r['prod_xgb'] / 50.0))  # XGB50=1.0, 20=0.4, 75=1.5
+        rr_expected = min(rr_val * xgb_adj, 6.0)  # 期望R:R封顶6
+        rr_score = rr_expected * 16.67  # 期望6→100, 期望3→50, 期望1.5→25
         # 距买入区=现价距中枢下沿(安全买点): 双边惩罚, 贴着下沿→100分, 超跌或追高→降分
         dist_score = 50.0
         zl_v = r.get('zl'); price_v = r['price']
@@ -755,13 +766,15 @@ def main():
             dist_score = max(0.0, min(100.0, 100.0 - abs(dist_pct) * 5.0))
         # S&R 评分: 现价在支撑带(安全)与阻力带(追高)之间的位置, 贴支撑=100
         sr_sc = r.get('sr_score') if isinstance(r.get('sr_score'), (int, float)) else 50.0
+        resonance = r.get('resonance', 0) or 0
         r['_rank'] = (r['prod_xgb'] * 0.35          # XGB第一(生产模型AUC0.667)
-                      + rr_score * 0.15             # R:R第二(盈亏比)
+                      + rr_score * 0.15             # R:R第二(期望值修正)
                       + r['score3d'] * 0.15         # 3D
                       + chip * 0.10                 # 筹码
                       + r['enhance'] * 0.10         # 四框架
                       + dist_score * 0.05           # 距买入区(中枢下沿锚)
                       + sr_sc * 0.05                # S&R支撑阻力带(贴支撑加分)
+                      + (8 if resonance >= 3 else (3 if resonance == 2 else 0))  # 三锚共振奖励
                       + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
 
@@ -786,7 +799,10 @@ def main():
                 return True
         return False
 
-    recs = [r for r in results if not veto(r)][:15]
+    recs = [r for r in results if not veto(r)
+            and r.get('in_zs') == '是'          # 强制中枢内(修复中枢外标的混入)
+            and r.get('risk_gate') != 'BLOCK']  # 剔除风险门控BLOCK
+    recs = recs[:15]
     for i, r in enumerate(recs):
         logic = '+'.join([x for x in [
             ('中枢内' if r['in_zs'] == '是' else ''),
