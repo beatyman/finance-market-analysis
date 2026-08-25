@@ -127,6 +127,96 @@ def fetch_pe_batch(stocks, cache_file=None):
     
     return pe_map
 
+# ═══════════════ 基本面六项批量查询 (baostock) ═══════════════
+def _latest_quarters(n=6):
+    """返回最近 n 个 (year, quarter) 列表, 从当前季度往回推。"""
+    from datetime import datetime
+    now = datetime.now()
+    y, m = now.year, now.month
+    q = (m - 1) // 3 + 1
+    out = []
+    for _ in range(n):
+        out.append((y, q))
+        q -= 1
+        if q == 0:
+            q = 4
+            y -= 1
+    return out
+
+
+def fetch_fundamentals_batch(stocks, cache_file=None):
+    """批量拉基本面六项(PE/PB/ROE/毛利率/负债率/净利润同比), baostock。
+    返回 {code: {pe, pb, roe, gross_margin, debt_ratio, profit_yoy}}"""
+    if cache_file and os.path.exists(cache_file):
+        with open(cache_file, 'rb') as f:
+            return pickle.load(f)
+    import baostock as bs
+    from datetime import timedelta
+    bs.login()
+    fund_map = {}
+    quarters = _latest_quarters(6)
+    for idx, (code, name) in enumerate(stocks):
+        if idx % 50 == 0:
+            print(f'    基本面查询: {idx}/{len(stocks)}', flush=True)
+        sym = ('sh.' + code) if code.startswith('6') else ('sz.' + code)
+        e = {'pe': None, 'pb': None, 'roe': None, 'gross_margin': None,
+             'debt_ratio': None, 'profit_yoy': None}
+        try:
+            # PE/PB: query_history_k_data_plus (最新交易日)
+            end_dt = datetime.now() - timedelta(days=1)
+            start_dt = end_dt - timedelta(days=10)
+            rs = bs.query_history_k_data_plus(sym, 'date,peTTM,pbMRQ',
+                start_date=start_dt.strftime('%Y-%m-%d'),
+                end_date=end_dt.strftime('%Y-%m-%d'), frequency='d')
+            while rs.next():
+                d = rs.get_row_data()
+                if len(d) > 1 and d[1] and e['pe'] is None:
+                    e['pe'] = float(d[1])
+                if len(d) > 2 and d[2] and e['pb'] is None:
+                    e['pb'] = float(d[2])
+            # ROE/毛利率: query_profit_data (最新季度, 字段 roeAvg=3 gpMargin=5)
+            for y, q in quarters:
+                rs = bs.query_profit_data(code=sym, year=y, quarter=q)
+                while rs.next():
+                    d = rs.get_row_data()
+                    if len(d) > 3 and d[3] and e['roe'] is None:
+                        e['roe'] = float(d[3])
+                    if len(d) > 5 and d[5] and e['gross_margin'] is None:
+                        e['gross_margin'] = float(d[5])
+                if e['roe'] is not None and e['gross_margin'] is not None:
+                    break
+            # 负债率: query_balance_data (liabilityToAsset=7)
+            for y, q in quarters:
+                rs = bs.query_balance_data(code=sym, year=y, quarter=q)
+                while rs.next():
+                    d = rs.get_row_data()
+                    if len(d) > 7 and d[7] and e['debt_ratio'] is None:
+                        e['debt_ratio'] = float(d[7])
+                if e['debt_ratio'] is not None:
+                    break
+            # 净利润同比: query_growth_data (YOYNI=5)
+            for y, q in quarters:
+                rs = bs.query_growth_data(code=sym, year=y, quarter=q)
+                while rs.next():
+                    d = rs.get_row_data()
+                    if len(d) > 5 and d[5] and e['profit_yoy'] is None:
+                        e['profit_yoy'] = float(d[5])
+                if e['profit_yoy'] is not None:
+                    break
+        except Exception:
+            pass
+        # baostock 返回小数(0.18=18%), 转百分数匹配 fundamental_score 评分
+        for k in ('roe', 'gross_margin', 'debt_ratio', 'profit_yoy'):
+            if e[k] is not None:
+                e[k] = round(e[k] * 100, 2)
+        fund_map[code] = e
+    bs.logout()
+    if cache_file:
+        os.makedirs(os.path.dirname(cache_file) or '.', exist_ok=True)
+        with open(cache_file, 'wb') as f:
+            pickle.dump(fund_map, f)
+    return fund_map
+
 # ═══════════════ 主力资金流批量查询 (新浪 MoneyFlow) ═══════════════
 def fetch_flow_batch(codes, sleep=0.08):
     """批量取近5日主力净流入累计(元)。返回 {code: flow_5d}"""
@@ -189,6 +279,27 @@ def main():
         macro = {}
         print(f'  宏观: 获取失败 ({e})')
 
+    # 市场情绪温度计 (market_sentiment) — 全局择时约束
+    sentiment = None
+    sentiment_mult = 1.0  # 情绪降仓乘数
+    try:
+        from market_sentiment import market_sentiment
+        sentiment = market_sentiment(today)
+        if 'error' in sentiment:
+            print(f'  情绪: {sentiment["error"]}')
+            sentiment = None
+        else:
+            lv = sentiment['level']
+            if '冰点' in lv:
+                sentiment_mult = 0.5
+            elif '冷' in lv:
+                sentiment_mult = 0.7
+            elif '过热' in lv:
+                sentiment_mult = 0.8
+            print(f'  情绪: {lv} (涨停{sentiment["zt_n"]} 炸板率{sentiment["break_rate"]}% 晋级{sentiment["advance_rate"]}% 最高{sentiment["max_board"]}板) → 仓位乘数×{sentiment_mult}')
+    except Exception as e:
+        print(f'  情绪: 获取失败 ({e})')
+
     # Sector heat
     try:
         heat = get_sector_heat()
@@ -200,6 +311,16 @@ def main():
     pe_cache = os.path.expanduser('~/chan_pe_cache.pkl')
     pe_map = fetch_pe_batch(stocks, cache_file=pe_cache)
     print(f'  PE: {len(pe_map)} 只有效')
+
+    # 基本面六项 (PE/PB/ROE/毛利率/负债率/净利润同比, baostock, cached)
+    try:
+        fund_cache = os.path.expanduser('~/chan_fundamentals_cache.pkl')
+        fund_map = fetch_fundamentals_batch(stocks, cache_file=fund_cache)
+        n_fund = sum(1 for e in fund_map.values() if any(v is not None for v in e.values()))
+        print(f'  基本面六项: {n_fund} 只有效')
+    except Exception as e:
+        fund_map = {}
+        print(f'  基本面六项: 获取失败 ({e})')
 
     # Fetch quotes
     print(f'  获取行情...')
@@ -266,6 +387,29 @@ def main():
             _entry = feat_cache[_c]
             feat_cache[_c] = (_mat[_i].tolist(),) + _entry[1:]
     print(f'  [预处理] 特征收集 {len(feat_cache)} 只, winsorize 完成')
+
+    # 关系特征 (DTW形态相似度/PageRank/中心性) — 全市场图结构
+    rel_map = {}
+    try:
+        from relation_features import relation_features
+        codes_list = list(feat_cache.keys())
+        ret_matrix = []
+        for c in codes_list:
+            closes = feat_cache[c][6]  # closes 是 feat_cache 第6元素
+            if len(closes) >= 60:
+                rets = [closes[i] / closes[i-1] - 1 for i in range(len(closes)-60, len(closes))]
+            else:
+                rets = [0.0] * 60
+            ret_matrix.append(rets)
+        ret_matrix = np.array(ret_matrix)
+        rel_feat = relation_features(ret_matrix)
+        rel_map = {code: {'degree': float(rel_feat['degree_centrality'][i]),
+                          'pagerank': float(rel_feat['pagerank'][i]),
+                          'dtw_mean': float(rel_feat['dtw_similarity_mean'][i])}
+                   for i, code in enumerate(codes_list)}
+        print(f'  [关系特征] DTW/PageRank/中心性 完成 ({len(codes_list)}只)')
+    except Exception as e:
+        print(f'  [关系特征] 失败 ({e})')
 
     # 主力资金流批量拉取(近5日净流入)
     print('  [资金流] 批量拉取近5日主力净流入...')
@@ -352,6 +496,25 @@ def main():
 
         # PE from baostock batch query
         pe = pe_map.get(code)
+
+        # 基本面六项评分 (fundamental_score) — 补"真基本面"维度
+        fund_score6 = None
+        fund_rating = '—'
+        try:
+            from fundamental_score import fundamental_score as fs6
+            f = fund_map.get(code, {})
+            if f and any(v is not None for v in f.values()):
+                r = fs6(pe=(f.get('pe') or pe), pb=f.get('pb'), roe=f.get('roe'),
+                        revenue_yoy=f.get('profit_yoy'), gross_margin=f.get('gross_margin'),
+                        debt_to_asset=f.get('debt_ratio'))
+                fund_score6 = r['total']   # 0-30
+                fund_rating = r['rating']
+        except Exception:
+            pass
+
+        # 关系特征 (pagerank 龙头识别 + dtw 形态相似度)
+        rel_pagerank = rel_map.get(code, {}).get('pagerank') if rel_map else None
+        rel_dtw = rel_map.get(code, {}).get('dtw_mean') if rel_map else None
 
         # YTD
         ytd = (closes[-1] / closes[-120] - 1) * 100 if len(closes) >= 120 else None
@@ -661,6 +824,10 @@ def main():
             'resonance_label': resonance_label,
             'flow_5d': flow_5d,
             'flow_score': round(flow_score, 1),
+            'fund_score6': fund_score6,
+            'fund_rating': fund_rating,
+            'rel_pagerank': rel_pagerank,
+            'rel_dtw': rel_dtw,
         })
 
     print(f'  完成: {len(results)} 只信号')
@@ -759,6 +926,11 @@ def main():
         [f'DXY: {macro.get("DXY",{}).get("value","?")} | US10Y: {macro.get("UST10Y",{}).get("value","?")}% | USD/CNY: {macro.get("USDCNY",{}).get("value","?")}'],
         [f'宏观方向: {macro_signal(macro).get("bias","中性")}'],
         [''],
+        ['━━━ 市场情绪 ━━━'],
+        [f'情绪: {sentiment["level"]} | 涨停{sentiment["zt_n"]} 炸板{sentiment["zb_n"]} 跌停{sentiment["dt_n"]} 炸板率{sentiment["break_rate"]}%' if sentiment else '情绪: 未获取(非交易日或接口不可达)'],
+        [f'连板: 最高{sentiment["max_board"]}板 | 昨涨停溢价{sentiment["premium"]:+.2f}% | 晋级率{sentiment["advance_rate"]}% | 大面{sentiment["big_loss"]}只' if sentiment else ''],
+        [f'仓位乘数: ×{sentiment_mult} | {sentiment["advice"]}' if sentiment else f'仓位乘数: ×{sentiment_mult}(默认)'],
+        [''],
         ['━━━ 扫描统计 ━━━'],
         [f'CSI300成分股: {len(stocks)}只 | 有效信号: {len(results)}只'],
         [f'Buy: {buys} | Sell: {sells} | Hold: {holds}'],
@@ -810,14 +982,25 @@ def main():
         sr_sc = r.get('sr_score') if isinstance(r.get('sr_score'), (int, float)) else 50.0
         resonance = r.get('resonance', 0) or 0
         flow_sc = r.get('flow_score') if isinstance(r.get('flow_score'), (int, float)) else 50.0
+        # 基本面六项(30分制→100分制): 补真基本面维度
+        fund6_sc = 50.0
+        if isinstance(r.get('fund_score6'), (int, float)):
+            fund6_sc = min(100.0, r['fund_score6'] / 30.0 * 100.0)
+        # 龙头奖励: pagerank 高于平均(图核心节点)加分
+        leader_bonus = 0
+        pr = r.get('rel_pagerank')
+        if isinstance(pr, (int, float)) and pr > 0.004:
+            leader_bonus = 3
         r['_rank'] = (r['prod_xgb'] * 0.35          # XGB第一(生产模型AUC0.667)
                       + rr_score * 0.15             # R:R第二(期望值修正)
                       + r['score3d'] * 0.15         # 3D
                       + chip * 0.10                 # 筹码
                       + r['enhance'] * 0.05         # 四框架
                       + flow_sc * 0.05              # 主力资金流(近5日净流入)
+                      + fund6_sc * 0.05             # 基本面六项(PE/PB/ROE/毛利率/负债率/增速)
                       + dist_score * 0.05           # 距买入区(中枢下沿锚)
                       + sr_sc * 0.05                # S&R支撑阻力带(贴支撑加分)
+                      + leader_bonus                # 龙头奖励(pagerank图核心)
                       + (8 if resonance >= 3 else (3 if resonance == 2 else 0))  # 三锚共振奖励
                       + (10 if r['v45'] >= 8 else 0))
     results.sort(key=lambda x: -x['_rank'])
@@ -927,6 +1110,12 @@ def main():
                 rr_map = {r['code']: r['rr'] for r in results}
                 v45_map = {r['code']: r['v45'] for r in results}
                 wyckoff_map = {r['code']: r.get('wyckoff','-') for r in results}
+
+                # 情绪降仓乘数: 冷/冰点降仓, 过热减仓
+                if sentiment_mult != 1.0:
+                    weights = {c: w * sentiment_mult for c, w in weights.items()}
+                    lv = sentiment['level'] if sentiment else '未知'
+                    print(f'  [情绪降仓] 权重×{sentiment_mult} (情绪{lv})')
 
                 ranked = sorted(weights.items(), key=lambda x: -x[1])
                 for i, (code, wt) in enumerate(ranked):
