@@ -619,6 +619,12 @@ Al Brooks/Bob Volman 经典价格行为量化算法，核心增量是**可执行
 - **关键坑**: Referer必须=`https://www.aastocks.com/sc/stocks/warrantcbbc/search.aspx`, 错误Referer(lt/warrant/search.aspx)返回空; 返回JSON的`list`数组(非`data`); 字段sym/type/udly/strike/efgear/iv/pctout/outq/ldate; type映射窝轮C=认购P=认沽,牛熊证C=牛P=熊
 - **融合**: 窝轮(认购/沽比)+牛熊证(牛/熊街货比)判断散户方向, 与沽空流量/淡仓存量(机构)交叉验证
 
+### 产品本质与信号纯度 (关键)
+
+- **窝轮=欧式期权**(现金结算, 有显著theta时间价值损耗); **牛熊证=带强制收回的杠杆票据**(接近期货, theta小)
+- **磁吸效应**: 牛熊证强制收回→正股被吸引向重货收回价(做市商delta对冲+散户止损放大波动), 故牛证重货收回价=强支撑/熊证重货收回价=强压力(非主观, 是收回机制本身)
+- **信号纯度**: 牛熊证theta小→牛/熊街货比是比窝轮认购/认沽比更纯的散户方向信号(窝轮买认购可能博波动而非纯看多)
+
 ## 5大龙头四维交叉验证 (scripts/hk_5_stocks.py)
 
 一键跑腾讯/阿里/美团/快手/小米四维对比, 输出"散户vs机构"背离全景+关键点位。
