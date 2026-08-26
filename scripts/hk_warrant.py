@@ -79,9 +79,10 @@ def filter_by_underlying(df: pd.DataFrame, stock_code: str) -> pd.DataFrame:
 # ═══════════════ 方式2: AASTOCKS API 直连 ═══════════════
 
 class AAStocksWarrantFetcher:
-    """AASTOCKS 窝轮/牛熊证 API 直连 (需环境能访问 aastocks, 沙箱DNS劫持不可用)。"""
+    """AASTOCKS 窝轮/牛熊证 API 直连 (无Cookie, 关键在正确Referer)。"""
 
     BASE_URL = "https://www.aastocks.com/sc/resources/datafeed/getwarrantcbbcdata.ashx"
+    REFERER = "https://www.aastocks.com/sc/stocks/warrantcbbc/search.aspx"
 
     def __init__(self, timeout: int = 15):
         self.timeout = timeout
@@ -89,9 +90,10 @@ class AAStocksWarrantFetcher:
         self.session.headers.update({
             "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                            "AppleWebKit/537.36 (KHTML, like Gecko) "
-                           "Chrome/120.0.0.0 Safari/537.36"),
-            "Referer": "https://www.aastocks.com/sc/lt/warrant/search.aspx",
-            "Accept": "*/*",
+                           "Chrome/151.0.0.0 Safari/537.36"),
+            "Referer": self.REFERER,
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "application/json, text/javascript, */*; q=0.01",
         })
 
     def _build_filter_param(self, stock_code: str) -> str:
@@ -100,8 +102,8 @@ class AAStocksWarrantFetcher:
         return f"{clean_code}{pipes}0|0|0|0|0"
 
     def fetch_derivative_data(self, stock_code: str, data_type: int = 1,
-                              page_size: int = 200) -> Optional[pd.DataFrame]:
-        """data_type: 1=窝轮(Warrant) 2=牛熊证(CBBC)。"""
+                              page_size: int = 500) -> Optional[pd.DataFrame]:
+        """data_type: 1=窝轮(Warrant) 2=牛熊证(CBBC)。返回标准化 DataFrame。"""
         type_name = "窝轮" if data_type == 1 else "牛熊证"
         params = {
             "t": str(data_type),
@@ -113,11 +115,26 @@ class AAStocksWarrantFetcher:
             resp = self.session.get(self.BASE_URL, params=params, timeout=self.timeout)
             resp.raise_for_status()
             data = resp.json()
-            if not data or "data" not in data:
+            if not data or "list" not in data:
                 logger.warning(f"未获取到 {stock_code} {type_name} 数据")
                 return None
-            logger.info(f"成功抓取 {stock_code} {type_name} {len(data['data'])} 条")
-            return pd.DataFrame(data["data"])
+            df = pd.DataFrame(data["list"])
+            # API 实际字段 → 标准字段
+            df = df.rename(columns={
+                "sym": "code", "udly": "underlying", "issuer": "issuer",
+                "last": "last_price", "turn": "turnover", "strike": "strike",
+                "efgear": "effective_gearing", "iv": "iv",
+                "pctout": "outstanding_ratio", "outq": "outstanding",
+                "ldate": "expiry", "premi": "premium", "movalue": "moneyness",
+                "desp": "name", "chg": "change", "pctchg": "change_pct",
+            })
+            # 类型映射: 窝轮 C=认购/P=认沽; 牛熊证 C=牛/P=熊
+            if data_type == 1:
+                df["type"] = df["type"].map({"C": "认购", "P": "认沽"})
+            else:
+                df["type"] = df["type"].map({"C": "牛", "P": "熊"})
+            logger.info(f"成功抓取 {stock_code} {type_name} {len(df)} 条")
+            return df
         except Exception as e:
             logger.error(f"AASTOCKS {type_name} 接口失败: {e}")
             return None

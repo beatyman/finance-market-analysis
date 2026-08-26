@@ -615,8 +615,8 @@ Al Brooks/Bob Volman 经典价格行为量化算法，核心增量是**可执行
 
 - **方式1 导出解析**: `load_warrant_data('导出.xlsx')` + `filter_by_underlying(df,'美团')`——本地解析不受DNS劫持影响
 - **AASTOCKS列名**: 代号/购沽/牛熊/相关资产(正股名称)/现价/成交额/行使价/收回价/街货量/引伸波幅/实际杠杆
-- **方式2 API直连**: `AAStocksWarrantFetcher().fetch_derivative_data('03690', data_type=1)`(1=窝轮2=牛熊证)
-- **环境坑**: www.aastocks.com被DNS劫持到198.18.0.126(内网保留地址), 沙箱无法直连→用导出文件
+- **方式2 API直连**: `AAStocksWarrantFetcher().fetch_derivative_data('03690', data_type=1)`(1=窝轮2=牛熊证)——**无Cookie, 关键在正确Referer**
+- **关键坑**: Referer必须=`https://www.aastocks.com/sc/stocks/warrantcbbc/search.aspx`, 错误Referer(lt/warrant/search.aspx)返回空; 返回JSON的`list`数组(非`data`); 字段sym/type/udly/strike/efgear/iv/pctout/outq/ldate; type映射窝轮C=认购P=认沽,牛熊证C=牛P=熊
 - **融合**: 窝轮(认购/沽比)+牛熊证(牛/熊街货比)判断散户方向, 与沽空流量/淡仓存量(机构)交叉验证
 
 ## 阿娇版筛选标准（重要工作流）
