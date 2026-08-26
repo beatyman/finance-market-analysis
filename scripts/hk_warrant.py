@@ -105,9 +105,14 @@ class AAStocksWarrantFetcher:
                               page_size: int = 500) -> Optional[pd.DataFrame]:
         """data_type: 1=窝轮(Warrant) 2=牛熊证(CBBC)。返回标准化 DataFrame。"""
         type_name = "窝轮" if data_type == 1 else "牛熊证"
+        # co 列配置: 窝轮含14/15/16(价内外/实际杠杆/引伸波幅), 牛熊证含26/27/23(收回价/杠杆/换股比率)
+        if data_type == 1:
+            co = "|1|2|3|4|5|6|8|9|11|12|14|15|16|17|19|20|21|7|13|25|29|"
+        else:
+            co = "|1|2|3|4|5|6|8|9|11|12|17|26|27|23|19|20|21|7|13|25|29|"
         params = {
             "t": str(data_type),
-            "co": "|1|2|3|4|5|6|8|9|11|12|14|15|16|17|19|20|21|7|13|25|29|",
+            "co": co,
             "s": "", "o": "", "f": self._build_filter_param(stock_code),
             "pi": "1", "exp": "Y", "ps": str(page_size),
         }
@@ -124,6 +129,7 @@ class AAStocksWarrantFetcher:
                 "sym": "code", "udly": "underlying", "issuer": "issuer",
                 "last": "last_price", "turn": "turnover", "strike": "strike",
                 "efgear": "effective_gearing", "iv": "iv",
+                "calllv": "call_level", "gear": "gearing", "enratio": "ratio",
                 "pctout": "outstanding_ratio", "outq": "outstanding",
                 "ldate": "expiry", "premi": "premium", "movalue": "moneyness",
                 "desp": "name", "chg": "change", "pctchg": "change_pct",
