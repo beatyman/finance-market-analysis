@@ -4,11 +4,11 @@ CSI 300 生产级训练管线 v2.0
 ================================
 吸收自 /root/train/chan.py-main 的全部最佳实践：
 
-标注：Triple-Barrier(1.5×ATR) + 横截面分位数 + MFE/MAE
+标注：Triple-Barrier meta-label (upper+1.5×ATR / lower-1.0×ATR / horizon10)
 特征：55维基础 + 时序算子(lag/diff/roll/linreg) + 横截面(zscore/rank/deviation)
-清洗：Winsorization(1%-99%) + Spearman冗余过滤(>0.85) + 滚动IC筛选(|IC|>0.02,IR>0.3)
+清洗：FeaturePipeline split-before-fit (NaN/winsor/Spearman/IC 只在train上fit)
 切分：Purged时间切分(±5天缓冲区)
-缩放：Expanding window (防前视)
+缩放：无 (XGBoost树模型无需标准化)
 训练：XGBoost(n=500,depth=7,lr=0.03,early_stopping)
 评估：AUC + OOS IC/IR + 特征重要性
 """
@@ -286,31 +286,13 @@ def label_mfe_mae(snap: BSPSnapshot, future_closes: np.ndarray) -> int:
 
 def build_labels(snaps: List[BSPSnapshot]) -> pd.DataFrame:
     """
-    Simple directional label: future 5-bar return > 2% → 1.
-    Proven AUC=0.667 on 55 features. More complex labels (Triple-Barrier etc.)
-    require different feature sets; start simple, iterate.
+    V2: Triple-Barrier meta-label（真实落地，口径单一可审计）。
+    upper = +1.5×ATR, lower = -1.0×ATR, horizon = 10 日。
+    TIMEOUT 样本 label=NaN（训练时剔除），但保留 is_timeout 列供回测统计。
     """
-    rows = []
-    for s in snaps:
-        idx = s.idx
-        n_total = len(s.all_closes)
-        fut5_idx = min(idx + 5, n_total - 1)
-        ret_5d = (s.all_closes[fut5_idx] / s.price - 1) * 100 if fut5_idx > idx else np.nan
-        label = 1 if (not np.isnan(ret_5d) and ret_5d > 2.0) else (0 if not np.isnan(ret_5d) else -1)
-
-        rows.append({
-            'code': s.code, 'date': s.date, 'idx': s.idx,
-            'is_buy': s.is_buy, 'price': s.price,
-            'future_5d_ret': ret_5d, 'label': label,
-        })
-
-    df = pd.DataFrame(rows)
-    pos = (df['label'] == 1).sum()
-    neg = (df['label'] == 0).sum()
-    mid = (df['label'] == -1).sum()
-    total = pos + neg + mid
-    print(f"  label: 1={pos}({pos/max(total,1)*100:.1f}%) 0={neg}({neg/max(total,1)*100:.1f}%) -1={mid}({mid/max(total,1)*100:.1f}%)")
-    return df
+    from labels import build_meta_labels
+    return build_meta_labels(snaps, horizon=10, upper_atr=1.5, lower_atr=1.0,
+                              timeout_policy='exclude')
 
 
 # ══════════════════════════════════════════════════════════
@@ -980,7 +962,7 @@ def main():
         return
 
     # ── 2. Build labels ──
-    print("\n[2/8] Building enhanced labels (Triple-Barrier + CS percentile + MFE/MAE)...")
+    print("\n[2/8] Building Triple-Barrier meta-labels (upper+1.5ATR / lower-1.0ATR / horizon10)...")
     label_df = build_labels(snaps)
 
     # Filter to clear labels only
@@ -1048,7 +1030,7 @@ def main():
         **metrics,
         'feature_names': final_feat_cols,
         'engine': 'chan.py step_load (Vespa314 CChan)',
-        'labeling': 'Triple-Barrier + CS percentile + MFE/MAE composite',
+        'labeling': 'Triple-Barrier meta-label (upper+1.5ATR / lower-1.0ATR / horizon10)',
         'trained_at': pd.Timestamp.now().isoformat(),
         'total_time_s': round(time.time() - t_total, 1),
     }
