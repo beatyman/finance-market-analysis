@@ -801,6 +801,13 @@ def main():
         flow_5d = flow_map.get(code, 0.0)
         flow_score = max(0.0, min(100.0, 50.0 + flow_5d / 1e8 * 50.0))
 
+        # ATR14（统一计算，供交易计划引擎使用）
+        atr14 = 0.0
+        if len(closes) >= 15:
+            _trs = [max(highs[i] - lows[i], abs(highs[i] - closes[i-1]), abs(lows[i] - closes[i-1]))
+                    for i in range(1, len(closes))]
+            atr14 = sum(_trs[-14:]) / 14
+
         # Fresh BSP gate (P0-08): 信号新鲜度标记（不硬过滤，仅标记）
         sig_age = getattr(cur, 'signal_age_bars', None)
         is_fresh = getattr(cur, 'is_fresh_bsp', True)
@@ -857,6 +864,7 @@ def main():
             'flow_score': round(flow_score, 1),
             'signal_age_bars': sig_age,
             'signal_freshness': signal_freshness,
+            'atr14': round(atr14, 3),
             'fund_score6': fund_score6,
             'fund_rating': fund_rating,
             'rel_pagerank': rel_pagerank,
@@ -867,6 +875,62 @@ def main():
 
     # Sort by 3D score
     results.sort(key=lambda x: -x['score3d'])
+
+    # ═══════════════ 交易计划生成（trade_entry_engine 整合）═══════════════
+    trade_plans = []
+    try:
+        from trade_entry_engine import evaluate_candidate, EngineConfig, Candidate, asdict
+        trade_cfg = EngineConfig(
+            account_equity=1_000_000, risk_per_trade=0.005,
+            cap_normal=200_000, cap_strong=250_000, cap_very_strong=300_000,
+            hard_max_notional=300_000,
+        )
+        for r in results:
+            # 只对 Buy 候选生成交易计划
+            if 'Buy' not in r['bsp']:
+                continue
+            support = r['zl'] if isinstance(r['zl'], (int, float)) else None
+            tp1 = r['tp1'] if isinstance(r['tp1'], (int, float)) else None
+            atr = r.get('atr14', 0.0)
+            if not (support and tp1 and atr):
+                continue
+            if support <= 0 or tp1 <= 0 or atr <= 0:
+                continue
+            # structural_stop = 结构失效价 = 中枢下沿下方3%（跌破中枢下沿=结构破坏）
+            structural_stop = round(support * 0.97, 2)
+            # setup_quality: 基础30 + 中枢内20 + 三锚共振每锚15（最高95）
+            setup_quality = 30.0
+            if r['in_zs'] == '是':
+                setup_quality += 20
+            setup_quality += r.get('resonance', 0) * 15
+            setup_quality = min(100.0, setup_quality)
+            # data_confidence: PE/基本面 可用性
+            dc = 1.0
+            if r['pe'] is None:
+                dc -= 0.05
+            if r.get('fund_score6') is None:
+                dc -= 0.05
+            cand = Candidate(
+                code=r['code'], name=r['name'], price=r['price'],
+                xgb_score=r['prod_xgb'], score_3d=r['score3d'],
+                setup_quality=round(setup_quality, 1), data_confidence=dc,
+                support=support, structural_stop=structural_stop, target1=tp1,
+                target2=None, atr=atr,
+                in_valid_structure=True,
+                daily_trend_ok=True,
+                # 小周期确认：日线版默认 False（待 30m/60m 数据接入）
+                lower_tf_higher_low=False, lower_tf_macd_positive=False,
+                lower_tf_breakout=False, lower_tf_volume_confirm=False,
+                trigger_price=None, market_regime=0.0,
+                current_portfolio_deployed=0.0,
+            )
+            plan = evaluate_candidate(cand, trade_cfg)
+            trade_plans.append(asdict(plan))
+        _state_rank = {'TRIGGERED_LONG': 0, 'SETUP': 1, 'WATCH': 2, 'NO_TRADE': 3}
+        trade_plans.sort(key=lambda p: (_state_rank.get(p['state'], 9), -p.get('rr_at_ideal_mid', 0)))
+        print(f'  交易计划: {len(trade_plans)} 个 Buy 候选')
+    except Exception as e:
+        print(f'  交易计划生成失败: {e}')
 
     # ═══════════════ Excel Output ═══════════════
     wb = openpyxl.Workbook()
@@ -1178,6 +1242,47 @@ def main():
                 ws4.freeze_panes = 'A2'
     except Exception as e:
         print(f'  组合优化跳过: {e}')
+
+    # --- 交易计划 sheet (trade_entry_engine 整合) ---
+    if trade_plans:
+        ws5 = wb.create_sheet('交易计划')
+        tp_headers = ['代码', '名称', '状态', '动作', '信号强度', '现价', '支撑',
+                      '理想入场低', '理想入场高', '最大接受价', '止损', 'T1',
+                      '当前R:R', '理想R:R', '风险预算(元)', '仓位上限(元)',
+                      '建议金额(元)', '建议股数', '距支撑(ATR)', '原因']
+        for c, h in enumerate(tp_headers, 1):
+            cell = ws5.cell(1, c, h)
+            cell.fill = hdr_fill; cell.font = hdr_font
+            cell.border = thin_border; cell.alignment = Alignment(horizontal='center')
+
+        _state_fill = {'TRIGGERED_LONG': green_fill, 'SETUP': yellow_fill,
+                       'WATCH': yellow_fill, 'NO_TRADE': red_fill}
+        for i, p in enumerate(trade_plans):
+            vals = [
+                p['code'], p['name'], p['state'], p['action'], p['signal_strength'],
+                p['current_price'], p['support'], p['ideal_entry_low'], p['ideal_entry_high'],
+                p['max_acceptable_entry'], p['stop'], p['target1'],
+                p['rr_at_current'], p['rr_at_ideal_mid'],
+                p['risk_budget_rmb'], p['position_cap_rmb'],
+                p['suggested_notional_rmb'], p['suggested_shares'],
+                p['distance_to_support_atr'], p['reason'],
+            ]
+            for c, v in enumerate(vals, 1):
+                cell = ws5.cell(i+2, c, v)
+                cell.border = thin_border
+                cell.alignment = Alignment(horizontal='center', wrap_text=(c == 20))
+                if c == 20:
+                    cell.alignment = Alignment(horizontal='left', vertical='center')
+            fill = _state_fill.get(p['state'])
+            if fill:
+                for c in range(1, len(tp_headers)+1):
+                    ws5.cell(i+2, c).fill = fill
+
+        for c, w in enumerate([8, 10, 12, 26, 10, 7, 7, 9, 9, 9, 7, 7,
+                               7, 7, 10, 10, 11, 8, 9, 40], 1):
+            ws5.column_dimensions[openpyxl.utils.get_column_letter(c)].width = w
+        ws5.freeze_panes = 'A2'
+        print(f'  交易计划 sheet: {len(trade_plans)} 行')
 
     wb.save(out_path)
 
