@@ -1003,50 +1003,32 @@ def main():
     all_feat_cols = list(base_cols)  # skip time-series + cross-sectional for now
     print(f"  Features: {len(all_feat_cols)}")
 
-    # ── 5. Feature cleaning ──
-    print("\n[5/8] Feature cleaning (Winsorization + Redundancy + IC filter)...")
-
-    # Merge labels
+    # ── 5. Merge labels ──
+    print("\n[5/8] Merge labels...")
     feat_df['label'] = label_df['label'].values
     feat_df['code'] = label_df['code'].values
     feat_df['date'] = label_df['date'].values
 
-    # Drop NaN-heavy columns
-    na_ratio = feat_df[all_feat_cols].isna().mean()
-    keep_cols = na_ratio[na_ratio <= 0.8].index.tolist()
-    print(f"  NaN filter: {len(all_feat_cols)} → {len(keep_cols)} (dropped {len(all_feat_cols)-len(keep_cols)} >80% NaN)")
-
-    # 因子净化: PURIFY_WINSORIZE 配置了→横截面净化; None→旧方法按列整体1-99%(验证最优AUC 0.667)
-    if PURIFY_WINSORIZE:
-        feat_df = cross_sectional_purify(feat_df, keep_cols, date_col='date',
-                                         winsorize=PURIFY_WINSORIZE,
-                                         standardize=PURIFY_STANDARDIZE)
-        print(f"  横截面净化: {PURIFY_WINSORIZE}缩尾 + {PURIFY_STANDARDIZE or '无'}标准化")
-    else:
-        feat_df = winsorize_features(feat_df, keep_cols)
-        print(f"  缩尾: 按列整体 1%-99% (legacy, 验证最优 AUC 0.667)")
-
-    # Spearman redundancy filter
-    keep_cols = spearman_redundancy_filter(feat_df, keep_cols)
-
-    # Rolling IC filter (may return 0 if thresholds too strict — fall back to Spearman-filtered)
-    ic_cols = rolling_ic_filter(feat_df, keep_cols, 'label')
-    if len(ic_cols) < 10:
-        print(f"  ⚠ IC filter too strict ({len(ic_cols)} features), using Spearman-filtered ({len(keep_cols)})")
-    else:
-        keep_cols = ic_cols
-
-    final_feat_cols = keep_cols
-    print(f"  Final features: {len(final_feat_cols)}")
-
-    # ── 6. Purged time split ──
+    # ── 6. Purged time split（先 split，消除特征选择泄漏 P0-05）──
     print("\n[6/8] Purged time split (±5 day buffer)...")
     train_df, val_df, test_df = purged_time_split(feat_df)
 
-    # ── 7. Expanding window scale ──
-    print("\n[7/8] Expanding window scaling (no look-ahead)...")
-    X_train, X_val, X_test = expanding_window_scale(
-        train_df, val_df, test_df, final_feat_cols)
+    # ── 7. FeaturePipeline（split-before-fit：fit 只在 train）──
+    print("\n[7/8] FeaturePipeline (split-before-fit, 无泄漏)...")
+    from feature_pipeline import FeaturePipeline
+    pipeline = FeaturePipeline()
+    pipeline.fit(train_df, all_feat_cols, 'label')
+    X_train = pipeline.transform(train_df).values
+    X_val = pipeline.transform(val_df).values
+    X_test = pipeline.transform(test_df).values
+    final_feat_cols = pipeline.keep_features
+    print(f"  Final features: {len(final_feat_cols)} "
+          f"(constants={len(pipeline.constants_removed)}, "
+          f"corr_drop={len(pipeline.correlation_drop)}, "
+          f"ic_drop={len(pipeline.ic_drop)}, "
+          f"missing_drop={len(pipeline.missing_dropped)})")
+    # 保存 preprocessing 工件（model bundle 的一部分）
+    pipeline.save(MODEL_DIR / 'preprocessing.json')
 
     y_train = train_df['label'].values.astype(int)
     y_val = val_df['label'].values.astype(int)

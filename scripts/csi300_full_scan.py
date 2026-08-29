@@ -50,15 +50,20 @@ _prod_meta = None
 
 def load_models():
     global _prod_model, _prod_meta
-    import json
-    # 新模型 v5+talib (101维, AUC 0.667)
-    prod_path = os.path.join(MODELS, 'chan_xgb_v5_talib.pkl')
-    if not os.path.exists(prod_path):
-        prod_path = os.path.join(MODELS, 'chan_xgb_latest.pkl')
-    if os.path.exists(prod_path) and _prod_model is None:
-        with open(prod_path, 'rb') as f:
-            _prod_model = pickle.load(f)
-        print(f'[model v5+talib {_prod_model.n_features_in_}维]', end=' ')
+    if _prod_model is not None:
+        return _prod_model
+    # V2: 使用不可变 bundle，取消 latest fallback；缺失即明确报错
+    try:
+        from model_bundle import load_bundle
+        bundle = load_bundle()
+        _prod_model = bundle['model']
+        _prod_meta = bundle['schema']   # {'feature_names', 'feature_hash', 'n_features'}
+        print(f'[bundle {bundle["model_id"]} {bundle["schema"]["n_features"]}维 '
+              f'hash={bundle["schema"]["feature_hash"][:8]}]', end=' ')
+    except Exception as e:
+        print(f'[model ERROR] {e}', end=' ')
+        _prod_model = None
+        _prod_meta = None
     return _prod_model
 
 def predict_score(feats, model, feat_order=None):
@@ -77,15 +82,23 @@ def predict_score(feats, model, feat_order=None):
         return None
 
 # ═══════════════ CSI 300 Stock List ═══════════════
-def load_csi300_stocks():
+def load_csi300_stocks(asof_date=None):
+    """Point-in-Time 沪深300成分股（含科创板688，不再按代码前缀排除）。"""
+    try:
+        from universe import get_csi300_members
+        members = get_csi300_members(asof_date)
+    except Exception:
+        members = None
+    if members:
+        # 仅剔除 ST / 退市整理（eligibility 过滤，非板块排除）
+        return [(c, n) for c, n in members if 'ST' not in n and '退' not in n]
+    # 兜底：membership 数据缺失时回退旧静态快照（此时也不排除688）
     codes = []
     with open(os.path.join(REF, 'hs300_stocks.csv')) as f:
         for row in csv.DictReader(f):
             c = row['成分券代码'].strip()
             n = row['成分券名称'].strip().strip('"')
             if 'ST' in n or '退' in n:
-                continue
-            if c.startswith(('688', '8', '4', '83', '87')):
                 continue
             codes.append((c, n))
     return codes
@@ -367,9 +380,15 @@ def main():
         try:
             from talib_features import add_talib_features, get_talib_feature_names
             _talib_feats = add_talib_features(_closes, _highs, _lows, _vols)
-            _talib_names = get_talib_feature_names()
-            _feat_vec = [_feats[k] for k in sorted(_feats.keys())] + \
-                        [_talib_feats.get(k, 0.0) for k in _talib_names]
+            if _prod_meta is not None:
+                # V2: 用 bundle schema 的严格顺序构造特征（训练/推理同一 schema）
+                _all = dict(_feats)
+                _all.update(_talib_feats)
+                _feat_vec = [_all.get(k, 0.0) for k in _prod_meta['feature_names']]
+            else:
+                _talib_names = get_talib_feature_names()
+                _feat_vec = [_feats[k] for k in sorted(_feats.keys())] + \
+                            [_talib_feats.get(k, 0.0) for k in _talib_names]
         except Exception:
             _feat_vec = [_feats[k] for k in sorted(_feats.keys())]
         feat_cache[_code] = (_feat_vec, _cur, _bsp_buy, _bsp_types, _zs_str, _pos,

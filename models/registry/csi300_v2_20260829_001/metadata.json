@@ -1,0 +1,11 @@
+{
+  "model_id": "csi300_v2_20260829_001",
+  "source": "chan_xgb_v5_talib.pkl",
+  "n_features": 101,
+  "engine": "chan_engine_v5 + scorer(58) + talib(43)",
+  "auc": 0.6672614762596834,
+  "labeling": "future_5d_return > 2.0%",
+  "promoted_at": "2026-08-29",
+  "note": "V2 bundle: feature schema 锁死, 取消 latest fallback",
+  "feature_hash": "8de702c55154c6d2"
+}
