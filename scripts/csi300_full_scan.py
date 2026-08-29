@@ -801,6 +801,18 @@ def main():
         flow_5d = flow_map.get(code, 0.0)
         flow_score = max(0.0, min(100.0, 50.0 + flow_5d / 1e8 * 50.0))
 
+        # Fresh BSP gate (P0-08): 信号新鲜度标记（不硬过滤，仅标记）
+        sig_age = getattr(cur, 'signal_age_bars', None)
+        is_fresh = getattr(cur, 'is_fresh_bsp', True)
+        if sig_age is None:
+            signal_freshness = 'N/A'
+        elif is_fresh:
+            signal_freshness = 'NEW'
+        elif sig_age <= 3:
+            signal_freshness = 'ACTIVE'
+        else:
+            signal_freshness = 'STALE'
+
         results.append({
             'code': code,
             'name': name,
@@ -843,6 +855,8 @@ def main():
             'resonance_label': resonance_label,
             'flow_5d': flow_5d,
             'flow_score': round(flow_score, 1),
+            'signal_age_bars': sig_age,
+            'signal_freshness': signal_freshness,
             'fund_score6': fund_score6,
             'fund_rating': fund_rating,
             'rel_pagerank': rel_pagerank,
@@ -862,7 +876,7 @@ def main():
     ws.title = f'{today}信号'
 
     headers = ['代码', '名称', '现价', 'PE', 'YTD%', '生产XGB', '3D分', 
-               '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', 'V4.5', 'GZK',
+               '等级', '仓位%', 'R:R', '中枢', '中枢内', 'BSP', '新鲜度', 'V4.5', 'GZK',
                '买入', '止损', 'TP1', '风控', '标签', '威科夫',
                '风险仓位', '风险门控', '爆仓概率', 'S&R带', 'S&R分', '共振', '资金(亿)',
                '基本面', '龙头']
@@ -893,7 +907,7 @@ def main():
             r['code'], r['name'], r['price'], r['pe'], r['ytd'],
             r['prod_xgb'], r['score3d'],
             r['grade'], r['position_pct'], r['rr'],
-            r['zs'], r['in_zs'], r['bsp'],
+            r['zs'], r['in_zs'], r['bsp'], r['signal_freshness'],
             r['v45'], r['gzk'],
             r['entry'], r['stop'], r['tp1'],
             r['risk_status'], r['tag'], r['wyckoff'],
@@ -919,15 +933,15 @@ def main():
             for c in range(1, len(headers)+1):
                 ws.cell(row, c).fill = green_fill
 
-    # Column widths (24 columns: A-X)
+    # Column widths (31 columns: A-AE)
     widths = {'A':8, 'B':12, 'C':8, 'D':6, 'E':7, 'F':9, 'G':5,
-              'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':5, 'O':5,
-              'P':8, 'Q':8, 'R':8, 'S':6, 'T':6, 'U':18,
-              'V':9, 'W':9, 'X':9, 'Y':11, 'Z':6, 'AA':9, 'AB':9, 'AC':11, 'AD':6}
+              'H':6, 'I':5, 'J':5, 'K':20, 'L':6, 'M':16, 'N':8, 'O':5, 'P':5,
+              'Q':8, 'R':8, 'S':8, 'T':6, 'U':6, 'V':18,
+              'W':9, 'X':9, 'Y':9, 'Z':11, 'AA':6, 'AB':9, 'AC':9, 'AD':11, 'AE':6}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'A2'
-    ws.auto_filter.ref = f'A1:AD{len(results)+1}'
+    ws.auto_filter.ref = f'A1:AE{len(results)+1}'
 
     # --- Sheet 2: Macro (detailed) ---
     ws2 = wb.create_sheet('宏观')

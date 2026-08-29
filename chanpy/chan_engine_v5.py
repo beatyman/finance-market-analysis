@@ -10,7 +10,7 @@ from chan_core_v5 import ChanCoreV5
 
 # Map v5 BSP types to our internal format
 def _bsp_classify(pts, px, pivots):
-    """Extract BSP signals — match v4's behavior"""
+    """Extract BSP signals + latest BSP date — match v4's behavior"""
     buy_pts=[p for p in pts if p['point_type']=='buy']
     sell_pts=[p for p in pts if p['point_type']=='sell']
     
@@ -32,7 +32,13 @@ def _bsp_classify(pts, px, pivots):
             bsp_types=['中枢内']  # In pivot, neutral
         else:
             bsp_types=['中枢外']  # Outside pivot
-    return bsp_buy, bsp_types
+    
+    # 最新 BSP 日期（供 fresh gate 判定 signal_age）
+    latest_bsp_date = None
+    all_recent = recent_buy + recent_sell
+    if all_recent:
+        latest_bsp_date = max(p['date'] for p in all_recent)
+    return bsp_buy, bsp_types, latest_bsp_date
 
 def analyze(dates, opens, closes, highs, lows, code=''):
     """Compatible with chan_engine.analyze() — returns (cur, bsp_buy, bsp_types, px, zs_str, pos_str)"""
@@ -78,7 +84,7 @@ def analyze(dates, opens, closes, highs, lows, code=''):
     trend_summary=trend.get('summary','?') if isinstance(trend,dict) else '?'
     
     # BSP
-    bsp_buy,bsp_types=_bsp_classify(pts, px, pivots)
+    bsp_buy,bsp_types,latest_bsp_date=_bsp_classify(pts, px, pivots)
     
     # Build compatible cur object with bi_list/zs_list/seg_list
     class FakeKL:
@@ -114,11 +120,25 @@ def analyze(dates, opens, closes, highs, lows, code=''):
             self.bi_list=[]
             self.zs_list=[]
             self.seg_list=[]
+            self.bsp_event_date=None
+            self.signal_age_bars=None
+            self.is_fresh_bsp=True
         def __bool__(self): return True
         def high(self): return max(h for h in highs[-20:])
         def low(self): return min(l for l in lows[-20:])
     
     cur=FakeCur()
+    
+    # Fresh BSP gate (P0-08): signal_age_bars = 从最新BSP生成日到最后一根K线的交易日数
+    cur.bsp_event_date = None
+    cur.signal_age_bars = None
+    cur.is_fresh_bsp = True  # 无BSP或无日期信息时默认 fresh（不误伤）
+    if latest_bsp_date is not None:
+        cur.bsp_event_date = str(latest_bsp_date.date())
+        dates_ts = pd.to_datetime(dates)
+        n_after = int((dates_ts >= latest_bsp_date).sum())
+        cur.signal_age_bars = max(0, n_after - 1)  # bar 数（交易日），非日历天数
+        cur.is_fresh_bsp = cur.signal_age_bars <= 1
     
     # Build stroke list from v5 strokes
     strokes=result.get('strokes',[])
